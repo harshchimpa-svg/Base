@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using WebApi.CustomMiddleware.NLog;
+using WebApi.CustomMiddlewares.Claims;
 
 namespace WebApi;
 
@@ -18,83 +19,35 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // --- Add Controllers ---
         builder.Services.AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            });
+             .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-        // --- Add SignalR ---
-        builder.Services.AddSignalR();
+        builder.Services.AddLogging(loggingBuilder =>
+        {
+            loggingBuilder.ClearProviders();
+            loggingBuilder.AddNLogWeb();
+        });
 
-        // --- NLog Logging ---
-        builder.Logging.ClearProviders();
-        builder.Host.UseNLog();
+        Environment.SetEnvironmentVariable("DB_CONNECTION_STRING", builder.Configuration.GetConnectionString("DefaultConnection"));
 
-        // --- Set DB Connection String in Environment ---
-        Environment.SetEnvironmentVariable(
-            "DB_CONNECTION_STRING",
-            builder.Configuration.GetConnectionString("DefaultConnection")
-        );
-
-        // --- Add Services Layers ---
         builder.Services.AddPersistenceLayer(builder.Configuration, builder.Environment);
-        builder.Services.ApplicationLayer(); 
+
+        builder.Services.ApplicationLayer();
         builder.Services.AddInfrastructure();
 
         builder.Services.AddHttpContextAccessor();
-
-        // --- Swagger ---
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "Web API",
-                Version = "v1"
-            });
 
-            c.CustomOperationIds(apiDesc =>
-                apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null
-            );
-
-            // JWT Auth
-            var security = new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Type = SecuritySchemeType.Http,
-                Scheme = "bearer",
-                BearerFormat = "JWT",
-                In = ParameterLocation.Header,
-                Description = "Enter 'Bearer {your token}'",
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            };
-
-            c.AddSecurityDefinition("Bearer", security);
-
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                { security, Array.Empty<string>() }
-            });
-        });
-
-        // --- Rate Limiter ---
         builder.Services.AddRateLimiter(options =>
         {
-            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(ctx =>
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
                 RateLimitPartition.GetFixedWindowLimiter(
-                    ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-                    _ => new FixedWindowRateLimiterOptions
+                    partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                    factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 60,
-                        Window = TimeSpan.FromMinutes(1)
-                    }
-                ));
+                        PermitLimit = 60, // Max 60 requests
+                        Window = TimeSpan.FromMinutes(1) // Per 1 minute
+                    }));
 
             options.OnRejected = async (context, token) =>
             {
@@ -103,41 +56,92 @@ public class Program
             };
         });
 
-        // --- CORS ---
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("AllowOrigin", policy =>
+            options.AddPolicy(name: "AllowOrigin",
+                builder =>
+                {
+                    builder.AllowAnyMethod()    // Allows any HTTP methods
+                           .AllowAnyHeader()    // Allows any headers
+                                                //.SetIsOriginAllowed(host => true)
+                           .SetIsOriginAllowed(_ => true)// Allows any origin (for dev, be more specific in prod)
+                           .AllowCredentials(); // Allows credentials like cookies or tokens
+                });
+        });
+
+        // Configure Swagger
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web API", Version = "v1" });
+
+            // Optional: Custom operation IDs
+            c.CustomOperationIds(apiDesc =>
             {
-                policy.AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .SetIsOriginAllowed(_ => true)
-                      .AllowCredentials();
+                return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+            });
+
+            // Add JWT Bearer Security
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Description = "Enter 'Bearer {Token}'",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            };
+
+            c.AddSecurityDefinition("Bearer", securityScheme);
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+                    },
+                    Array.Empty<string>()
+                },
             });
         });
 
-        // --- File Upload Limit ---
         builder.Services.Configure<FormOptions>(options =>
         {
-            options.MultipartBodyLengthLimit = 30 * 1024 * 1024;
+            options.MultipartBodyLengthLimit = 30 * 1024 * 1024; // setting max upload file size to 30MB
         });
 
         var app = builder.Build();
 
-        // --- Middlewares ---
+        // Middleware configuration
         app.UseHttpsRedirection();
         app.UseHsts();
 
-        app.UseStaticFiles();
-
         app.UseCors("AllowOrigin");
+
         app.UseRateLimiter();
 
         app.UseMiddleware<NLogMiddleware>();
 
+        app.UseStaticFiles();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
-        // --- Swagger UI ---
+        //app.UseMiddleware<ClaimMiddleware>();
+
+        // Enable Swagger in all environments
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
