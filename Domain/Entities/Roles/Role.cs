@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Organizations;
-using Domain.Entities.Roles.RoleClaims;
 using Domain.Entities.Users.UserRoles;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +12,4 @@ public class Role : IdentityRole
     [ForeignKey("Organization")]
     public int? OrganizationId { get; set; }
     public Organization? Organization { get; set; }
-
-    public List<RoleClaim> RoleMenus { get; set; } = [];
 }

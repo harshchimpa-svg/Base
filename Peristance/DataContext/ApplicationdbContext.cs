@@ -3,9 +3,6 @@ using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
 using Domain.Entities.Organizations;
 using Domain.Entities.OTPs;
-using Domain.Entities.Roles.RoleClaims;
-using Domain.Entities.Templates;
-using Domain.Entities.Templates.TemplateTypes;
 using Domain.Entities.Users.UserRoles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,7 +12,7 @@ using System.Reflection;
 
 namespace Persistence.DataContext;
 
-public class ApplicationDbContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, RoleClaim, IdentityUserToken<string>>
+public class ApplicationDbContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
 {
     private readonly IReadOnlyCollection<int> _currentOrgIds;
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentOrganizationProvider currentOrganizationProvider) : base(options)
@@ -25,12 +22,12 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
 
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
-    public DbSet<Template> Templates { get; set; }
-    public DbSet<TemplateBody> TemplateBodies { get; set; }
-    public DbSet<TemplateType> TemplateTypes { get; set; }
-    public DbSet<TemplateDocument> TemplateDocuments { get; set; }
+
+    //public DbSet<Template> Templates { get; set; }
+    //public DbSet<TemplateBody> TemplateBodies { get; set; }
+    //public DbSet<TemplateType> TemplateTypes { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<Role> Roles { get; set; } 
+    public DbSet<Role> Roles { get; set; }
 
 
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
@@ -43,10 +40,6 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
 
 
 
-        modelBuilder.Entity<RoleClaim>()
-        .HasOne(rc => rc.Role)
-        .WithMany(r => r.RoleMenus)
-        .HasForeignKey(rc => rc.RoleId);
 
         modelBuilder.Entity<Role>()
             .HasIndex(r => r.NormalizedName)

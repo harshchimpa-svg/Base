@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using WebApi.CustomMiddleware.NLog;
-using WebApi.CustomMiddlewares.Claims;
 
 namespace WebApi;
 

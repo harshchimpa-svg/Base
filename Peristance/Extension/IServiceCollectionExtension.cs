@@ -1,18 +1,29 @@
 ﻿
 using Application.Interfaces.GenericRepositories;
+using Application.Interfaces.Repositories.Organization;
+using Application.Interfaces.Repositories.Otps;
 using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
+using Application.Interfaces.Repositories.Users.UserRoles;
+using Application.Interfaces.Repositories.Users.UserRoles.Roles;
 using Application.Interfaces.UnitOfWorkRepositories;
+using Domain.Entities.ApplicationRoles;
+using Domain.Entities.ApplicationUsers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Peristance.Extension.Repositories.Organization;
 using Persistence.DataContext;
 using Persistence.Extension.Repositories;
+using Persistence.Extension.Repositories.Otps;
+using Persistence.Extension.Repositories.Roles;
+using Persistence.Extension.Repositories.Roles.UserRoles;
 using Persistence.Extension.Repositories.UserIdAndOrganizationIds;
 using System.Security.Claims;
 using System.Text;
@@ -55,16 +66,28 @@ public static class IServiceCollectionExtension
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
         .AddTransient<ICurrentOrganizationProvider, CurrentOrganizationProvider>()
        .AddTransient<IUserIdAndOrganizationIdRepository, UserIdAndOrganizationIdRepository>()
-
-
-        ;
-
+       .AddScoped<IOrganizationRepository, OrganizationRepository>()
+       .AddScoped<IOtpRepository, OtpRepository>()
+       .AddScoped<IRoleRepository, RoleRepository>()
+       .AddScoped<IUserRoleRepository, UserRoleRepository>();
     }
 
     public static void AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
     {
 
-
+        services.AddIdentity<User, Role>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Lockout.AllowedForNewUsers = true;
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        })
+      .AddEntityFrameworkStores<ApplicationDbContext>()
+       .AddDefaultTokenProviders();
 
         // Configure application cookies
         services.ConfigureApplicationCookie(options =>
@@ -96,30 +119,6 @@ public static class IServiceCollectionExtension
                 RoleClaimType = ClaimTypes.Role
 
             };
-        })
-        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-        {
-            options.Cookie.HttpOnly = true;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            options.SlidingExpiration = true;
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        })
-       .AddGoogle(options =>
-       {
-           options.ClientId = configuration["Auth:Google:ClientID"];
-           options.ClientSecret = configuration["Auth:Google:ClientSecret"];
-           options.Scope.Add("email");
-           options.Scope.Add("profile");
-           options.SaveTokens = true;
-       })
-       .AddLinkedIn(options =>
-       {
-           options.ClientId = configuration["Auth:LinkedIn:ClientId"];
-           options.ClientSecret = configuration["Auth:LinkedIn:ClientSecret"];
-           options.CallbackPath = new PathString("/signin-LinkedIn"); // Make sure this matches LinkedIn's registered redirect URI
-           options.Scope.Add("r_liteprofile");
-           options.Scope.Add("r_emailaddress");
-           options.SaveTokens = true;
-       });
+        });
     }
 }

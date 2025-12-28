@@ -55,13 +55,6 @@ public class RoleController : ControllerBase
 
     }
 
-    [HttpPut("{id}/menu")]
-    public async Task<ActionResult> CreateRoleClaim(Guid id, [FromBody] string[] menuIds)
-    {
-        var data = await _mediator.Send(new CreateUpdateRoleClaimCommand(id, menuIds));
-        return ResponseHelper.GenerateResponse(data);
-    }
-
     [HttpPut("/api/user/{id}/role")]
     public async Task<ActionResult> CreateUserRole(string id, [FromBody] List<string> roles)
     {
