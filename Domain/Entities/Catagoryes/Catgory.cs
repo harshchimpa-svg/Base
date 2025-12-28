@@ -10,5 +10,5 @@ public class Catgory : BaseAuditableEntity
     public string PhotoUrl { get; set; }
     public int? ParentId { get; set; }
     public Catgory Parent { get; set; }
-    public CatgoryType CatgoryType { get; set; }
+    public CatgoryType CatgoryType { get; set; }            
 }

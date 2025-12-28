@@ -71,27 +71,5 @@ public class UserController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [AllowAnonymous]
-    [HttpGet("blood-group/lookup")]
-    public async Task<ActionResult> GetBloodGroupLookup()
-    {
-        var data = await _mediator.Send(new GetBloodGroupLookupQuery());
-        return ResponseHelper.GenerateResponse(data);
-    }
 
-    [AllowAnonymous]
-    [HttpGet("gender/lookup")]
-    public async Task<ActionResult> GetGenderLookup()
-    {
-        var data = await _mediator.Send(new GetGenderLookupQuery());
-        return ResponseHelper.GenerateResponse(data);
-    }
-
-    [AllowAnonymous]
-    [HttpGet("marital-status/lookup")]
-    public async Task<ActionResult> GetMaritalStatus()
-    {
-        var data = await _mediator.Send(new GetMaritalStatusLookupQuery());
-        return ResponseHelper.GenerateResponse(data);
-    }
 }
