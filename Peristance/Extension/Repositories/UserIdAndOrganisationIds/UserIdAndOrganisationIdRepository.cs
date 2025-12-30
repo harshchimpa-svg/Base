@@ -26,7 +26,7 @@ public class UserIdAndOrganizationIdRepository : IUserIdAndOrganizationIdReposit
         var result = new GetUserIdAndOrganizationIdDto
         {
             //UserId = "86eebc00-1ab5-487a-abf9-f5c87cf5d549",
-            OrganizationId = 8
+            OrganizationId = 1
         };
 
         var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

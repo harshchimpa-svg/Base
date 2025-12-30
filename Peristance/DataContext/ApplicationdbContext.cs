@@ -1,10 +1,12 @@
 ﻿using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Documents;
 using Domain.Entities.Organizations;
 using Domain.Entities.OTPs;
 using Domain.Entities.PaymentHeates;
 using Domain.Entities.Transicstions;
+using Domain.Entities.TranstionDocuments;
 using Domain.Entities.Users.UserRoles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -28,11 +30,12 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     //public DbSet<Template> Templates { get; set; }
     //public DbSet<TemplateBody> TemplateBodies { get; set; }
     //public DbSet<TemplateType> TemplateTypes { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<PaymentHead> PaymentHeads { get; set; }
-    public DbSet<Transicstion> Transicstions { get; set; } 
-
+    public DbSet<Transicstion> Transicstions { get; set; }
+    public DbSet<Document> Documents { get; set; }
+    public DbSet<TranstionDocument> TranstionDocument { get; set; }
+     
 
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
 

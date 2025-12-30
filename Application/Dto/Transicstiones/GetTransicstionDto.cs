@@ -16,6 +16,6 @@ public class GetTransicstionDto : BaseDto, IMapFrom<Transicstion>
     public int Amount { get; set; }
     public string paticular { get; set; }
     public string Comments { get; set; }
-    public int PaymentHeadId { get; set; }
+    public int? PaymentHeadId { get; set; }
     public GetPaymentHeadDto PaymentHead { get; set; }
 }

@@ -12,8 +12,8 @@ using Persistence.DataContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251228162923_Transicstion")]
-    partial class Transicstion
+    [Migration("20251229130445_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,8 +117,7 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
@@ -192,10 +191,6 @@ namespace Persistence.Migrations
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("PhotoUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -412,7 +407,7 @@ namespace Persistence.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PaymentHeadId")
+                    b.Property<int?>("PaymentHeadId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdatedBy")
@@ -757,9 +752,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.PaymentHeates.PaymentHead", "PaymentHead")
                         .WithMany()
-                        .HasForeignKey("PaymentHeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentHeadId");
 
                     b.Navigation("Catgory");
 

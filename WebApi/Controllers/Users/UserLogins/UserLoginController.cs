@@ -17,7 +17,6 @@ public class UserLoginController : ControllerBase
         _mediator = mediator;
     }
 
-    [AllowAnonymous]
     [Route("login")]
     [HttpPost]
     public async Task<IActionResult> LoginUser(UserLoginCommand command)
@@ -26,7 +25,6 @@ public class UserLoginController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [AllowAnonymous]
     [Route("change-password")]
     [HttpPost]
     public async Task<ActionResult> ChangePassword(ChangePasswordCommand command)
@@ -35,7 +33,6 @@ public class UserLoginController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [AllowAnonymous]
     [Route("forget-password")]
     [HttpPost]
     public async Task<ActionResult> ForgetPassword(ForgetPasswordCommand command)
@@ -44,7 +41,6 @@ public class UserLoginController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [AllowAnonymous]
     [Route("reset-password")]
     [HttpPost]
     public async Task<ActionResult> ResetPassword(ResetPasswordCommand command)
@@ -53,7 +49,6 @@ public class UserLoginController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [AllowAnonymous]
     [HttpPost("verify-otp")]
     public async Task<ActionResult> VerifyOtp(VerifyOtpCommand command)
     {
@@ -61,7 +56,6 @@ public class UserLoginController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [AllowAnonymous]
     [HttpPut("change-password/admin")]
     public async Task<ActionResult> ChangePasswordByAdmin(ChangePasswordByAdminCommand command)
     {

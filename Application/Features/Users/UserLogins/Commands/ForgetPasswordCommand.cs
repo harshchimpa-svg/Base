@@ -7,7 +7,6 @@ using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Common.Enums.Otps;
 using Domain.Entities.ApplicationUsers;
 using Domain.Entities.OTPs;
-using Domain.Entities.Templates;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -92,25 +91,26 @@ internal class ForgetPasswordCommandHandler : IRequestHandler<ForgetPasswordComm
 
     private async Task SendEmail(string email, int otp, string name, bool isRegisterOtp, bool isLoginOtp)
     {
-        int templateId = isRegisterOtp ? 8 : 4;
 
-        templateId = isLoginOtp ? 10 : templateId;
+        string subject = "OTP Verification";
 
-        var template = await _unitOfWork.Repository<Template>().Entities
-                                      .Include(x => x.TemplateBody)
-                                      .FirstOrDefaultAsync(x => x.Id == templateId);
+        string emailBody = $@"
+         Dear {name},
+  
+         We received a request to reset your account password.
 
-        if (template == null)
-        {
-            throw new BadRequestException($"template id {templateId} doesn't exists");
-        }
+         Your OTP for password reset is:
 
-        string subject = template.Subject;
+         OTP: {otp}
 
-        string emailBody = template.TemplateBody.Body
-                                                .Replace("{{otp}}", otp.ToString())
-                                                .Replace("{{username}}", name);
+         This OTP is valid for 5 minutes.
+         Please do not share this OTP with anyone.
 
+         If you did not request a password reset, please ignore this email or contact our support team.
+
+         Regards,
+         Support Team
+         ";
         await _emailService.SendEmail(email, subject, emailBody);
     }
 }

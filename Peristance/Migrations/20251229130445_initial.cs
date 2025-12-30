@@ -73,7 +73,7 @@ namespace Persistence.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     AppToken = table.Column<string>(type: "text", nullable: true),
                     SignalRToken = table.Column<string>(type: "text", nullable: true),
                     UserType = table.Column<int>(type: "integer", nullable: false),
@@ -102,6 +102,67 @@ namespace Persistence.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Catgory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Icon = table.Column<string>(type: "text", nullable: false),
+                    ParentId = table.Column<int>(type: "integer", nullable: true),
+                    CatgoryType = table.Column<int>(type: "integer", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Catgory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Catgory_Catgory_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Catgory",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Catgory_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentHeads",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    PaymentHeadType = table.Column<int>(type: "integer", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentHeads", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentHeads_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organizations",
                         principalColumn: "Id",
@@ -231,7 +292,8 @@ namespace Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -240,6 +302,12 @@ namespace Persistence.Migrations
                         name: "FK_OTPs_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OTPs_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -262,7 +330,8 @@ namespace Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,6 +340,12 @@ namespace Persistence.Migrations
                         name: "FK_UserAddress_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAddress_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -294,7 +369,8 @@ namespace Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -305,6 +381,52 @@ namespace Persistence.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserProfile_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transicstions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CatgoryId = table.Column<int>(type: "integer", nullable: true),
+                    Amount = table.Column<int>(type: "integer", nullable: false),
+                    paticular = table.Column<string>(type: "text", nullable: false),
+                    Comments = table.Column<string>(type: "text", nullable: false),
+                    PaymentHeadId = table.Column<int>(type: "integer", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transicstions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transicstions_Catgory_CatgoryId",
+                        column: x => x.CatgoryId,
+                        principalTable: "Catgory",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Transicstions_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transicstions_PaymentHeads_PaymentHeadId",
+                        column: x => x.PaymentHeadId,
+                        principalTable: "PaymentHeads",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -354,9 +476,24 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Catgory_OrganizationId",
+                table: "Catgory",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Catgory_ParentId",
+                table: "Catgory",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Organizations_ParentId",
                 table: "Organizations",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OTPs_OrganizationId",
+                table: "OTPs",
+                column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OTPs_UserId",
@@ -364,10 +501,40 @@ namespace Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentHeads_OrganizationId",
+                table: "PaymentHeads",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transicstions_CatgoryId",
+                table: "Transicstions",
+                column: "CatgoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transicstions_OrganizationId",
+                table: "Transicstions",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transicstions_PaymentHeadId",
+                table: "Transicstions",
+                column: "PaymentHeadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAddress_OrganizationId",
+                table: "UserAddress",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAddress_UserId",
                 table: "UserAddress",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfile_OrganizationId",
+                table: "UserProfile",
+                column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfile_UserId",
@@ -398,6 +565,9 @@ namespace Persistence.Migrations
                 name: "OTPs");
 
             migrationBuilder.DropTable(
+                name: "Transicstions");
+
+            migrationBuilder.DropTable(
                 name: "UserAddress");
 
             migrationBuilder.DropTable(
@@ -405,6 +575,12 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Catgory");
+
+            migrationBuilder.DropTable(
+                name: "PaymentHeads");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

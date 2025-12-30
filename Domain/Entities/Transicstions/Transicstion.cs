@@ -17,6 +17,6 @@ public class Transicstion : BaseAuditableEntity
     public string Comments { get; set; }
     
     [ForeignKey("PaymentHead")]
-    public int PaymentHeadId { get; set; }
+    public int? PaymentHeadId { get; set; }
     public PaymentHead PaymentHead { get; set; }
 }

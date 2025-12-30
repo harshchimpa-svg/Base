@@ -25,7 +25,9 @@ public class OtpRepository : IOtpRepository
             ForOtp = forOtp,
             OtpSentOn = otpSentOn,
             IsChecked = false,
-            TimesChecked = 0
+            TimesChecked = 0,
+            OrganizationId = 1
+
         };
 
         await _unitOfWork.Repository<OTP>().AddAsync(otpEntity);
@@ -36,7 +38,7 @@ public class OtpRepository : IOtpRepository
 
     private int GenerateOtp()
     {
-        var otp = new Random().Next(1000, 9999);
+        var otp = new Random().Next(1000, 10000);
         return otp;
     }
 }

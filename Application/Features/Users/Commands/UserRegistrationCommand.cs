@@ -1,4 +1,3 @@
-using Application.Common.Exceptions;
 using Application.Common.Mappings.Commons;
 using Application.Interfaces.Repositories.Otps;
 using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
@@ -8,7 +7,6 @@ using AutoMapper;
 using Domain.Common.Enums.Otps;
 using Domain.Common.Enums.Users;
 using Domain.Entities.ApplicationUsers;
-using Domain.Entities.Templates;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -97,7 +95,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         // Create new user
         var user = new User
         {
-            UserName = Guid.NewGuid().ToString(),
+            UserName = request.Email.Trim().ToLower(),
             Email = request.Email,
             PhoneNumber = request.PhoneNumber,
             FirstName = request.FirstName,
@@ -108,7 +106,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             UserType = UserType.WebUser
         };
 
-        var createUserResult = await _userManager.CreateAsync(user, request.Password);
+        var createUserResult = await _userManager.CreateAsync(user);
 
         if (!createUserResult.Succeeded)
         {
@@ -117,36 +115,44 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         }
 
         // Generate and save OTP
-
-        if (request.Email != null)
+        if (!string.IsNullOrWhiteSpace(request.Email))
         {
             var otpEntity = await _otpRepository.GenerateAndAddOtpAsync(user.Id, "Registration", OtpSentOn.Email, cancellationToken);
 
-            // Send OTP email
-            await SendRegistrationOtpEmail(request.Email, otpEntity.Otp, request.FirstName + request.LastName ?? "");
+            // Send OTP email (FIXED)
+            await SendRegistrationOtpEmail(
+                request.Email,
+                otpEntity.Otp,
+                $"{request.FirstName ?? ""} {request.LastName ?? ""}".Trim()
+            );
         }
+
+        var countAfterCreate = await _userManager.Users.CountAsync();
 
         return Result<string>.Success("User registered successfully. OTP sent to email.");
     }
 
     private async Task SendRegistrationOtpEmail(string email, int otp, string name)
     {
-        int templateId = 3;
 
-        var template = await _unitOfWork.Repository<Template>().Entities
-            .Include(x => x.TemplateBody)
-            .FirstOrDefaultAsync(x => x.Id == templateId);
+        string subject = "OTP Verification";
+        string emailBody = $@"
+          Dear {name},
 
-        if (template == null)
-        {
-            throw new BadRequestException($"template id {templateId} doesn't exists");
-        }
+          Thank you for registering with us.
 
-        string subject = template.Subject;
+         Your OTP for account registration is:
 
-        string emailBody = template.TemplateBody.Body
-            .Replace("{{otp}}", otp.ToString())
-            .Replace("{{username}}", name);
+         OTP: {otp}
+
+         This OTP is valid for 5 minutes.
+         Please do not share this OTP with anyone.
+
+         If you did not request this registration, please ignore this email.
+
+         Regards,
+         Support Team
+         ";
 
         await _emailService.SendEmail(email, subject, emailBody);
     }

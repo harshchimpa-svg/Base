@@ -10,7 +10,6 @@ public class GetCatgoryDto : BaseDto, IMapFrom<Catgory>
 {
     public string Name { get; set; }
     public string Icon { get; set; }
-    public string PhotoUrl { get; set; }
     public int? ParentId { get; set; }
     public CatgoryType CatgoryType { get; set; }
 }

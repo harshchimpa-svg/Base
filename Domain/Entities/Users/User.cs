@@ -4,7 +4,6 @@ using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
 using Domain.Entities.Users.UserRoles;
 using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities.ApplicationUsers;
@@ -13,9 +12,6 @@ public class User : IdentityUser
 {
     public string FirstName { get; set; }
     public string? LastName { get; set; }
-
-    [DataType(DataType.PhoneNumber)]
-    [MaxLength(20)]
     public string? PhoneNumber { get; set; }
 
     public string? AppToken { get; set; }

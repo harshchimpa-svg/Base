@@ -43,12 +43,16 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
 
         User? user = null;
 
-        if (!ValidationManager.IsValidPhoneNumber(request.Username))
+        var username = request.Username.Trim();
+
+        if (!ValidationManager.IsValidPhoneNumber(username))
         {
-            user = await _userManager.Users
-                .Where(x => x.Email.ToLower() == request.Username.ToLower())
-                .OrderByDescending(x => x.CreatedDate)
-                .FirstOrDefaultAsync();
+            if (!username.EndsWith("@gmail.com"))
+            {
+                return Result<string>.BadRequest("Only Gmail or phone number is allowed.");
+            }
+
+            user = await _userManager.FindByEmailAsync(username);
 
             if (user == null)
             {
@@ -58,9 +62,9 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
         else
         {
             user = await _userManager.Users
-            .Where(x => x.PhoneNumber.ToLower() == request.Username.ToLower())
-            .OrderByDescending(x => x.CreatedDate)
-            .FirstOrDefaultAsync();
+                .Where(x => x.PhoneNumber != null && x.PhoneNumber == username)
+                .OrderByDescending(x => x.CreatedDate)
+                .FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -68,26 +72,24 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
             }
         }
 
-        OtpSentOn otpSentOn = ValidationManager.IsValidPhoneNumber(request.Username) ? OtpSentOn.PhoneNumber : OtpSentOn.Email;
+        OtpSentOn otpSentOn = ValidationManager.IsValidPhoneNumber(username) ? OtpSentOn.PhoneNumber : OtpSentOn.Email;
 
         var otpEntity = await _unitOfWork.Repository<OTP>().Entities
-                                        .Where(x => x.UserId == user.Id && x.OtpSentOn == otpSentOn)
-                                       .OrderByDescending(x => x.CreatedDate)
-                                      .FirstOrDefaultAsync();
+            .Where(x => x.UserId == user.Id && x.OtpSentOn == otpSentOn && x.ForOtp == "Registration" && !x.IsChecked)
+            .OrderByDescending(x => x.CreatedDate)
+            .FirstOrDefaultAsync();
 
         if (otpEntity == null)
         {
-            throw new Exception("No otp requested!");
+            return Result<string>.BadRequest("No otp requested!");
         }
 
         if (otpEntity.TimesChecked > 5)
         {
-            return Result<string>.BadRequest($"You checked otp too many times request new otp");
+            return Result<string>.BadRequest("You checked otp too many times request new otp");
         }
 
-        var timeDifference = DateTime.UtcNow - otpEntity.CreatedDate;
-
-        if (timeDifference.Value.TotalMinutes >= 5)
+        if (!otpEntity.CreatedDate.HasValue || (DateTime.UtcNow - otpEntity.CreatedDate.Value).TotalMinutes >= 5)
         {
             return Result<string>.BadRequest("Otp expired request new otp");
         }
@@ -95,24 +97,17 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
         if (otpEntity.Otp != request.Otp)
         {
             otpEntity.TimesChecked += 1;
-
             await _unitOfWork.Repository<OTP>().UpdateAsync(otpEntity, otpEntity.Id);
             await _unitOfWork.Save(cancellationToken);
-
             return Result<string>.BadRequest("Incorrect otp!");
         }
 
-        await _unitOfWork.Repository<OTP>().DeleteAsync(otpEntity);
+        otpEntity.IsChecked = true;
+        await _unitOfWork.Repository<OTP>().UpdateAsync(otpEntity, otpEntity.Id);
         await _unitOfWork.Save(cancellationToken);
 
-        if (otpEntity.OtpSentOn == OtpSentOn.PhoneNumber && !user.PhoneNumberConfirmed)
-        {
-            user.PhoneNumberConfirmed = true;
-        }
-        else if (otpEntity.OtpSentOn == OtpSentOn.Email && !user.EmailConfirmed)
-        {
-            user.EmailConfirmed = true;
-        }
+        if (otpSentOn == OtpSentOn.PhoneNumber && !user.PhoneNumberConfirmed) user.PhoneNumberConfirmed = true;
+        else if (otpSentOn == OtpSentOn.Email && !user.EmailConfirmed) user.EmailConfirmed = true;
 
         await _userManager.UpdateAsync(user);
 

@@ -30,8 +30,8 @@ public class CurrentOrganizationProvider : ICurrentOrganizationProvider
         }
         else
         {
-            organizationIds.Add(8);
-            mainOrgId = 8;
+            organizationIds.Add(1);
+            mainOrgId = 1;
         }
 
         var connectionString = _configuration.GetConnectionString("DefaultConnection");
