@@ -1,4 +1,5 @@
 ﻿using Application.Common.Mappings.Commons;
+using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Documents;
@@ -18,11 +19,10 @@ internal class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentComm
     private readonly IFileService _fileService;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-
     public CreateDocumentCommandHandler(
         IFileService fileService,
         IUnitOfWork unitOfWork,
-        IMapper mapper)
+        IMapper mapper) 
     {
         _fileService = fileService;
         _unitOfWork = unitOfWork;
@@ -35,7 +35,7 @@ internal class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentComm
 
         var document = new Document
         {
-            ImageUrl = imageUrl
+            ImageUrl = imageUrl,
         };
 
         await _unitOfWork.Repository<Document>().AddAsync(document);

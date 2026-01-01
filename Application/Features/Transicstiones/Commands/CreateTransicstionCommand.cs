@@ -34,7 +34,7 @@ internal class CreateTransicstionCommandHandler : IRequestHandler<CreateTransics
     {
         if (request.CatgoryId.HasValue)
         {
-            var parentExists = await _unitOfWork.Repository<Transicstion>().GetByID(request.CatgoryId.Value);
+            var parentExists = await _unitOfWork.Repository<Catgory>().GetByID(request.CatgoryId.Value);
 
             if (parentExists == null)
             {

@@ -35,7 +35,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
             entity.CreatedBy = userId;
         }
 
-        await _context.Set<T>().AddAsync(entity);
+        entity.OrganizationId = userOrg.OrganizationId.Value;
+        await _context.Set<T>().AddAsync(entity); 
 
         return entity;
     }

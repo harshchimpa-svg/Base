@@ -1,5 +1,7 @@
 ﻿using Application.Extensions;
 using Infrastructure.Extensions;
+using Application.Interfaces.Services;        // ✅ ADDED
+using Infrastructure.Services;                // ✅ ADDED
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
@@ -27,12 +29,18 @@ public class Program
             loggingBuilder.AddNLogWeb();
         });
 
-        Environment.SetEnvironmentVariable("DB_CONNECTION_STRING", builder.Configuration.GetConnectionString("DefaultConnection"));
+        Environment.SetEnvironmentVariable(
+            "DB_CONNECTION_STRING",
+            builder.Configuration.GetConnectionString("DefaultConnection")
+        );
 
         builder.Services.AddPersistenceLayer(builder.Configuration, builder.Environment);
 
         builder.Services.ApplicationLayer();
         builder.Services.AddInfrastructure();
+
+        // ✅ FILE SERVICE REGISTER (MAIN FIX)
+        builder.Services.AddScoped<IFileService, FileService>();
 
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
@@ -44,42 +52,47 @@ public class Program
                     partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 60, // Max 60 requests
-                        Window = TimeSpan.FromMinutes(1) // Per 1 minute
+                        PermitLimit = 60,
+                        Window = TimeSpan.FromMinutes(1)
                     }));
 
             options.OnRejected = async (context, token) =>
             {
                 context.HttpContext.Response.StatusCode = 429;
-                await context.HttpContext.Response.WriteAsync("Too many requests! Try again after 1 minute");
+                await context.HttpContext.Response.WriteAsync(
+                    "Too many requests! Try again after 1 minute"
+                );
             };
         });
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy(name: "AllowOrigin",
+            options.AddPolicy(
+                name: "AllowOrigin",
                 builder =>
                 {
-                    builder.AllowAnyMethod()    // Allows any HTTP methods
-                           .AllowAnyHeader()    // Allows any headers
-                                                //.SetIsOriginAllowed(host => true)
-                           .SetIsOriginAllowed(_ => true)// Allows any origin (for dev, be more specific in prod)
-                           .AllowCredentials(); // Allows credentials like cookies or tokens
+                    builder.AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .SetIsOriginAllowed(_ => true)
+                           .AllowCredentials();
                 });
         });
 
-        // Configure Swagger
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web API", Version = "v1" });
-
-            // Optional: Custom operation IDs
-            c.CustomOperationIds(apiDesc =>
+            c.SwaggerDoc("v1", new OpenApiInfo
             {
-                return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+                Title = "Web API",
+                Version = "v1"
             });
 
-            // Add JWT Bearer Security
+            c.CustomOperationIds(apiDesc =>
+            {
+                return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)
+                    ? methodInfo.Name
+                    : null;
+            });
+
             var securityScheme = new OpenApiSecurityScheme
             {
                 Name = "Authorization",
@@ -118,12 +131,11 @@ public class Program
 
         builder.Services.Configure<FormOptions>(options =>
         {
-            options.MultipartBodyLengthLimit = 30 * 1024 * 1024; // setting max upload file size to 30MB
+            options.MultipartBodyLengthLimit = 30 * 1024 * 1024;
         });
 
         var app = builder.Build();
 
-        // Middleware configuration
         app.UseHttpsRedirection();
         app.UseHsts();
 
@@ -138,9 +150,6 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
-        //app.UseMiddleware<ClaimMiddleware>();
-
-        // Enable Swagger in all environments
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

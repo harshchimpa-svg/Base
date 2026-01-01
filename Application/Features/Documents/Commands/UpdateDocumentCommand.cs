@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.UnitOfWorkRepositories;
+﻿using Application.Interfaces.Services;
+using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Documents;
 using MediatR;

@@ -20,10 +20,9 @@ internal class GetAllTransicstionQueryHandler : IRequestHandler<GetAllTransicsti
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
-
     public async Task<Result<List<GetTransicstionDto>>> Handle(GetAllTransicstionQuery request, CancellationToken cancellationToken)
     {
-        var locations = await _unitOfWork.Repository<Transicstion>().GetAll();
+        var locations = _unitOfWork.Repository<Transicstion>().Entities.AsQueryable();
 
         var map = _mapper.Map<List<GetTransicstionDto>>(locations);
 

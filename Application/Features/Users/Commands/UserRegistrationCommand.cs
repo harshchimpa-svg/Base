@@ -106,7 +106,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             UserType = UserType.WebUser
         };
 
-        var createUserResult = await _userManager.CreateAsync(user);
+        var createUserResult = await _userManager.CreateAsync(user,request.Password);
 
         if (!createUserResult.Succeeded)
         {

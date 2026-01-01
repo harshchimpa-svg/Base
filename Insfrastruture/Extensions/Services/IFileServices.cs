@@ -1,58 +1,39 @@
-﻿using Application.Common.Mappings.Commons;
-using Application.Interfaces.UnitOfWorkRepositories;
-using AutoMapper;
-using Domain.Entities.Documents;
-using MediatR;
+﻿using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Shared;
 
-namespace Application.Features.Documents.Commands;
-
-
-public interface IFileService
+namespace Infrastructure.Services
 {
-    Task<string> UploadAsync(IFormFile file, string folderName);
-}
-
-public class CreateDocumentCommand
-    : IRequest<Result<string>>, ICreateMapFrom<Document>
-{
-    public IFormFile Image { get; set; }
-}
-
-internal class CreateDocumentCommandHandler
-    : IRequestHandler<CreateDocumentCommand, Result<string>>
-{
-    private readonly IFileService _fileService;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public CreateDocumentCommandHandler(
-        IFileService fileService,
-        IUnitOfWork unitOfWork,
-        IMapper mapper)
+    public class FileService : IFileService
     {
-        _fileService = fileService;
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
-    }
+        private readonly IWebHostEnvironment _env;
 
-    public async Task<Result<string>> Handle(
-        CreateDocumentCommand request,
-        CancellationToken cancellationToken)
-    {
-        var imageUrl = await _fileService.UploadAsync(
-            request.Image,
-            "documents");
-
-        var document = new Document
+        public FileService(IWebHostEnvironment env)
         {
-            ImageUrl = imageUrl
-        };
+            _env = env;
+        }
 
-        await _unitOfWork.Repository<Document>().AddAsync(document);
-        await _unitOfWork.Save(cancellationToken);
+        public async Task<string> UploadAsync(
+            IFormFile file,
+            string folderName)
+        {
+            var uploads = Path.Combine(
+                _env.WebRootPath,
+                "uploads",
+                folderName);
 
-        return Result<string>.Success("Document created successfully.");
+            if (!Directory.Exists(uploads))
+                Directory.CreateDirectory(uploads);
+
+            var fileName =
+                $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+
+            var filePath = Path.Combine(uploads, fileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream);
+
+            return $"/uploads/{folderName}/{fileName}";
+        }
     }
 }

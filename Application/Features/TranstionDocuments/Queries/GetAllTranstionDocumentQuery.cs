@@ -1,19 +1,20 @@
 ﻿using Application.Dto.Transicstions;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Domain.Entities.TranstionDocuments;
 using MediatR;
 using Shared;
 
 namespace Application.Features.TranstionDocuments.Queries;
 
-public class GetAllTranstionDocumentQuery : IRequest<PaginatedResult<GetTransicstionDocumentsDto>>
+public class GetAllTranstionDocumentQuery : IRequest<Result<List<GetTransicstionDocumentsDto>>>
 {
     public int? TransicstionId { get; set; }
     public int? CatgoryId { get; set; } 
 
 }
-internal class GetAllTranstionDocumentQueryHandler : IRequestHandler<GetAllTranstionDocumentQuery, PaginatedResult<GetTransicstionDocumentsDto>>
+internal class GetAllTranstionDocumentQueryHandler : IRequestHandler<GetAllTranstionDocumentQuery, Result<List<GetTransicstionDocumentsDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -24,17 +25,12 @@ internal class GetAllTranstionDocumentQueryHandler : IRequestHandler<GetAllTrans
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<PaginatedResult<GetTransicstionDocumentsDto>> Handle(GetAllTranstionDocumentQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<GetTransicstionDocumentsDto>>> Handle(GetAllTranstionDocumentQuery request, CancellationToken cancellationToken)
     {
-        var queryable = _unitOfWork.Repository<TranstionDocument>().Entities.AsQueryable();
+        var locations = await _unitOfWork.Repository<TranstionDocument>().GetAll();
 
-        if (request.CatgoryId.HasValue)
-        {
-            queryable = queryable.Where(x => x.CatgoryId == request.CatgoryId);
-        }
+        var map = _mapper.Map<List<GetTransicstionDocumentsDto>>(locations);
 
-        var map = _mapper.Map<List<GetTransicstionDocumentsDto>>(queryable);
-
-        return PaginatedResult < GetTransicstionDocumentsDto>.Create(map, 1, 1, 10);
+        return Result<List<GetTransicstionDocumentsDto>>.Success(map, "Location list");
     }
 }
