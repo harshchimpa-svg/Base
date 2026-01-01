@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Enums.TransicstionTypes;
 using Domain.Entities.Catagoryes;
 using Domain.Entities.PaymentHeates;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,8 @@ public class Transicstion : BaseAuditableEntity
     public int Amount { get; set; }
     public string paticular {  get; set; }
     public string Comments { get; set; }
-    
+    public TransicstionType TransicstionType { get; set; }
+
     [ForeignKey("PaymentHead")]
     public int? PaymentHeadId { get; set; }
     public PaymentHead PaymentHead { get; set; }

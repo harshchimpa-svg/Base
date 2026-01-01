@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Catagoryes;
 using Domain.Entities.Documents;
 using Domain.Entities.Organizations;
 using Domain.Entities.OTPs;
@@ -35,8 +36,9 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Transicstion> Transicstions { get; set; }
     public DbSet<Document> Documents { get; set; }
     public DbSet<TranstionDocument> TranstionDocument { get; set; }
-     
+    public DbSet<Catgory> Catgory { get; set; }
 
+     
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -3,6 +3,7 @@ using Application.Features.Catgoryes.Command;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Common.Enums.CatagoryTypes;
+using Domain.Common.Enums.TransicstionTypes;
 using Domain.Entities.Catagoryes;
 using Domain.Entities.Transicstions;
 using MediatR;
@@ -17,6 +18,7 @@ public class CreateTransicstionCommand : IRequest<Result<string>>, ICreateMapFro
     public string paticular { get; set; }
     public int Amount { get; set; }
     public int? PaymentHeadId { get; set; }
+    public TransicstionType TransicstionType { get; set; }
 
 }
 internal class CreateTransicstionCommandHandler : IRequestHandler<CreateTransicstionCommand, Result<string>>
