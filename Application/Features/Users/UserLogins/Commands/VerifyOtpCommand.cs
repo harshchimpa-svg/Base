@@ -75,7 +75,10 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
         OtpSentOn otpSentOn = ValidationManager.IsValidPhoneNumber(username) ? OtpSentOn.PhoneNumber : OtpSentOn.Email;
 
         var otpEntity = await _unitOfWork.Repository<OTP>().Entities
-            .Where(x => x.UserId == user.Id && x.OtpSentOn == otpSentOn && x.ForOtp == "Registration" && !x.IsChecked)
+            .Where(x => x.UserId == user.Id
+                        && x.OtpSentOn == otpSentOn
+                        && (x.ForOtp == "Registration" || x.ForOtp == "Forgot")
+                        && !x.IsChecked)
             .OrderByDescending(x => x.CreatedDate)
             .FirstOrDefaultAsync();
 
@@ -115,4 +118,5 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
 
         return Result<string>.Success(token, "Otp verified successfully", token);
     }
+
 }

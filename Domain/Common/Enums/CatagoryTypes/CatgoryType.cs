@@ -2,6 +2,6 @@
 
 public enum CatgoryType
 {
-    expence=1,
-    salary=2
+    expence = 1,
+    salary = 2
 }

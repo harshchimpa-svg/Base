@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Common.Enums.ForOtpTypes;
 using Domain.Common.Enums.Otps;
 using Domain.Entities.ApplicationUsers;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +12,7 @@ public class OTP : BaseAuditableEntity
     public bool IsChecked { get; set; } = false;
     public string? ForOtp { get; set; }
     public OtpSentOn OtpSentOn { get; set; }
+    public ForOtpType ForOtpType { get; set; }
     public int TimesChecked { get; set; } = 0;
 
     [ForeignKey("User")]

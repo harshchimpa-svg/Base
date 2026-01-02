@@ -1,4 +1,5 @@
-﻿using Application.Features.Documents.Commands;
+﻿using Application.Features.Catgoryes.Command;
+using Application.Features.Documents.Commands;
 using Application.Features.Documents.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +25,9 @@ public class DocumentController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromForm] IFormFile image)
+    public async Task<IActionResult> Update(int id, [FromForm] UpdateDocumentDto image)
     {
-        var result = await _mediator.Send(
-            new UpdateDocumentCommand(id, image));
+        var result = await _mediator.Send(new UpdateDocumentCommand(id, image));
 
         return ResponseHelper.GenerateResponse(result);
     }
