@@ -22,6 +22,54 @@ namespace Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Abouts.About", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Profile")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SubTitel")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("About");
+                });
+
             modelBuilder.Entity("Domain.Entities.ApplicationRoles.Role", b =>
                 {
                     b.Property<string>("Id")
@@ -79,6 +127,9 @@ namespace Persistence.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsActive")
@@ -152,7 +203,7 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Catagoryes.Catgory", b =>
+            modelBuilder.Entity("Domain.Entities.Balances.Balance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,8 +211,52 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CatgoryType")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Credit")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Debit")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Balance");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Catagoryes.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -169,7 +264,11 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Icon")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -201,10 +300,10 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Catgory");
+                    b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Documents.Document", b =>
+            modelBuilder.Entity("Domain.Entities.Clientses.Clients", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -218,7 +317,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -227,6 +326,70 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Contacts.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Massage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -241,7 +404,58 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Documents");
+                    b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Customers.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Domain.Entities.OTPs.OTP", b =>
@@ -371,13 +585,19 @@ namespace Persistence.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PaymentHeates.PaymentHead", b =>
+            modelBuilder.Entity("Domain.Entities.Services.Service", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CatgoryId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -390,6 +610,9 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<decimal>("Mesurment")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -398,126 +621,31 @@ namespace Persistence.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PaymentHeadType")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("PaymentHeads");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Transicstions.Transicstion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("CatgoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Comments")
+                    b.Property<string>("SerialNo")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("PaymentHeadId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TransicstionType")
-                        .HasColumnType("integer");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("paticular")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int?>("VendorId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CatgoryId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.HasIndex("PaymentHeadId");
+                    b.HasIndex("VendorId");
 
-                    b.ToTable("Transicstions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.TranstionDocuments.TranstionDocument", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CatgoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TransicstionId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CatgoryId");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("TransicstionId");
-
-                    b.ToTable("TranstionDocument");
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserAddresses.UserAddress", b =>
@@ -660,6 +788,66 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Vendors.Vendor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Profile")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Website")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("Vendors");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -751,6 +939,17 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Abouts.About", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
             modelBuilder.Entity("Domain.Entities.ApplicationRoles.Role", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
@@ -771,7 +970,7 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Catagoryes.Catgory", b =>
+            modelBuilder.Entity("Domain.Entities.Balances.Balance", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -779,7 +978,24 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Catagoryes.Catgory", "Parent")
+                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Catagoryes.Category", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Catagoryes.Category", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
 
@@ -788,7 +1004,35 @@ namespace Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Documents.Document", b =>
+            modelBuilder.Entity("Domain.Entities.Clientses.Clients", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Services.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Contacts.Contact", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Customers.Customer", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -827,22 +1071,13 @@ namespace Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PaymentHeates.PaymentHead", b =>
+            modelBuilder.Entity("Domain.Entities.Services.Service", b =>
                 {
-                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                    b.HasOne("Domain.Entities.Catagoryes.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("OrganizationId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Transicstions.Transicstion", b =>
-                {
-                    b.HasOne("Domain.Entities.Catagoryes.Catgory", "Catgory")
-                        .WithMany()
-                        .HasForeignKey("CatgoryId");
 
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -850,40 +1085,15 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.PaymentHeates.PaymentHead", "PaymentHead")
+                    b.HasOne("Domain.Entities.Vendors.Vendor", "Vendor")
                         .WithMany()
-                        .HasForeignKey("PaymentHeadId");
+                        .HasForeignKey("VendorId");
 
-                    b.Navigation("Catgory");
+                    b.Navigation("Category");
 
                     b.Navigation("Organization");
 
-                    b.Navigation("PaymentHead");
-                });
-
-            modelBuilder.Entity("Domain.Entities.TranstionDocuments.TranstionDocument", b =>
-                {
-                    b.HasOne("Domain.Entities.Catagoryes.Catgory", "Catgory")
-                        .WithMany()
-                        .HasForeignKey("CatgoryId");
-
-                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Transicstions.Transicstion", "Transicstion")
-                        .WithMany()
-                        .HasForeignKey("TransicstionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Catgory");
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("Transicstion");
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserAddresses.UserAddress", b =>
@@ -941,6 +1151,17 @@ namespace Persistence.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Vendors.Vendor", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

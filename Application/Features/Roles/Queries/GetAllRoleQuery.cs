@@ -22,7 +22,7 @@ internal class GetRoleQueryHandler : IRequestHandler<GetAllRoleQuery, Result<Lis
         _roleManager = roleManager;
     }
 
-    async Task<Result<List<GetRoleDto>>> IRequestHandler<GetAllRoleQuery, Result<List<GetRoleDto>>>.Handle(GetAllRoleQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<GetRoleDto>>> Handle(GetAllRoleQuery request, CancellationToken cancellationToken) 
     {
         var roleList = await _roleManager.Roles.ToListAsync();
         if (roleList == null)

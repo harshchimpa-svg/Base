@@ -1,5 +1,6 @@
 ﻿using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
+using Domain.Common.Enums.Users.UserRoleType;
 using Domain.Entities.UserProfiles;
 
 namespace Application.Dto.Users;
@@ -7,12 +8,12 @@ namespace Application.Dto.Users;
 public class GetUserProfileDto : IMapFrom<UserProfile>
 {
     public string UserId { get; set; }
-    public StringIdAndNameDto User { get; set; }
-    public IdAndNameDto? Gender { get; set; }
-    public DateOnly? DOB { get; set; }
-    public IdAndNameDto? MaritalStatus { get; set; }
-    public string? ProfilePicture { get; set; }
-    public string? FacebookId { get; set; }
-    public string? LinkedInId { get; set; }
-    public string? InstagramId { get; set; }
+    public string Name { get; set; }
+    public int PhoneNumber { get; set; }
+    public string Email { get; set; }
+    public decimal Weight { get; set; }
+    public decimal Height { get; set; }
+    public UserRoleType UserRoleType  { get; set; }
+    public decimal age { get; set; }
+    public string message { get; set; }
 }

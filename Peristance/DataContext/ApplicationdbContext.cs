@@ -1,19 +1,22 @@
 ﻿using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
-using Domain.Entities.Catagoryes;
-using Domain.Entities.Documents;
 using Domain.Entities.Organizations;
 using Domain.Entities.OTPs;
-using Domain.Entities.PaymentHeates;
-using Domain.Entities.Transicstions;
-using Domain.Entities.TranstionDocuments;
 using Domain.Entities.Users.UserRoles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
+using Domain.Entities.Contacts;
+using Domain.Entities.Customers;
+using About = Domain.Entities.Abouts.About;
+using Balance = Domain.Entities.Balances.Balance;
+using Category = Domain.Entities.Catagoryes.Category;
+using Clients = Domain.Entities.Clientses.Clients;
+using Service = Domain.Entities.Services.Service;
+using Vendor = Domain.Entities.Vendors.Vendor;
 
 namespace Persistence.DataContext;
 
@@ -27,17 +30,21 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
 
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
-
-    //public DbSet<Template> Templates { get; set; }
-    //public DbSet<TemplateBody> TemplateBodies { get; set; }
-    //public DbSet<TemplateType> TemplateTypes { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<PaymentHead> PaymentHeads { get; set; }
-    public DbSet<Transicstion> Transicstions { get; set; }
-    public DbSet<Document> Documents { get; set; }
-    public DbSet<TranstionDocument> TranstionDocument { get; set; }
-    public DbSet<Catgory> Catgory { get; set; }
+    public DbSet<Category> Category { get; set; }
+    public DbSet<Service> Services { get; set; }
+    public DbSet<Vendor> Vendors { get; set; }
+    public DbSet<Clients> Clients { get; set; }
+    public DbSet<Balance> Balance { get; set; }
+    public DbSet<About> About { get; set; }
+    public DbSet<Contact> Contact { get; set; }
+    public DbSet<Customer> Customer { get; set; }
 
+
+
+
+
+ 
      
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
 

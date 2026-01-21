@@ -1,0 +1,35 @@
+using Application.Dto.Customers;
+using Application.Dto.Services;
+using Application.Features.Services.Queries;
+using Application.Interfaces.UnitOfWorkRepositories;
+using AutoMapper;
+using Domain.Entities.Customers;
+using Domain.Entities.Services;
+using MediatR;
+using Shared;
+
+namespace Application.Features.Customers.Queries;
+
+public class GetAllCustomersQueries: IRequest<Result<List<GetCustomerDto>>>
+{
+}
+internal class GetAllCustomersQueriesHandler : IRequestHandler<GetAllCustomersQueries, Result<List<GetCustomerDto>>>
+{
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public GetAllCustomersQueriesHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    {
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Result<List<GetCustomerDto>>> Handle(GetAllCustomersQueries request, CancellationToken cancellationToken)
+    {
+        var Service = await _unitOfWork.Repository<Customer>().GetAll();
+
+        var map = _mapper.Map<List<GetCustomerDto>>(Service);
+
+        return Result<List<GetCustomerDto>>.Success(map, "Service list");
+    }
+}

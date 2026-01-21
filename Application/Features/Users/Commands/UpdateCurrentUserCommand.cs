@@ -131,7 +131,7 @@ internal class UpdateCurrentUserCommandHandler : IRequestHandler<UpdateCurrentUs
 
         // Update only non-null profile fields
         if (request.Gender != null)
-            userProfile.Gender = request.Gender;
+            userProfile.Name = request.Name;
         if (request.DOB != null)
             userProfile.DOB = request.DOB;
         if (request.MaritalStatus != null)

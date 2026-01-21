@@ -2,8 +2,9 @@
 
 public class GetDashboardDto
 {
-    public int TotalAmount { get; set; }
-    public int Salery { get; set; }
-    public int Expense { get; set; }
+    public decimal Credit { get; set; }
+    public decimal Debit { get; set; }
+    public decimal TotalAmount { get; set; }
 }
+
 

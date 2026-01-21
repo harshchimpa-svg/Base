@@ -1,8 +1,6 @@
 ﻿using Application.Dto.Dashboardes;
 using Application.Interfaces.UnitOfWorkRepositories;
-using AutoMapper;
-using Domain.Common.Enums.CatagoryTypes;
-using Domain.Entities.Transicstions;
+using Domain.Entities.Balances;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
@@ -13,38 +11,35 @@ public class GetAllDashBoardQuery : IRequest<Result<GetDashboardDto>>
 {
 }
 
-internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuery, Result<GetDashboardDto>>
+internal class GetAllDashBoardQueryHandler
+    : IRequestHandler<GetAllDashBoardQuery, Result<GetDashboardDto>>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllDashBoardQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllDashBoardQueryHandler(IUnitOfWork unitOfWork)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<GetDashboardDto>> Handle(GetAllDashBoardQuery request, CancellationToken cancellationToken)
     {
-        var transicstions = _unitOfWork
-            .Repository<Transicstion>()
+        var balances = _unitOfWork
+            .Repository<Balance>()
             .Entities
-            .AsQueryable();
+            .AsNoTracking();
 
-        var totalIncome = await transicstions
-            .Where(x => x.Catgory.CatgoryType == CatgoryType.salary)
-            .SumAsync(x => (int?)x.Amount) ?? 0;
+        var totalCredit = await balances
+            .SumAsync(x => (decimal?)x.Credit, cancellationToken) ?? 0;
 
-        var totalExpense = await transicstions
-            .Where(x => x.Catgory.CatgoryType == CatgoryType.expence)
-            .SumAsync(x => (int?)x.Amount) ?? 0;
+        var totalDebit = await balances
+            .SumAsync(x => (decimal?)x.Debit, cancellationToken) ?? 0;
 
-        var totalBalance = totalIncome - totalExpense;
+        var totalBalance = totalCredit - totalDebit;
 
         var dto = new GetDashboardDto
         {
-            Salery = totalIncome,
-            Expense = totalExpense,
+            Credit = totalCredit,
+            Debit = totalDebit,
             TotalAmount = totalBalance
         };
 

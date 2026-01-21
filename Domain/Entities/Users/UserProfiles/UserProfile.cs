@@ -3,6 +3,7 @@ using Domain.Common.Enums.Employees;
 using Domain.Commons.Enums.Users;
 using Domain.Entities.ApplicationUsers;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Common.Enums.Users.UserRoleType;
 
 namespace Domain.Entities.UserProfiles;
 
@@ -11,11 +12,12 @@ public class UserProfile : BaseAuditableEntity
     [ForeignKey("User")]
     public string UserId { get; set; }
     public User User { get; set; }
-    public Gender? Gender { get; set; }
-    public DateOnly? DOB { get; set; }
-    public MaritalStatus? MaritalStatus { get; set; }
-    public string? ProfilePicture { get; set; }
-    public string? FacebookId { get; set; }
-    public string? LinkedInId { get; set; }
-    public string? InstagramId { get; set; }
+    public string Name { get; set; }
+    public int PhoneNumber { get; set; }
+    public string Email { get; set; }
+    public decimal Weight { get; set; }
+    public decimal Height { get; set; }
+    public UserRoleType UserRoleType  { get; set; }
+    public decimal age { get; set; }
+    public string message { get; set; }
 }

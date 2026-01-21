@@ -36,7 +36,7 @@ public class CurrentOrganizationProvider : ICurrentOrganizationProvider
 
         var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-        using (var connection = new NpgsqlConnection(connectionString))
+        /*using (var connection = new NpgsqlConnection(connectionString))
         {
             connection.Open();
 
@@ -57,7 +57,7 @@ public class CurrentOrganizationProvider : ICurrentOrganizationProvider
                     }
                 }
             }
-        }
+        }*/
 
         return organizationIds;
     }

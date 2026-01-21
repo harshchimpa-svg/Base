@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 using System.ComponentModel.DataAnnotations;
+using Domain.Common.Enums.Users.UserRoleType;
 
 namespace Application.Features.Users.Commands;
 
@@ -26,13 +27,14 @@ public class UpdateUserCommand : IRequest<Result<string>>
     public string? OtherDetails { get; set; }
 
     // Profile fields
-    public Gender? Gender { get; set; }
-    public DateOnly? DOB { get; set; }
-    public MaritalStatus? MaritalStatus { get; set; }
-    public IFormFile? ProfilePicture { get; set; }
-    public string? FacebookId { get; set; }
-    public string? LinkedInId { get; set; }
-    public string? InstagramId { get; set; }
+    public string Name { get; set; }
+    public int PhoneNumber { get; set; }
+    public string Email { get; set; }
+    public decimal Weight { get; set; }
+    public decimal Height { get; set; }
+    public UserRoleType UserRoleType  { get; set; }
+    public decimal age { get; set; }
+    public string message { get; set; }
 
     // Address fields
     public string? Address1 { get; set; }
@@ -102,7 +104,7 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Res
                request.ProfilePicture != null || request.FacebookId != null ||
                request.LinkedInId != null || request.InstagramId != null;
     }
-
+    
     private bool HasAddressFields(UpdateUserCommand request)
     {
         return request.Address1 != null || request.Address2 != null || request.CityId != null ||
