@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Shared;
 using System.ComponentModel.DataAnnotations;
+using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Common.Enums.Users.UserRoleType;
 using Domain.Entities.UserProfiles;
 
@@ -36,7 +37,7 @@ public class UserRegistrationCommand : IRequest<Result<string>>, ICreateMapFrom<
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserRoleType UserRoleType  { get; set; }
-    public decimal age { get; set; }
+    public decimal DateOfBirth { get; set; }
     public string message { get; set; }
 
     [Required(ErrorMessage = "Password is required")]
@@ -51,14 +52,17 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
     private readonly IUserIdAndOrganizationIdRepository _userIdAndOrganizationIdRepository;
     private readonly IOtpRepository _otpRepository;
     private readonly IEmailService _emailService;
+    private readonly IUnitOfWork _unitOfWork;
 
     public UserRegistrationCommandHandler(
         UserManager<User> userManager,
         IMapper mapper,
         IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository,
         IOtpRepository otpRepository,
-        IEmailService emailService)
+        IEmailService emailService,
+        IUnitOfWork  unitOfWork)
     {
+        _unitOfWork = unitOfWork;
         _userManager = userManager;
         _mapper = mapper;
         _userIdAndOrganizationIdRepository = userIdAndOrganizationIdRepository;
@@ -122,12 +126,27 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         };
 
         var createUserResult = await _userManager.CreateAsync(user, request.Password);
+        
         if (!createUserResult.Succeeded)
         {
             var errors = string.Join(", ", createUserResult.Errors.Select(e => e.Description));
             return Result<string>.BadRequest($"Failed to create user: {errors}");
         }
-
+        
+        var userProfile = new UserProfile
+        {
+            UserId = user.Id,
+            Weight = request.Weight,
+            Height = request.Height,
+            UserRoleType  = request.UserRoleType,
+            DateOfBirth = request.DateOfBirth,
+            message = request.message,
+            Email = request.Email,
+        };
+        
+        await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);
+        await _unitOfWork.Save(cancellationToken); 
+        
         if (request.Email != null)
         {
             var otpEntity = await _otpRepository.GenerateAndAddOtpAsync(
@@ -140,47 +159,6 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         }
 
         return Result<string>.Success("User registered successfully. OTP sent to email.");
-    }
-    public async Task<Result<string>> Handle(UserRegistrationCommand request, CancellationToken cancellationToken)
-    {
-        var userProfileExists = await _unitOfWork.Repository<UserProfile>()
-            .Entities
-            .AnyAsync(up => up.UserId == userId, cancellationToken);
-
-        UserProfile userProfile;
-        if (!userProfileExists)
-        {
-            // Create new profile if it doesn't exist
-            userProfile = new UserProfile
-            {
-                UserId = userId
-            };
-            await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);
-            await _unitOfWork.Save(cancellationToken);
-        }
-        else
-        {
-            userProfile = await _unitOfWork.Repository<UserProfile>()
-                .Entities
-                .FirstOrDefaultAsync(up => up.UserId == userId, cancellationToken);
-        }
-
-        // Update only non-null profile fields
-        if (request.Gender != null)
-            userProfile.Gender = request.Gender;
-        if (request.DOB != null)
-            userProfile.DOB = request.DOB;
-        if (request.MaritalStatus != null)
-            userProfile.MaritalStatus = request.MaritalStatus;
-        if (request.FacebookId != null)
-            userProfile.FacebookId = request.FacebookId;
-        if (request.LinkedInId != null)
-            userProfile.LinkedInId = request.LinkedInId;
-        if (request.InstagramId != null)
-            userProfile.InstagramId = request.InstagramId;
-
-        await _unitOfWork.Repository<UserProfile>().UpdateAsync(userProfile);
-        await _unitOfWork.Save(cancellationToken);
     }
     private async Task SendRegistrationOtpEmail(string email, int otp, string name)
     {

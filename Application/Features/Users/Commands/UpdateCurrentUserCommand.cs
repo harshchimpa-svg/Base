@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 using System.ComponentModel.DataAnnotations;
+using Domain.Common.Enums.Users.UserRoleType;
 
 namespace Application.Features.Users.Commands;
 
@@ -23,13 +24,14 @@ public class UpdateCurrentUserCommand : IRequest<Result<string>>
     public string? OtherDetails { get; set; }
 
     // Profile fields
-    public Gender? Gender { get; set; }
-    public DateOnly? DOB { get; set; }
-    public MaritalStatus? MaritalStatus { get; set; }
-    public IFormFile? ProfilePicture { get; set; }
-    public string? FacebookId { get; set; }
-    public string? LinkedInId { get; set; }
-    public string? InstagramId { get; set; }
+    public string Name { get; set; }
+    public int PhoneNumber { get; set; }
+    public string Email { get; set; }
+    public decimal Weight { get; set; }
+    public decimal Height { get; set; }
+    public UserRoleType UserRoleType  { get; set; }
+    public decimal DateOfBirth { get; set; }
+    public string message { get; set; }
 
     // Address fields
     public string? Address1 { get; set; }
@@ -94,9 +96,9 @@ internal class UpdateCurrentUserCommandHandler : IRequestHandler<UpdateCurrentUs
 
     private bool HasProfileFields(UpdateCurrentUserCommand request)
     {
-        return request.Gender != null || request.DOB != null || request.MaritalStatus != null ||
-               request.ProfilePicture != null || request.FacebookId != null ||
-               request.LinkedInId != null || request.InstagramId != null;
+        return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
+               request.Height != null || request.UserRoleType != null ||
+               request.DateOfBirth != null || request.message != null;
     }
 
     private bool HasAddressFields(UpdateCurrentUserCommand request)
@@ -130,19 +132,21 @@ internal class UpdateCurrentUserCommandHandler : IRequestHandler<UpdateCurrentUs
         }
 
         // Update only non-null profile fields
-        if (request.Gender != null)
+        if (request.PhoneNumber != null)
             userProfile.Name = request.Name;
-        if (request.DOB != null)
-            userProfile.DOB = request.DOB;
-        if (request.MaritalStatus != null)
-            userProfile.MaritalStatus = request.MaritalStatus;
+        if (request.Email != null)
+            userProfile.Email = request.Email;
+        if (request.Weight != null)
+            userProfile.Weight = request.Weight;
 
-        if (request.FacebookId != null)
-            userProfile.FacebookId = request.FacebookId;
-        if (request.LinkedInId != null)
-            userProfile.LinkedInId = request.LinkedInId;
-        if (request.InstagramId != null)
-            userProfile.InstagramId = request.InstagramId;
+        if (request.Height != null)
+            userProfile.Height = request.Height;
+        if (request.UserRoleType != null)
+            userProfile.UserRoleType = request.UserRoleType;
+        if (request.DateOfBirth != null)
+            userProfile.DateOfBirth = request.DateOfBirth;
+        if (request.message != null)
+            userProfile.message = request.message;
 
         await _unitOfWork.Repository<UserProfile>().UpdateAsync(userProfile);
         await _unitOfWork.Save(cancellationToken);

@@ -18,6 +18,6 @@ public class UserProfile : BaseAuditableEntity
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserRoleType UserRoleType  { get; set; }
-    public decimal age { get; set; }
+    public decimal DateOfBirth { get; set; }
     public string message { get; set; }
 }
