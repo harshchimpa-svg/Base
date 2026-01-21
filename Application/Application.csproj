@@ -61,4 +61,8 @@
     <None Remove="C:\Users\Asus\.nuget\packages\tesseract\5.2.0\build\\..\x64\tesseract50.dll" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Locations\Queries\" />
+  </ItemGroup>
+
 </Project>
