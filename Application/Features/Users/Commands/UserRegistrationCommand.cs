@@ -37,7 +37,7 @@ public class UserRegistrationCommand : IRequest<Result<string>>, ICreateMapFrom<
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserRoleType UserRoleType  { get; set; }
-    public decimal DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public string message { get; set; }
 
     [Required(ErrorMessage = "Password is required")]
@@ -141,7 +141,6 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             UserRoleType  = request.UserRoleType,
             DateOfBirth = request.DateOfBirth,
             message = request.message,
-            Email = request.Email,
         };
         
         await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);

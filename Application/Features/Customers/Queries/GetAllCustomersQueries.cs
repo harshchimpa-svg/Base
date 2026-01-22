@@ -1,10 +1,7 @@
 using Application.Dto.Customers;
-using Application.Dto.Services;
-using Application.Features.Services.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Customers;
-using Domain.Entities.Services;
 using MediatR;
 using Shared;
 

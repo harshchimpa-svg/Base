@@ -30,7 +30,7 @@ public class UpdateCurrentUserCommand : IRequest<Result<string>>
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserRoleType UserRoleType  { get; set; }
-    public decimal DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public string message { get; set; }
 
     // Address fields
@@ -133,12 +133,6 @@ internal class UpdateCurrentUserCommandHandler : IRequestHandler<UpdateCurrentUs
 
         // Update only non-null profile fields
         if (request.PhoneNumber != null)
-            userProfile.Name = request.Name;
-        if (request.Email != null)
-            userProfile.Email = request.Email;
-        if (request.Weight != null)
-            userProfile.Weight = request.Weight;
-
         if (request.Height != null)
             userProfile.Height = request.Height;
         if (request.UserRoleType != null)
