@@ -41,9 +41,6 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Customer> Customer { get; set; }
 
 
-
-
-
  
      
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;

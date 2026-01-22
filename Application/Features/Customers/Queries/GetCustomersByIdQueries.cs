@@ -1,9 +1,8 @@
 using Application.Dto.Customers;
-using Application.Dto.Services;
-using Application.Features.Services.Queries;
+
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.Services;
+using Domain.Entities.Customers;
 using MediatR;
 using Shared;
 
@@ -31,7 +30,7 @@ internal class GetCustomersByIdQueriesHandler : IRequestHandler<GetCustomersById
 
     public async Task<Result<GetCustomerDto>> Handle(GetCustomersByIdQueries request, CancellationToken cancellationToken)
     {
-        var Service = await _unitOfWork.Repository<Service>().GetByID(request.Id);
+        var Service = await _unitOfWork.Repository<Customer>().GetByID(request.Id);
 
         if (Service == null)
         {

@@ -21,8 +21,8 @@ namespace WebApi.Controllers.Customers
         [HttpPost]
         public async Task<ActionResult> CreateServices(CreateCustomerCommand command)
         {
-            var Services = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Services);
+            var services = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(services);
         }
 
         [HttpPut("{id}")]
@@ -35,22 +35,22 @@ namespace WebApi.Controllers.Customers
         [HttpGet]
         public async Task<IActionResult> GetServices()
         {
-            var Services = await _mediator.Send(new GetAllCustomersQueries());
-            return ResponseHelper.GenerateResponse(Services);
+            var result = await _mediator.Send(new GetAllCustomersQueries());
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetServicesById(int id)
         {
-            var Services = await _mediator.Send(new GetCustomersByIdQueries(id));
-            return ResponseHelper.GenerateResponse(Services);
+            var result = await _mediator.Send(new GetCustomersByIdQueries(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServices(int id)
         {
-            var Services = await _mediator.Send(new DeleteCustomerCommand(id));
-            return ResponseHelper.GenerateResponse(Services);
+            var result = await _mediator.Send(new DeleteCustomerCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

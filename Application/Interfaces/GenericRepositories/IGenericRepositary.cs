@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Application.Interfaces.GenericRepositories;
 
-public interface IGenericRepository<T> where T : class, IEntity
+public interface IGenericRepository<T> where T : class
 {
     IQueryable<T> Entities { get; }
     Task<List<T>> GetAll();

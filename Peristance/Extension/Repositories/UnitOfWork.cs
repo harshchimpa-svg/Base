@@ -42,7 +42,7 @@ public class UnitOfWork : IUnitOfWork
         disposed = true;
     }
 
-    public IGenericRepository<T> Repository<T>() where T : BaseAuditableEntity
+    public IGenericRepository<T> Repository<T>() where T : class
     {
         if (_repository == null)
             _repository = new Hashtable();
