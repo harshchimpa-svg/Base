@@ -17,6 +17,8 @@ using Category = Domain.Entities.Catagoryes.Category;
 using Clients = Domain.Entities.Clientses.Clients;
 using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
+using Domain.Entities.Locations;
+using Domain.Entities.Gyms;
 
 namespace Persistence.DataContext;
 
@@ -39,13 +41,15 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<About> About { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Customer> Customer { get; set; }
+    public DbSet<Location> Locations { get; set; }
+    public DbSet<Gym> Gyms { get; set; }
 
 
 
 
 
- 
-     
+
+
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
