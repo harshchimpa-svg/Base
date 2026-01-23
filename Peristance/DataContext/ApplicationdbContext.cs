@@ -11,6 +11,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
+using Domain.Entities.Dites;
+using Domain.Entities.DiteTypes;
 using About = Domain.Entities.Abouts.About;
 using Balance = Domain.Entities.Balances.Balance;
 using Category = Domain.Entities.Catagoryes.Category;
@@ -43,6 +45,8 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Customer> Customer { get; set; }
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
+    public DbSet<DiteType> DiteType { get; set; }
+    public DbSet<diet> Dite { get; set; }
 
 
 

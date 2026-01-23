@@ -29,7 +29,7 @@ public class UpdateCurrentUserCommand : IRequest<Result<string>>
     public string Email { get; set; }
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
-    public UserRoleType UserRoleType  { get; set; }
+    public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string message { get; set; }
 
@@ -97,7 +97,7 @@ internal class UpdateCurrentUserCommandHandler : IRequestHandler<UpdateCurrentUs
     private bool HasProfileFields(UpdateCurrentUserCommand request)
     {
         return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
-               request.Height != null || request.UserRoleType != null ||
+               request.Height != null || request.UserLevelType != null ||
                request.DateOfBirth != null || request.message != null;
     }
 
@@ -135,8 +135,8 @@ internal class UpdateCurrentUserCommandHandler : IRequestHandler<UpdateCurrentUs
         if (request.PhoneNumber != null)
         if (request.Height != null)
             userProfile.Height = request.Height;
-        if (request.UserRoleType != null)
-            userProfile.UserRoleType = request.UserRoleType;
+        if (request.UserLevelType != null)
+            userProfile.UserLevelType = request.UserLevelType;
         if (request.DateOfBirth != null)
             userProfile.DateOfBirth = request.DateOfBirth;
         if (request.message != null)

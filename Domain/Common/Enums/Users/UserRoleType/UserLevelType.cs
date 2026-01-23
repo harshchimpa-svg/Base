@@ -1,6 +1,6 @@
 namespace Domain.Common.Enums.Users.UserRoleType;
 
-public enum UserRoleType
+public enum UserLevelType
 {
     Bigner = 1,
     exprince,

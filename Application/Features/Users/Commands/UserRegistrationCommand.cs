@@ -36,7 +36,7 @@ public class UserRegistrationCommand : IRequest<Result<string>>, ICreateMapFrom<
     
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
-    public UserRoleType UserRoleType  { get; set; }
+    public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string message { get; set; }
 
@@ -138,7 +138,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             UserId = user.Id,
             Weight = request.Weight,
             Height = request.Height,
-            UserRoleType  = request.UserRoleType,
+            UserLevelType  = request.UserLevelType,
             DateOfBirth = request.DateOfBirth,
             message = request.message,
         };

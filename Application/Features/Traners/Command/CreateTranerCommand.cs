@@ -29,7 +29,7 @@ public class CreateTranerCommand : IRequest<Result<string>>
     public string Email { get; set; }
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
-    public UserRoleType UserRoleType  { get; set; }
+    public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string message { get; set; }
     
@@ -87,7 +87,7 @@ internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand
             UserId = user.Id,
             Weight = request.Weight,
             Height = request.Height,
-            UserRoleType  = request.UserRoleType,
+            UserLevelType  = request.UserLevelType,
             DateOfBirth = request.DateOfBirth,
             message = request.message,
         };
@@ -107,6 +107,7 @@ internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand
         };
         await _unitOfWork.Repository<UserAddress>().AddAsync(UserAddress);
         await _unitOfWork.Save(cancellationToken); 
+        
         
         
         return Result<string>.Success("User registered successfully. OTP sent to email.");
