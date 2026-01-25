@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Abouts
 {
-    [Route("api/[controller]")]
+    [Route("api/abouts")]
     [ApiController]
-
     public class AboutController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,38 +17,38 @@ namespace WebApi.Controllers.Abouts
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateVendor(CreateAboutCommand command)
+        public async Task<ActionResult> CreateAbout(CreateAboutCommand command)
         {
-            var Vendor = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Vendor);
+            var about = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(about);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVendor(int id, CreateAboutCommand command)
+        public async Task<IActionResult> UpdateAbout(int id, CreateAboutCommand command)
         {
             var result = await _mediator.Send(new UpdateAboutCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetVendor()
+        public async Task<IActionResult> GetAbout()
         {
-            var Vendor = await _mediator.Send(new GetAllAboutQuery());
-            return ResponseHelper.GenerateResponse(Vendor);
+            var about = await _mediator.Send(new GetAllAboutQuery());
+            return ResponseHelper.GenerateResponse(about);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetVendorById(int id)
+        public async Task<ActionResult> GetAboutById(int id)
         {
-            var Vendor = await _mediator.Send(new GetAboutByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var about = await _mediator.Send(new GetAboutByIdQuery(id));
+            return ResponseHelper.GenerateResponse(about);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVendor(int id)
+        public async Task<IActionResult> DeleteAbout(int id)
         {
-            var Vendor = await _mediator.Send(new DeleateAboutCommand(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var about = await _mediator.Send(new DeleateAboutCommand(id));
+            return ResponseHelper.GenerateResponse(about);
         }
     }
 }

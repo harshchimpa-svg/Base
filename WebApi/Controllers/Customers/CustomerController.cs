@@ -4,12 +4,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Customers
-
 {
-    [Route("api/[controller]")]
+    [Route("api/customers")]
     [ApiController]
-
-    public class CustomerController: ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -19,35 +17,35 @@ namespace WebApi.Controllers.Customers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateServices(CreateCustomerCommand command)
+        public async Task<ActionResult> CreateCustomer(CreateCustomerCommand command)
         {
-            var services = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(services);
+            var customer = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(customer);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateServices(int id, CreateCustomerCommand command)
+        public async Task<IActionResult> UpdateCustomer(int id, CreateCustomerCommand command)
         {
             var result = await _mediator.Send(new UpdateCustomerCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetServices()
+        public async Task<IActionResult> GetCustomers()
         {
-            var result = await _mediator.Send(new GetAllCustomersQueries());
+            var result = await _mediator.Send(new GetAllCustomerQueries());
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetServicesById(int id)
+        public async Task<ActionResult> GetCustomerById(int id)
         {
-            var result = await _mediator.Send(new GetCustomersByIdQueries(id));
+            var result = await _mediator.Send(new GetCustomerByIdQueries(id));
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteServices(int id)
+        public async Task<IActionResult> DeleteCustomer(int id)
         {
             var result = await _mediator.Send(new DeleteCustomerCommand(id));
             return ResponseHelper.GenerateResponse(result);

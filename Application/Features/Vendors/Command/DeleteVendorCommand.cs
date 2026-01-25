@@ -1,6 +1,6 @@
-using Application.Features.Catgoryes.Command;
+using Application.Features.Categoryes.Command;
 using Application.Interfaces.UnitOfWorkRepositories;
-using Domain.Entities.Catagoryes;
+using Domain.Entities.Catagories;
 using Domain.Entities.Vendors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

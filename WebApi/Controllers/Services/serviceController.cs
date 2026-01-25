@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Services
 
 {
-    [Route("api/[controller]")]
+    [Route("api/services")]
     [ApiController]
 
     public class serviceController : ControllerBase
@@ -28,28 +28,28 @@ namespace WebApi.Controllers.Services
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateServices(int id, CreateServiceCommand command)
         {
-            var result = await _mediator.Send(new UpdateServicesCommand(id, command));
+            var result = await _mediator.Send(new UpdateServiceCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetServices()
         {
-            var Services = await _mediator.Send(new GetAllServicesQueries());
+            var Services = await _mediator.Send(new GetAllServiceQueries());
             return ResponseHelper.GenerateResponse(Services);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetServicesById(int id)
         {
-            var Services = await _mediator.Send(new GetServicesByIdQueries(id));
+            var Services = await _mediator.Send(new GetServiceByIdQueries(id));
             return ResponseHelper.GenerateResponse(Services);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServices(int id)
         {
-            var Services = await _mediator.Send(new DeleteServicesCommand(id));
+            var Services = await _mediator.Send(new DeleteServiceCommand(id));
             return ResponseHelper.GenerateResponse(Services);
         }
     }

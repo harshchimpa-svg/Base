@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Locations
 {
-    [Route("api/[controller]")]
+    [Route("api/locations")]
     [ApiController]
     public class LocationController : ControllerBase
     {

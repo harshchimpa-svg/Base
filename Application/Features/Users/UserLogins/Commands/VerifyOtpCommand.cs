@@ -29,7 +29,11 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
     private readonly IJWTService _jwtService;
     private readonly IUserIdAndOrganizationIdRepository _userIdAndOrganizationIdRepository;
 
-    public VerifyOtpCommandHandler(IUnitOfWork unitOfWork, UserManager<User> userManager, IJWTService jwtService, IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository)
+    public VerifyOtpCommandHandler(
+        IUnitOfWork unitOfWork, 
+        UserManager<User> userManager, 
+        IJWTService jwtService, 
+        IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository)
     {
         _userIdAndOrganizationIdRepository = userIdAndOrganizationIdRepository;
         _unitOfWork = unitOfWork;
@@ -52,7 +56,10 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
                 return Result<string>.BadRequest("Only Gmail or phone number is allowed.");
             }
 
-            user = await _userManager.FindByEmailAsync(username);
+            user = await _userManager.Users
+                .Where(x => x.Email == username)
+                .OrderByDescending(x => x.CreatedDate)
+                .FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -118,5 +125,4 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
 
         return Result<string>.Success(token, "Otp verified successfully", token);
     }
-
 }

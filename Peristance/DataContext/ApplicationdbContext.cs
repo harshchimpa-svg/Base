@@ -9,13 +9,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
+using Domain.Entities.Catagories;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
-using Domain.Entities.Dites;
-using Domain.Entities.DiteTypes;
+using Domain.Entities.DietDocuments;
+using Domain.Entities.Diets;
+using Domain.Entities.DietTypes;
 using About = Domain.Entities.Abouts.About;
 using Balance = Domain.Entities.Balances.Balance;
-using Category = Domain.Entities.Catagoryes.Category;
 using Clients = Domain.Entities.Clientses.Clients;
 using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
@@ -35,7 +36,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<Category> Category { get; set; }
+    public DbSet<Category> Categori { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Clients> Clients { get; set; }
@@ -45,9 +46,9 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Customer> Customer { get; set; }
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
-    public DbSet<DiteType> DiteType { get; set; }
-    public DbSet<diet> Dite { get; set; }
-
+    public DbSet<DietType> DietType { get; set; }
+    public DbSet<Diet> Diet { get; set; }
+    public DbSet<DietDocument> DietDocument { get; set; }
 
 
 

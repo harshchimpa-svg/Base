@@ -1,9 +1,9 @@
 ﻿using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
 using Domain.Common.Enums.CatagoryTypes;
-using Domain.Entities.Catagoryes;
+using Domain.Entities.Catagories;
 
-namespace Application.Dto.Catgoryes;
+namespace Application.Dto.Categoryes;
 
 public class GetCategoryDto : BaseDto, IMapFrom<Category>
 {

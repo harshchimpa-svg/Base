@@ -10,12 +10,12 @@ namespace Application.Features.Balence.Queries;
 public class GetAllBalenceQuery: IRequest<Result<List<GetBalenceDto>>>
 {
 }
-internal class GetAllCatgoryesQueryHandler : IRequestHandler<GetAllBalenceQuery, Result<List<GetBalenceDto>>>
+internal class GetAllCategoryesQueryHandler : IRequestHandler<GetAllBalenceQuery, Result<List<GetBalenceDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllCatgoryesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllCategoryesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
