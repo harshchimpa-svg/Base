@@ -1,4 +1,4 @@
-/*using Application.Features.GymTraners.Commands;
+using Application.Features.GymTraners.Commands;
 using Application.Features.GymTraners.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -52,4 +52,4 @@ namespace WebApi.Controllers.GemTraners
             return ResponseHelper.GenerateResponse(Services);
         }
     }
-}*/
+}

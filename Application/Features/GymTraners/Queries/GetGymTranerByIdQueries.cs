@@ -1,4 +1,4 @@
-    /*using Application.Dto.Customers;
+    using Application.Dto.Customers;
     using Application.Dto.GymTraners;
     using Application.Features.Customers.Queries;
     using Application.Interfaces.UnitOfWorkRepositories;
@@ -42,4 +42,4 @@
 
             return Result<GetGymTranerDto>.Success(mapData, "Service");
         }
-    }*/
+    }

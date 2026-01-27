@@ -1,9 +1,8 @@
-using Application.Dto.Diets;
 using Application.Dto.Exercises;
-using Application.Features.Diets.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Diets;
+using Domain.Entities.Exercises;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
@@ -29,7 +28,7 @@ internal class GetExerciseQueryHandler : IRequestHandler<GetExerciseQuery,Pagina
 
     public async Task<PaginatedResult<GetExerciseDto>> Handle(GetExerciseQuery request, CancellationToken cancellationToken)
     {
-        var queryable = _unitOfWork.Repository<Diet>().Entities.Include(s => s.DietType)
+        var queryable = _unitOfWork.Repository<Exercise>().Entities.Include(s => s.DietType)
             .AsQueryable();
 
         if (request.DietTypeId.HasValue)
