@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
-using Domain.Entities.Catagories;
+//using Domain.Entities.Catagories;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
 using Domain.Entities.DietDocuments;
@@ -24,7 +24,7 @@ using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
 using Domain.Entities.Gyms;
-using Domain.Entities.GymTraners;
+//using Domain.Entities.GymTraners;
 
 namespace Persistence.DataContext;
 
@@ -39,7 +39,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<Category> Categori { get; set; }
+    //public DbSet<Category> Categori { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Clients> Clients { get; set; }
@@ -50,7 +50,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
     public DbSet<DietType> DietType { get; set; }
-    public DbSet<GemTraner> GemTraner { get; set; }
+    //public DbSet<GemTraner> GemTraner { get; set; }
     public DbSet<Diet> Diet { get; set; }
     public DbSet<DietDocument> DietDocument { get; set; }
     public DbSet<Exercise> Exercise { get; set; }
