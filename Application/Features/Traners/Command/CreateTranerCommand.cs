@@ -5,7 +5,10 @@ using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Common.Enums.Users;
 using Domain.Common.Enums.Users.UserRoleType;
-using Domain.Entities.ApplicationUsers; using Domain.Entities.UserAddresses;
+using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Gyms;
+using Domain.Entities.GymTraners;
+using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
 using Domain.Entities.Users.UserRoles;
 using MediatR;
@@ -40,6 +43,9 @@ public class CreateTranerCommand : IRequest<Result<string>>
     public int? StateId { get; set; }
     public int? CountryId { get; set; }
     public int? PinCode { get; set; }
+    
+    
+    public List<int> GymId { get; set; }
 }
 
 internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand, Result<string>>
@@ -109,6 +115,19 @@ internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand
         await _unitOfWork.Save(cancellationToken); 
         
         
+        foreach (var gymId in request.GymId)
+        {
+            var gymTrainer = new GemTraner
+            {
+                UserId = user.Id, 
+                GymId = gymId     
+            };
+
+            await _unitOfWork.Repository<GemTraner>().AddAsync(gymTrainer);
+        }
+
+        await _unitOfWork.Save(cancellationToken);
+
         
         return Result<string>.Success("User registered successfully. OTP sent to email.");
     }

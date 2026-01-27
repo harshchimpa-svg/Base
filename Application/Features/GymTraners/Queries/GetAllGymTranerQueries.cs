@@ -1,4 +1,4 @@
-/*using Application.Dto.Customers;
+using Application.Dto.Customers;
 using Application.Dto.GymTraners;
 using Application.Features.Customers.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
@@ -32,4 +32,4 @@ internal class GetAllGymTranerQueriesHandler : IRequestHandler<GetAllGymTranerQu
 
         return Result<List<GetGymTranerDto>>.Success(map, "GemTraner list");
     }
-}*/
+}

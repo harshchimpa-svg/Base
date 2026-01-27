@@ -15,6 +15,8 @@ using Domain.Entities.Customers;
 using Domain.Entities.DietDocuments;
 using Domain.Entities.Diets;
 using Domain.Entities.DietTypes;
+using Domain.Entities.ExerciseDocuments;
+using Domain.Entities.Exercises;
 using About = Domain.Entities.Abouts.About;
 using Balance = Domain.Entities.Balances.Balance;
 using Clients = Domain.Entities.Clientses.Clients;
@@ -22,6 +24,7 @@ using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
 using Domain.Entities.Gyms;
+using Domain.Entities.GymTraners;
 
 namespace Persistence.DataContext;
 
@@ -47,10 +50,12 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
     public DbSet<DietType> DietType { get; set; }
+    public DbSet<GemTraner> GemTraner { get; set; }
     public DbSet<Diet> Diet { get; set; }
     public DbSet<DietDocument> DietDocument { get; set; }
-
-
+    public DbSet<Exercise> Exercise { get; set; }
+    public DbSet<ExerciseDocument> ExerciseDocument { get; set; }
+    
 
 
 

@@ -1,4 +1,4 @@
-/*using Application.Features.Customers.Commands;
+using Application.Features.Customers.Commands;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Entities.Customers;
 using Domain.Entities.GymTraners;
@@ -40,4 +40,4 @@ internal class DeleteGymTranerCommandHandler : IRequestHandler<DeleteGymTranerCo
 
         return Result<bool>.Success(true, "GemTraner deleted successfully.");
     }
-}*/
+}

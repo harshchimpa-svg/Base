@@ -1,6 +1,7 @@
-/*using Application.Common.Mappings.Commons;
+using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
+using Domain.Entities.Gyms;
 using Domain.Entities.GymTraners;
 using MediatR;
 using Shared;
@@ -9,8 +10,9 @@ namespace Application.Features.GymTraners.Commands;
 
 public class CreateGymTranerCommands: IRequest<Result<string>>, ICreateMapFrom<GemTraner>
 {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public int GymId { get; set; }
+
 }
 
 internal class CreateGymTranerCommandsHandler : IRequestHandler<CreateGymTranerCommands, Result<string>>
@@ -30,7 +32,7 @@ internal class CreateGymTranerCommandsHandler : IRequestHandler<CreateGymTranerC
 
         await _unitOfWork.Repository<GemTraner>().AddAsync(GemTraner);
         await _unitOfWork.Save(cancellationToken);
-
+        
         return Result<string>.Success("GemTraner created successfully.");
     }
-}*/
+}

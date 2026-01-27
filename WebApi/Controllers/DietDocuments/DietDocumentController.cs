@@ -7,11 +7,11 @@ namespace WebApi.Controllers.DietDocuments
 
     [Route("api/diet-documents")]
     [ApiController]
-    public class DietDocumentControllers : ControllerBase
+    public class DietDocumentController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public DietDocumentControllers(IMediator mediator)
+        public DietDocumentController(IMediator mediator)
         {
             _mediator = mediator;
         }

@@ -1,4 +1,4 @@
-/*using Application.Interfaces.UnitOfWorkRepositories;
+using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.GymTraners;
 using MediatR;
@@ -47,4 +47,4 @@ internal class UpdateGymTranerCommandHandler : IRequestHandler<UpdateGymTranerCo
 
         return Result<GemTraner>.Success("Update GemTraner...");
     }
-}*/
+}
