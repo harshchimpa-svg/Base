@@ -9,6 +9,6 @@ public class GetCustomerDto: BaseDto, IMapFrom<Customer>
 {
     public string Name { get; set; }
     public string Email { get; set; }
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public string Notes { get; set; }
 }
