@@ -1,7 +1,4 @@
-﻿
-
-using Application.Features.Catgoryes.Command;
-using Application.Interfaces.Services;
+﻿using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.GymDocuments;
