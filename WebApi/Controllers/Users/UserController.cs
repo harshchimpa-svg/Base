@@ -1,11 +1,8 @@
-﻿using Application.Features.Employees.Queries;
-using Application.Features.Users;
+﻿
 using Application.Features.Users.Commands;
 using Application.Features.Users.Queries;
 using Application.Features.Users.Queries.GetAllUsers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Users;
@@ -29,7 +26,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllUserQuery query)
+    public async Task<IActionResult> GetAll(GetAllUserQuery query)
     {
         var data = await _mediator.Send(query);
         return Ok(data);
@@ -50,7 +47,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromForm]UpdateUserCommand command)
+    public async Task<IActionResult> Update(string id, UpdateUserCommand command)
     {
         command.Id = id;
         var data = await _mediator.Send(command);
@@ -58,7 +55,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("current")]
-    public async Task<IActionResult> UpdateCurrentUser([FromForm]UpdateCurrentUserCommand command)
+    public async Task<IActionResult> UpdateCurrentUser(UpdateCurrentUserCommand command)
     {
         var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);

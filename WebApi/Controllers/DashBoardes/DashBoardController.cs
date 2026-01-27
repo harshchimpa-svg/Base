@@ -1,11 +1,11 @@
-﻿using Application.Features.Catgoryes.Queries;
+﻿using Application.Features.Categoryes.Queries;
 using Application.Features.Dashboards.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.DashBoardes
 {
-    [Route("api/[controller]")]
+    [Route("api/dashBoardes")]
     [ApiController]
     public class DashBoardController : ControllerBase
     {

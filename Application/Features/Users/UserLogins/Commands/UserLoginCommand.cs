@@ -11,7 +11,7 @@ namespace Application.Features.Users;
 
 public class UserLoginCommand : IRequest<Result<string>>
 {
-    public string Code { get; set; }
+    public string Email { get; set; }
     public string Password { get; set; }
 }
 
@@ -34,16 +34,16 @@ internal class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Resul
 
         User? user = null;
 
-        if (!ValidationManager.IsValidPhoneNumber(request.Code) && request.Code.Contains("@"))
+        if (!ValidationManager.IsValidPhoneNumber(request.Email) && request.Email.Contains("@"))
         {
             user = await _userManager.Users
                .Include(x => x.Organization)
-               .FirstOrDefaultAsync(x => x.Email.ToLower() == request.Code.ToLower()&&x.EmailConfirmed);
+               .FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower()&&x.EmailConfirmed);
         }
-        else if (ValidationManager.IsValidPhoneNumber(request.Code))
+        else if (ValidationManager.IsValidPhoneNumber(request.Email))
         {
             user = await _userManager.Users.Include(x => x.Organization)
-               .Where(x => x.PhoneNumber.ToLower() == request.Code.ToLower() &&x.PhoneNumberConfirmed)
+               .Where(x => x.PhoneNumber.ToLower() == request.Email.ToLower() &&x.PhoneNumberConfirmed)
                .FirstOrDefaultAsync();
         }
 

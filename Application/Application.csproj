@@ -62,8 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\DiteDocuments\Commands\" />
-    <Folder Include="Features\DiteDocuments\Queries\" />
+    <Folder Include="Features\DietDocuments\Queries\" />
   </ItemGroup>
 
 </Project>

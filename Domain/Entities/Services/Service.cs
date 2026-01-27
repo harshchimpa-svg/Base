@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
-using Domain.Entities.Catagoryes;
+using Domain.Entities.Catagories;
 using Domain.Entities.Vendors;
 
 namespace Domain.Entities.Services;
 
 public class Service:BaseAuditableEntity
 {
-    [ForeignKey("Catgory")]
+    [ForeignKey("Category")]
     public int? CatgoryId { get; set; }
     public Category Category { get; set; }
     public string Name { get; set; }

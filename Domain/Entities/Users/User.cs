@@ -30,5 +30,4 @@ public class User : IdentityUser
     public List<UserRole> UserRoles { get; set; }
     public UserProfile UserProfile { get; set; }
     public UserAddress UserAddress { get; set; }
-    public string? ImageUrl { get; set; }
 }

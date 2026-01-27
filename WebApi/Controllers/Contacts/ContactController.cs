@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Contacts
 
 {
-    [Route("api/[controller]")]
+    [Route("api/contacts")]
     [ApiController]
 
     public class ContactController : ControllerBase
@@ -21,14 +21,14 @@ namespace WebApi.Controllers.Contacts
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateVendor(CreateContactCommand command)
+        public async Task<ActionResult> CreateContact(CreateContactCommand command)
         {
             var Vendor = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Vendor);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetVendor()
+        public async Task<IActionResult> GetContact()
         {
             var Vendor = await _mediator.Send(new GetAllContactQueries());
             return ResponseHelper.GenerateResponse(Vendor);

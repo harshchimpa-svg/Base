@@ -28,9 +28,7 @@ public class UserRegistrationCommand : IRequest<Result<string>>, ICreateMapFrom<
 
     [EmailAddress]
     public string? Email { get; set; }
-
-    public IFormFile? Image { get; set; }
-
+    
     [Phone]
     public string? PhoneNumber { get; set; }
     
@@ -94,23 +92,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             if (existingUser)
                 return Result<string>.BadRequest("User with this phone number already exists.");
         }
-
-        string? imageUrl = null;
-        if (request.Image != null)
-        {
-            var folderPath = Path.Combine("wwwroot", "users");
-            Directory.CreateDirectory(folderPath);
-
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(request.Image.FileName)}";
-            var filePath = Path.Combine(folderPath, fileName);
-
-            using var stream = new FileStream(filePath, FileMode.Create);
-            await request.Image.CopyToAsync(stream, cancellationToken);
-
-            imageUrl = $"/users/{fileName}";
-        }
-
-
+        
         var user = new User
         {
             UserName = Guid.NewGuid().ToString(),
@@ -118,7 +100,6 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             PhoneNumber = request.PhoneNumber,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            ImageUrl = imageUrl,
             OrganizationId = userOrgInfo.OrganizationId!.Value,
             EmailConfirmed = false,
             PhoneNumberConfirmed = false,

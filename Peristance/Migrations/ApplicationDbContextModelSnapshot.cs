@@ -250,7 +250,7 @@ namespace Persistence.Migrations
                     b.ToTable("Balance");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Catagoryes.Category", b =>
+            modelBuilder.Entity("Domain.Entities.Catagories.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,7 +300,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categori");
                 });
 
             modelBuilder.Entity("Domain.Entities.Clientses.Clients", b =>
@@ -458,7 +458,52 @@ namespace Persistence.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DiteTypes.DiteType", b =>
+            modelBuilder.Entity("Domain.Entities.DietDocuments.DietDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DietId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DietId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("DietDocument");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DietTypes.DietType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -494,10 +539,10 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("DiteType");
+                    b.ToTable("DietType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dites.Dite", b =>
+            modelBuilder.Entity("Domain.Entities.Diets.Diet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -515,7 +560,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("DiteTypeId")
+                    b.Property<int?>("DietTypeId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
@@ -542,11 +587,11 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiteTypeId");
+                    b.HasIndex("DietTypeId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Dite");
+                    b.ToTable("Diet");
                 });
 
             modelBuilder.Entity("Domain.Entities.Gyms.Gym", b =>
@@ -790,9 +835,6 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("CatgoryId")
                         .HasColumnType("integer");
 
@@ -836,7 +878,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CatgoryId");
 
                     b.HasIndex("OrganizationId");
 
@@ -1179,7 +1221,7 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Catagoryes.Category", b =>
+            modelBuilder.Entity("Domain.Entities.Catagories.Category", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -1187,7 +1229,7 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Catagoryes.Category", "Parent")
+                    b.HasOne("Domain.Entities.Catagories.Category", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
 
@@ -1235,7 +1277,24 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DiteTypes.DiteType", b =>
+            modelBuilder.Entity("Domain.Entities.DietDocuments.DietDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.Diets.Diet", "Diet")
+                        .WithMany()
+                        .HasForeignKey("DietId");
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Diet");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DietTypes.DietType", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -1246,11 +1305,11 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dites.Dite", b =>
+            modelBuilder.Entity("Domain.Entities.Diets.Diet", b =>
                 {
-                    b.HasOne("Domain.Entities.DiteTypes.DiteType", "DiteType")
+                    b.HasOne("Domain.Entities.DietTypes.DietType", "DietType")
                         .WithMany()
-                        .HasForeignKey("DiteTypeId");
+                        .HasForeignKey("DietTypeId");
 
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -1258,7 +1317,7 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DiteType");
+                    b.Navigation("DietType");
 
                     b.Navigation("Organization");
                 });
@@ -1327,11 +1386,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Services.Service", b =>
                 {
-                    b.HasOne("Domain.Entities.Catagoryes.Category", "Category")
+                    b.HasOne("Domain.Entities.Catagories.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CatgoryId");
 
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()

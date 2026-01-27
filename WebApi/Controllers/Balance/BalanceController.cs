@@ -4,11 +4,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Balance
-
 {
-    [Route("api/[controller]")]
+    [Route("api/balance")]
     [ApiController]
-
     public class BalanceController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,38 +17,38 @@ namespace WebApi.Controllers.Balance
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateVendor(CreateBalenceCommand command)
+        public async Task<ActionResult> CreateBalance(CreateBalenceCommand command)
         {
-            var Vendor = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Vendor);
+            var balance = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(balance);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVendor(int id, CreateBalenceCommand command)
+        public async Task<IActionResult> UpdateBalance(int id, CreateBalenceCommand command)
         {
             var result = await _mediator.Send(new UpdateBalenceCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetVendor()
+        public async Task<IActionResult> GetBalance()
         {
-            var Vendor = await _mediator.Send(new GetAllBalenceQuery());
-            return ResponseHelper.GenerateResponse(Vendor);
+            var balance = await _mediator.Send(new GetAllBalenceQuery());
+            return ResponseHelper.GenerateResponse(balance);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetVendorById(int id)
+        public async Task<ActionResult> GetBalanceById(int id)
         {
-            var Vendor = await _mediator.Send(new GetBalenceByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var balance = await _mediator.Send(new GetBalenceByIdQuery(id));
+            return ResponseHelper.GenerateResponse(balance);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVendor(int id)
+        public async Task<IActionResult> DeleteBalance(int id)
         {
-            var Vendor = await _mediator.Send(new DeleteBalenceCommand(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var balance = await _mediator.Send(new DeleteBalenceCommand(id));
+            return ResponseHelper.GenerateResponse(balance);
         }
     }
 }
