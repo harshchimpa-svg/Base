@@ -11,7 +11,7 @@ public class CreateCustomerCommand: IRequest<Result<string>>, ICreateMapFrom<Cus
 {
     public string Name { get; set; }
     public string Email { get; set; }
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public string Notes { get; set; }
 }
 

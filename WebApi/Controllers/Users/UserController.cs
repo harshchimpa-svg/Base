@@ -24,20 +24,23 @@ public class UserController : ControllerBase
         var data = await _mediator.Send(new GetUserByIdQuery(id));
         return ResponseHelper.GenerateResponse(data);
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GetAll(GetAllUserQuery query)
-    {
-        var data = await _mediator.Send(query);
-        return Ok(data);
-    }
-
+    
     [HttpGet("current")]
     public async Task<IActionResult> GetCurrentUser()
     {
         var data = await _mediator.Send(new GetCurrentUserQuery());
         return ResponseHelper.GenerateResponse(data);
     }
+    
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] GetAllUserQuery query)
+    {
+        var data = await _mediator.Send(query);
+        return Ok(data);
+    }
+    
+    
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(UserRegistrationCommand command)
