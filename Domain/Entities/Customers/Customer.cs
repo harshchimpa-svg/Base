@@ -1,4 +1,5 @@
 using Domain.Common;
+using Domain.Entities.Balances;
 
 namespace Domain.Entities.Customers;
 

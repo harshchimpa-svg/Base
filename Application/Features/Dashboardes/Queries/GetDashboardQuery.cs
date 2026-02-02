@@ -1,6 +1,8 @@
 ﻿using Application.Dto.Dashboardes;
 using Application.Interfaces.UnitOfWorkRepositories;
+using Domain.Common.Enums.BalanceTypes;
 using Domain.Entities.Balances;
+using Domain.Entities.PaymentLoges;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
@@ -21,28 +23,31 @@ internal class GetAllDashBoardQueryHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetDashboardDto>> Handle(GetAllDashBoardQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetDashboardDto>> Handle(
+        GetAllDashBoardQuery request,
+        CancellationToken cancellationToken)
     {
-        var balances = _unitOfWork
-            .Repository<Balance>()
+        var payments = _unitOfWork
+            .Repository<PaymentLoge>()
             .Entities
-            .AsNoTracking();
+            .AsNoTracking(); 
 
-        var totalCredit = await balances
-            .SumAsync(x => (decimal?)x.Credit, cancellationToken) ?? 0;
+        var totalCredit = await payments
+            .Where(x => x.BalanceType == BalanceType.Credit)
+            .SumAsync(x => (decimal?)x.Amount, cancellationToken) ?? 0;
 
-        var totalDebit = await balances
-            .SumAsync(x => (decimal?)x.Debit, cancellationToken) ?? 0;
-
-        var totalBalance = totalCredit - totalDebit;
+        var totalDebit = await payments
+            .Where(x => x.BalanceType == BalanceType.Debit)
+            .SumAsync(x => (decimal?)x.Amount, cancellationToken) ?? 0;
 
         var dto = new GetDashboardDto
         {
             Credit = totalCredit,
             Debit = totalDebit,
-            TotalAmount = totalBalance
+            TotalAmount = totalCredit - totalDebit
         };
 
         return Result<GetDashboardDto>.Success(dto, "Dashboard summary");
     }
+
 }

@@ -27,6 +27,6 @@ internal class GetAllCustomersQueriesHandler : IRequestHandler<GetAllCustomerQue
 
         var map = _mapper.Map<List<GetCustomerDto>>(Service);
 
-        return Result<List<GetCustomerDto>>.Success(map, "Service list");
+        return Result<List<GetCustomerDto>>.Success(map, "Service list");   
     }
 }

@@ -6,40 +6,46 @@ using AutoMapper;
 using Domain.Common.Enums.Otps;
 using Domain.Common.Enums.Users;
 using Domain.Entities.ApplicationUsers;
-using Microsoft.AspNetCore.Http; 
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MediatR;
 using Shared;
 using System.ComponentModel.DataAnnotations;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Common.Enums.Users.UserRoleType;
+using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
 
 namespace Application.Features.Users.Commands;
 
 public class UserRegistrationCommand : IRequest<Result<string>>, ICreateMapFrom<User>
 {
-    [Required(ErrorMessage = "FirstName is required")]
-    [StringLength(50, ErrorMessage = "FirstName cannot exceed 50 characters")]
+    [Required]
     public string FirstName { get; set; }
 
     public string? LastName { get; set; }
+    public bool IsOtp { get; set; }
 
     [EmailAddress]
     public string? Email { get; set; }
-    
-    [Phone]
+
+    [Phone] 
     public string? PhoneNumber { get; set; }
-    
+
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
-    public UserLevelType UserLevelType  { get; set; }
+    public UserLevelType UserLevelType { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string message { get; set; }
 
-    [Required(ErrorMessage = "Password is required")]
-    [Length(6, 30, ErrorMessage = "Password must between 6 to 30 characters")]
+    public string? Address1 { get; set; }
+    public string? Address2 { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }
+    public string? Country { get; set; }
+    public int? PinCode { get; set; }
+
+    [Required]
     public string Password { get; set; }
 }
 
@@ -58,7 +64,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository,
         IOtpRepository otpRepository,
         IEmailService emailService,
-        IUnitOfWork  unitOfWork)
+        IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
         _userManager = userManager;
@@ -73,26 +79,10 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         request.Email = request.Email?.ToLower();
 
         if (request.Email == null && request.PhoneNumber == null)
-            return Result<string>.BadRequest("Email address or phone number is required");
+            return Result<string>.BadRequest("Email or phone number is required");
 
         var userOrgInfo = await _userIdAndOrganizationIdRepository.Get();
 
-        if (request.Email != null)
-        {
-            var existingUser = await _userManager.Users
-                .AnyAsync(x => x.Email.ToLower() == request.Email && x.EmailConfirmed);
-            if (existingUser)
-                return Result<string>.BadRequest("User with this email already exists.");
-        }
-
-        if (request.PhoneNumber != null)
-        {
-            var existingUser = await _userManager.Users
-                .AnyAsync(x => x.PhoneNumber == request.PhoneNumber && x.PhoneNumberConfirmed);
-            if (existingUser)
-                return Result<string>.BadRequest("User with this phone number already exists.");
-        }
-        
         var user = new User
         {
             UserName = Guid.NewGuid().ToString(),
@@ -101,54 +91,51 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             FirstName = request.FirstName,
             LastName = request.LastName,
             OrganizationId = userOrgInfo.OrganizationId!.Value,
-            EmailConfirmed = false,
-            PhoneNumberConfirmed = false,
+            EmailConfirmed = !request.IsOtp,
+            PhoneNumberConfirmed = !request.IsOtp,
+
             UserType = UserType.WebUser
         };
 
-        var createUserResult = await _userManager.CreateAsync(user, request.Password);
-        
-        if (!createUserResult.Succeeded)
+        var result = await _userManager.CreateAsync(user, request.Password);
+
+        if (!result.Succeeded)
+            return Result<string>.BadRequest(string.Join(", ", result.Errors.Select(e => e.Description)));
+
+        await _unitOfWork.Repository<UserAddress>().AddAsync(new UserAddress
         {
-            var errors = string.Join(", ", createUserResult.Errors.Select(e => e.Description));
-            return Result<string>.BadRequest($"Failed to create user: {errors}");
-        }
-        
-        var userProfile = new UserProfile
+            UserId = user.Id,
+            Address1 = request.Address1,
+            Address2 = request.Address2,
+            City = request.City,
+            State = request.State,
+            Country = request.Country,
+            PinCode = request.PinCode
+        });
+
+        await _unitOfWork.Repository<UserProfile>().AddAsync(new UserProfile
         {
             UserId = user.Id,
             Weight = request.Weight,
             Height = request.Height,
-            UserLevelType  = request.UserLevelType,
+            UserLevelType = request.UserLevelType,
             DateOfBirth = request.DateOfBirth,
-            message = request.message,
-        };
-        
-        await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);
-        await _unitOfWork.Save(cancellationToken); 
-        
-        if (request.Email != null)
-        {
-            var otpEntity = await _otpRepository.GenerateAndAddOtpAsync(
-                user.Id,
-                "Registration",
-                OtpSentOn.Email,
-                cancellationToken);
+            Message = request.message
+        });
 
-            await SendRegistrationOtpEmail(request.Email, otpEntity.Otp, request.FirstName + " " + request.LastName);
+        await _unitOfWork.Save(cancellationToken);
+
+        if (request.IsOtp && request.Email != null)
+        {
+            var otp = await _otpRepository.GenerateAndAddOtpAsync(
+                user.Id, "Registration", OtpSentOn.Email, cancellationToken);
+
+            await _emailService.SendEmail(
+                request.Email,
+                "OTP Verification",
+                $"Hello {request.FirstName},\n\nYour OTP is: {otp.Otp}\n\nThanks,\nSupport Team");
         }
 
-        return Result<string>.Success("User registered successfully. OTP sent to email.");
-    }
-    private async Task SendRegistrationOtpEmail(string email, int otp, string name)
-    {
-        string subject = "OTP Verification";
-        string emailBody =
-            $"Hello {name},\n\n" +
-            $"Your OTP for registration is: {otp}\n\n" +
-            $"Please do not share this OTP with anyone.\n\n" +
-            $"Thanks,\nSupport Team";
-
-        await _emailService.SendEmail(email, subject, emailBody);
+        return request.IsOtp ? Result<string>.Success("User registered. OTP sent.") : Result<string>.Success("User registered successfully.");
     }
 }

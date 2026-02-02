@@ -76,41 +76,65 @@ internal class ForgetPasswordCommandHandler : IRequestHandler<ForgetPasswordComm
             await SendEmail(user!.Email!, otp.Otp, name, request.IsRegisterOtp, request.IsLoginOtp);
         }
 
-        return Result<int>.Success("Otp has been sent to your phone number and email");
+        return Result<int>.Success("OTP has been sent to your registered email address.");
     }
 
     private async Task ValidateCanRequestOtp(string userId)
     {
         var totalOtpToday = await _unitOfWork.Repository<OTP>().Entities.Where(x => x.UserId == userId && x.CreatedDate.Value.Date == DateTime.UtcNow.Date).CountAsync();
 
-        if (totalOtpToday > 10)
+        /*if (totalOtpToday > 10)
         {
             throw new BadRequestException("You request otp too many times try again tomorrow!");
-        }
+        }*/
     }
 
     private async Task SendEmail(string email, int otp, string name, bool isRegisterOtp, bool isLoginOtp)
     {
-
         string subject = "OTP Verification";
+        string emailBody;
 
-        string emailBody = $@"
-         Dear {name},
-  
-         We received a request to reset your account password.
+        if (isRegisterOtp)
+        {
+            emailBody = $@"
+             Dear {name},
 
-         Your OTP for password reset is:
+             Welcome to our platform!
 
-         OTP: {otp}
+             Your OTP for account registration is:
 
-         This OTP is valid for 5 minutes.
-         Please do not share this OTP with anyone.
+             OTP: {otp}
 
-         If you did not request a password reset, please ignore this email or contact our support team.
+             This OTP is valid for 5 minutes.
+             Please do not share this OTP with anyone.
 
-         Regards,
-         Support Team
-         ";
+             Regards,
+             Support Team
+            ";
+        }
+        else
+        {
+            emailBody = $@"
+             Dear {name},
+
+            We received a request to reset your account password.
+
+            Your OTP for password reset is:
+
+            OTP: {otp}
+
+            This OTP is valid for 5 minutes.
+            Please do not share this OTP with anyone.
+
+            If you did not request a password reset, please ignore this email.
+
+            Regards,
+            Support Team
+          ";
+        }
+
         await _emailService.SendEmail(email, subject, emailBody);
     }
+
 }
+ 
