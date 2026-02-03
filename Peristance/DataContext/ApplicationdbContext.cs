@@ -44,7 +44,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<Category> Categori { get; set; }
+    public DbSet<Category> Categories { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Clients> Clients { get; set; }
@@ -64,7 +64,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<SaleProduct> SaleProduct { get; set; }
     public DbSet<SalePayment> SalePayment { get; set; } 
     public DbSet<Employee> Employee { get; set; } 
-    public DbSet<PaymentLoge> PaymentLoge { get; set; } 
+    public DbSet<PaymentLoge> PaymentLogs { get; set; } 
 
     
     
