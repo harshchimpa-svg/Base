@@ -2,7 +2,7 @@ using Application.Common.Mappings.Commons;
 using Application.Dto.Balences;
 using Application.Dto.CommonDtos;
 using Application.Dto.Customers;
-using Domain.Common.Enums.BalanceTypes;
+using Domain.Common.Enums.TransactionTypes;
 using Domain.Entities.PaymentLoges;
 using Domain.Entities.Sales;
 
@@ -14,8 +14,8 @@ public class GetPaymentLogeDto: BaseDto, IMapFrom<PaymentLoge>
     public string UserId { get; set; }
     public string UserName { get; set; }
     public decimal Amount { get; set; }
-    public BalanceType BalanceType { get; set; }
+    public TransactionType TransactionType { get; set; }
     public int CustomerId { get; set; }
     public GetCustomerDto Customer { get; set; }
-    public GetBalenceDto Balance { get; set; }
+    public GetTransactionDto Transaction { get; set; }
 }

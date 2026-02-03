@@ -12,5 +12,5 @@ public class GetCustomerDto: BaseDto, IMapFrom<Customer>
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Notes { get; set; }
-    public GetBalenceDto Balence { get; set; }
+    public GetTransactionDto Transaction { get; set; }
 }

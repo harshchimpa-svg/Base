@@ -1,20 +1,20 @@
 using Application.Dto.Balences;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.Balances;
+using Domain.Entities.Transactions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
 namespace Application.Features.Balence.Queries;
 
-public class GetAllBalenceQuery : IRequest<PaginatedResult<GetBalenceDto>>
+public class GetAllTransactionQuery : IRequest<PaginatedResult<GetTransactionDto>>
 {
     public int? CustomerId { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
-internal class GetAllBalenceQueryHandler : IRequestHandler<GetAllBalenceQuery,PaginatedResult<GetBalenceDto>>
+internal class GetAllBalenceQueryHandler : IRequestHandler<GetAllTransactionQuery,PaginatedResult<GetTransactionDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -25,9 +25,9 @@ internal class GetAllBalenceQueryHandler : IRequestHandler<GetAllBalenceQuery,Pa
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<PaginatedResult<GetBalenceDto>> Handle(GetAllBalenceQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetTransactionDto>> Handle(GetAllTransactionQuery request, CancellationToken cancellationToken)
     {
-        var queryable = _unitOfWork.Repository<Balance>().Entities.Include(s => s.Customer)
+        var queryable = _unitOfWork.Repository<Transaction>().Entities.Include(s => s.Customer)
             .AsQueryable();
 
         if (request.CustomerId.HasValue)
@@ -45,8 +45,8 @@ internal class GetAllBalenceQueryHandler : IRequestHandler<GetAllBalenceQuery,Pa
         }
         var query = await queryable.ToListAsync();
 
-        var map = _mapper.Map<List<GetBalenceDto>>(query);
+        var map = _mapper.Map<List<GetTransactionDto>>(query);
 
-        return PaginatedResult < GetBalenceDto>.Create(map, count, request.PageNumber, request.PageSize);
+        return PaginatedResult < GetTransactionDto>.Create(map, count, request.PageNumber, request.PageSize);
     }
 }

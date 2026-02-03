@@ -30,7 +30,7 @@ internal class GetAllPaymentLogeQueriesHandler : IRequestHandler<GetAllPaymentLo
             .Entities
             .Include(x => x.User)
             .Include(x => x.Customer)
-            .Include(x => x.Balance)
+            .Include(x => x.Transaction)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 

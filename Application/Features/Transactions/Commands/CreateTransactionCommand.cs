@@ -1,23 +1,23 @@
 using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Common.Enums.BalanceTypes;
-using Domain.Entities.Balances;
+using Domain.Common.Enums.TransactionTypes;
+using Domain.Entities.Transactions;
 using Domain.Entities.PaymentLoges;
 using MediatR;
 using Shared;
 
 namespace Application.Features.Balence.Commands;
 
-public class CreateBalenceCommand : IRequest<Result<string>>, ICreateMapFrom<Balance>
+public class CreateTransactionCommand : IRequest<Result<string>>, ICreateMapFrom<Transaction>
 {
     public int? CustomerId { get; set; }
     public string UserId { get; set; }  
-    public BalanceType BalanceType { get; set; }
+    public TransactionType TransactionType { get; set; }
     public decimal Amount { get; set; }
 }
 
-internal class CreateBalenceCommandHandler : IRequestHandler<CreateBalenceCommand, Result<string>>
+internal class CreateBalenceCommandHandler : IRequestHandler<CreateTransactionCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ internal class CreateBalenceCommandHandler : IRequestHandler<CreateBalenceComman
         _mapper = mapper;
     }
 
-    public async Task<Result<string>> Handle(CreateBalenceCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
     {
         if (request.CustomerId == null)
             return Result<string>.BadRequest("CustomerId is required");
@@ -36,18 +36,18 @@ internal class CreateBalenceCommandHandler : IRequestHandler<CreateBalenceComman
         if (string.IsNullOrEmpty(request.UserId))
             return Result<string>.BadRequest("UserId is required");
 
-        var balance = _mapper.Map<Balance>(request);
-        await _unitOfWork.Repository<Balance>().AddAsync(balance);
+        var transaction = _mapper.Map<Transaction>(request);
+        await _unitOfWork.Repository<Transaction>().AddAsync(transaction);
         await _unitOfWork.Save(cancellationToken);
 
         var paymentLoge = new PaymentLoge
         {
             Date = DateTime.UtcNow,
             Amount = request.Amount,
-            BalanceType = request.BalanceType,
+            TransactionType = request.TransactionType,
             UserId = request.UserId,
             CustomerId = request.CustomerId.Value,
-            BalanceId = balance.Id
+            TransactionId = transaction.Id
         };
 
         await _unitOfWork.Repository<PaymentLoge>().AddAsync(paymentLoge);

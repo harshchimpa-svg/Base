@@ -1,5 +1,5 @@
 using Domain.Common;
-using Domain.Entities.Balances;
+using Domain.Entities.Transactions;
 
 namespace Domain.Entities.Customers;
 

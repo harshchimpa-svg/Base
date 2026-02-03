@@ -1,7 +1,7 @@
 ﻿using Application.Dto.Dashboardes;
 using Application.Interfaces.UnitOfWorkRepositories;
-using Domain.Common.Enums.BalanceTypes;
-using Domain.Entities.Balances;
+using Domain.Common.Enums.TransactionTypes;
+using Domain.Entities.Transactions;
 using Domain.Entities.PaymentLoges;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -30,11 +30,11 @@ internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuer
             .AsNoTracking(); 
 
         var totalCredit = await payments
-            .Where(x => x.BalanceType == BalanceType.Credit)
+            .Where(x => x.TransactionType == TransactionType.Credit)
             .SumAsync(x => (decimal?)x.Amount, cancellationToken) ?? 0;
 
         var totalDebit = await payments
-            .Where(x => x.BalanceType == BalanceType.Debit)
+            .Where(x => x.TransactionType == TransactionType.Debit)
             .SumAsync(x => (decimal?)x.Amount, cancellationToken) ?? 0;
 
         var dto = new GetDashboardDto

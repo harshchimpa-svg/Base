@@ -19,7 +19,6 @@ using Domain.Entities.Employees;
 using Domain.Entities.ExerciseDocuments;
 using Domain.Entities.Exercises;
 using About = Domain.Entities.Abouts.About;
-using Balance = Domain.Entities.Balances.Balance;
 using Clients = Domain.Entities.Clientses.Clients;
 using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
@@ -30,6 +29,7 @@ using Domain.Entities.PaymentLoges;
 using Domain.Entities.SalePayments;
 using Domain.Entities.SaleProducts;
 using Domain.Entities.Sales;
+using Domain.Entities.Transactions;
 
 namespace Persistence.DataContext;
 
@@ -48,8 +48,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Clients> Clients { get; set; }
-    // public DbSet<Balance> Balance { get; set; }
-    public DbSet<Balance> Transactions { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     public DbSet<About> About { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Customer> Customer { get; set; }
