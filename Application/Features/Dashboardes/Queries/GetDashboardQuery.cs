@@ -13,8 +13,7 @@ public class GetAllDashBoardQuery : IRequest<Result<GetDashboardDto>>
 {
 }
 
-internal class GetAllDashBoardQueryHandler
-    : IRequestHandler<GetAllDashBoardQuery, Result<GetDashboardDto>>
+internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuery, Result<GetDashboardDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -23,9 +22,7 @@ internal class GetAllDashBoardQueryHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetDashboardDto>> Handle(
-        GetAllDashBoardQuery request,
-        CancellationToken cancellationToken)
+    public async Task<Result<GetDashboardDto>> Handle(GetAllDashBoardQuery request, CancellationToken cancellationToken)
     {
         var payments = _unitOfWork
             .Repository<PaymentLoge>()

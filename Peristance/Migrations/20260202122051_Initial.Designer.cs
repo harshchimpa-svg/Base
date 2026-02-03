@@ -12,8 +12,8 @@ using Persistence.DataContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260123093016_Dite")]
-    partial class Dite
+    [Migration("20260202122051_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,9 +132,6 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -214,17 +211,20 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("BalanceType")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Credit")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("Debit")
-                        .HasColumnType("numeric");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -241,19 +241,16 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Balance");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Catagoryes.Category", b =>
+            modelBuilder.Entity("Domain.Entities.Catagories.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -303,7 +300,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categori");
                 });
 
             modelBuilder.Entity("Domain.Entities.Clientses.Clients", b =>
@@ -445,8 +442,9 @@ namespace Persistence.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -461,7 +459,52 @@ namespace Persistence.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DiteTypes.DiteType", b =>
+            modelBuilder.Entity("Domain.Entities.DietDocuments.DietDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("DietId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DietId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("DietDocument");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DietTypes.DietType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -497,10 +540,10 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("DiteType");
+                    b.ToTable("DietType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dites.Dite", b =>
+            modelBuilder.Entity("Domain.Entities.Diets.Diet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -518,7 +561,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("DiteTypeId")
+                    b.Property<int?>("DietTypeId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
@@ -545,11 +588,228 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiteTypeId");
+                    b.HasIndex("DietTypeId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Dite");
+                    b.ToTable("Diet");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Employees.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address1")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Address2")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Alterphonenumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ExerciseDocuments.ExerciseDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ExerciseId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("ExerciseDocument");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Exercises.Exercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("DietTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DietTypeId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("Exercise");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GymTraners.GemTraner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("GymId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GymId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GemTraner");
                 });
 
             modelBuilder.Entity("Domain.Entities.Gyms.Gym", b =>
@@ -785,7 +1045,7 @@ namespace Persistence.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Services.Service", b =>
+            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLoge", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -793,8 +1053,230 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("BalanceId")
                         .HasColumnType("integer");
+
+                    b.Property<int>("BalanceType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BalanceId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentLoge");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SalePayments.SalePayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MethodType")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("NetAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("SaleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StatusType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("SalePayment");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SaleProducts.SaleProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SaleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("taxe")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("SaleProduct");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sales.Sale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("InvoiceNo")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsCanceld")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("NetAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Tax")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Sale");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Services.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CatgoryId")
                         .HasColumnType("integer");
@@ -839,7 +1321,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CatgoryId");
 
                     b.HasIndex("OrganizationId");
 
@@ -862,11 +1344,11 @@ namespace Persistence.Migrations
                     b.Property<string>("Address2")
                         .HasColumnType("text");
 
-                    b.Property<int?>("CityId")
-                        .HasColumnType("integer");
+                    b.Property<string>("City")
+                        .HasColumnType("text");
 
-                    b.Property<int?>("CountryId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -886,8 +1368,8 @@ namespace Persistence.Migrations
                     b.Property<int?>("PinCode")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StateId")
-                        .HasColumnType("integer");
+                    b.Property<string>("State")
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -935,8 +1417,20 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -953,10 +1447,6 @@ namespace Persistence.Migrations
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("message")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -1167,22 +1657,22 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Balances.Balance", b =>
                 {
+                    b.HasOne("Domain.Entities.Customers.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.Navigation("Customer");
 
                     b.Navigation("Organization");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Catagoryes.Category", b =>
+            modelBuilder.Entity("Domain.Entities.Catagories.Category", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -1190,7 +1680,7 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Catagoryes.Category", "Parent")
+                    b.HasOne("Domain.Entities.Catagories.Category", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId");
 
@@ -1238,7 +1728,24 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DiteTypes.DiteType", b =>
+            modelBuilder.Entity("Domain.Entities.DietDocuments.DietDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.Diets.Diet", "Diet")
+                        .WithMany()
+                        .HasForeignKey("DietId");
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Diet");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DietTypes.DietType", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -1249,11 +1756,11 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dites.Dite", b =>
+            modelBuilder.Entity("Domain.Entities.Diets.Diet", b =>
                 {
-                    b.HasOne("Domain.Entities.DiteTypes.DiteType", "DiteType")
+                    b.HasOne("Domain.Entities.DietTypes.DietType", "DietType")
                         .WithMany()
-                        .HasForeignKey("DiteTypeId");
+                        .HasForeignKey("DietTypeId");
 
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()
@@ -1261,9 +1768,87 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DiteType");
+                    b.Navigation("DietType");
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Employees.Employee", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ApplicationRoles.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ExerciseDocuments.ExerciseDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.Exercises.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId");
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Exercises.Exercise", b =>
+                {
+                    b.HasOne("Domain.Entities.DietTypes.DietType", "DietType")
+                        .WithMany()
+                        .HasForeignKey("DietTypeId");
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DietType");
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GymTraners.GemTraner", b =>
+                {
+                    b.HasOne("Domain.Entities.Gyms.Gym", "Gym")
+                        .WithMany()
+                        .HasForeignKey("GymId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gym");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Gyms.Gym", b =>
@@ -1328,13 +1913,95 @@ namespace Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Services.Service", b =>
+            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLoge", b =>
                 {
-                    b.HasOne("Domain.Entities.Catagoryes.Category", "Category")
+                    b.HasOne("Domain.Entities.Balances.Balance", "Balance")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("BalanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Customers.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Balance");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SalePayments.SalePayment", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Sales.Sale", "Sale")
+                        .WithMany()
+                        .HasForeignKey("SaleId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SaleProducts.SaleProduct", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Sales.Sale", "Sale")
+                        .WithMany()
+                        .HasForeignKey("SaleId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sales.Sale", b =>
+                {
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Services.Service", b =>
+                {
+                    b.HasOne("Domain.Entities.Catagories.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CatgoryId");
 
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
                         .WithMany()

@@ -48,7 +48,8 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Clients> Clients { get; set; }
-    public DbSet<Balance> Balance { get; set; }
+    // public DbSet<Balance> Balance { get; set; }
+    public DbSet<Balance> Transactions { get; set; }
     public DbSet<About> About { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Customer> Customer { get; set; }

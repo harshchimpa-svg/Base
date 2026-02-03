@@ -244,7 +244,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Balance");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Catagories.Category", b =>
@@ -1414,8 +1414,20 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -1432,10 +1444,6 @@ namespace Persistence.Migrations
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("message")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

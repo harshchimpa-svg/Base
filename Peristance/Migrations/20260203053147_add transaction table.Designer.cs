@@ -12,8 +12,8 @@ using Persistence.DataContext;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260130112103_Employee")]
-    partial class Employee
+    [Migration("20260203053147_add transaction table")]
+    partial class addtransactiontable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -211,20 +211,20 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("BalanceType")
+                        .HasColumnType("integer");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Credit")
-                        .HasColumnType("numeric");
-
                     b.Property<int?>("CustomerId")
                         .HasColumnType("integer");
-
-                    b.Property<decimal>("Debit")
-                        .HasColumnType("numeric");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -247,7 +247,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Balance");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Catagories.Category", b =>
@@ -646,6 +646,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("text");
@@ -663,6 +666,8 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Employee");
                 });
@@ -1040,6 +1045,66 @@ namespace Persistence.Migrations
                     b.ToTable("Organizations");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLoge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("BalanceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BalanceType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BalanceId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentLoge");
+                });
+
             modelBuilder.Entity("Domain.Entities.SalePayments.SalePayment", b =>
                 {
                     b.Property<int>("Id")
@@ -1352,8 +1417,20 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -1370,10 +1447,6 @@ namespace Persistence.Migrations
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("message")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -1708,7 +1781,13 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.ApplicationRoles.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
                     b.Navigation("Organization");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Domain.Entities.ExerciseDocuments.ExerciseDocument", b =>
@@ -1832,6 +1911,39 @@ namespace Persistence.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLoge", b =>
+                {
+                    b.HasOne("Domain.Entities.Balances.Balance", "Balance")
+                        .WithMany()
+                        .HasForeignKey("BalanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Customers.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Balance");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.SalePayments.SalePayment", b =>
