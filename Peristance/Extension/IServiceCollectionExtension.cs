@@ -40,7 +40,7 @@ public static class IServiceCollectionExtension
 
     }
 
-    public static void AddDbContext(this IServiceCollection services, IConfiguration configuration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment environment)
+    public static void AddDbContext(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
     {
         try
         {

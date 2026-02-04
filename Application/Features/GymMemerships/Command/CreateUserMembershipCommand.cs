@@ -11,7 +11,7 @@ using Shared;
 
 namespace Application.Features.GymMemerships;
 
-public class CreateUserMembershipCommand : IRequest<Result<string>>
+public class CreateUserMembershipCommand : IRequest<Result<string>>,ICreateMapFrom<UserMembership>
 {
     public string UserId { get; set; }
     public int MembershipId { get; set; }
@@ -52,7 +52,13 @@ internal class CreateUserMembershipCommandHandler
             return Result<string>.BadRequest("Invalid date range");
         }
 
-        var membership = _mapper.Map<UserMembership>(request);
+        var membership = new UserMembership
+        {
+            UserId = request.UserId,
+            MembershipId = request.MembershipId,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate,
+        };
 
         await _unitOfWork.Repository<UserMembership>()
             .AddAsync(membership);

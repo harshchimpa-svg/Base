@@ -25,6 +25,12 @@ using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
 using Domain.Entities.Gyms;
 using Domain.Entities.GymTraners;
+using Domain.Entities.GymDocuments;
+using Domain.Entities.GymMemerships;
+using Domain.Entities.GymCategorys;
+using Domain.Entities.GymProducts;
+using Domain.Entities.ProductDocuments;
+using Domain.Entities.GymCartItem;
 
 namespace Persistence.DataContext;
 
@@ -55,6 +61,12 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<DietDocument> DietDocument { get; set; }
     public DbSet<Exercise> Exercise { get; set; }
     public DbSet<ExerciseDocument> ExerciseDocument { get; set; }
+    public DbSet<GymDocument> GymDocuments { get; set; }
+    public DbSet<UserMembership> UserMembership { get; set; }
+    public DbSet<GymCategory> GymCategories { get; set; }
+    public DbSet<GymProduct> GymProducts { get; set; }
+    public DbSet<ProductDocument> ProductDocuments { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
     
 
 

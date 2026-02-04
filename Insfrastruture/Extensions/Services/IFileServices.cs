@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.Services
-{
+{ 
     public class FileService : IFileService
     {
         private readonly IWebHostEnvironment _env;

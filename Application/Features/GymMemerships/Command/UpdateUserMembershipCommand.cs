@@ -13,10 +13,7 @@ public class UpdateUserMembershipCommand : IRequest<Result<UserMembership>>
     public int Id { get; set; }
     public CreateUserMembershipCommand CreateCommand { get; set; }
 
-    public UpdateUserMembershipCommand( 
-
-        int id,
-        CreateUserMembershipCommand command)
+    public UpdateUserMembershipCommand( int id, CreateUserMembershipCommand command)
     {
         Id = id;
         CreateCommand = command;
@@ -36,9 +33,7 @@ internal class UpdateUserMembershipCommandHandler
         _mapper = mapper;
     }
 
-    public async Task<Result<UserMembership>> Handle(
-        UpdateUserMembershipCommand request,
-        CancellationToken cancellationToken)
+    public async Task<Result<UserMembership>> Handle( UpdateUserMembershipCommand request, CancellationToken cancellationToken)
     {
         var membership = await _unitOfWork.Repository<UserMembership>()
             .Entities.FirstOrDefaultAsync(x => x.Id == request.Id);

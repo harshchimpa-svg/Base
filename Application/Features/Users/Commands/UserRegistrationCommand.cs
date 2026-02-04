@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Common.Enums.Users.UserRoleType;
 using Domain.Entities.UserProfiles;
+using Domain.Entities.GymCarts;
 
 namespace Application.Features.Users.Commands;
 
@@ -125,6 +126,14 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         };
         
         await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);
+
+        var gymCart = new GymCart
+        {
+            UserId = user.Id
+        };
+
+        await _unitOfWork.Repository<GymCart>().AddAsync(gymCart);
+
         await _unitOfWork.Save(cancellationToken); 
         
         if (request.Email != null)

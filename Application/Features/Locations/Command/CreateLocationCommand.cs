@@ -11,7 +11,7 @@ namespace Application.Features.Locations.Command;
 
 public class CreateLocationCommand : IRequest<Result<string>>, ICreateMapFrom<Location>
 {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public string Name { get; set; }
 
     public LocationType? LocationType { get; set; }

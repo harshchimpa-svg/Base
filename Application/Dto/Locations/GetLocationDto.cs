@@ -11,7 +11,6 @@ public class GetLocationDto : BaseDto,IMapFrom<Location>
 {
     
     public string Name { get; set; }
-    
     public string Code {  get; set; }
     public string? ShortName { get; set; }
     public int? ParentId { get; set; }
