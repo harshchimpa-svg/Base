@@ -16,4 +16,6 @@ public class GetUserProfileDto : IMapFrom<UserProfile>
     public UserLevelType UserLevelType  { get; set; }
     public decimal age { get; set; }
     public string message { get; set; }
+    public string Message { get; set; }
+    public string ProfileImageUrl { get; set; } 
 }

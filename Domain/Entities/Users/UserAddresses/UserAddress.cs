@@ -12,15 +12,8 @@ public class UserAddress : BaseAuditableEntity
 
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
-
-    [ForeignKey("City")]
-    public int? CityId { get; set; }
-
-    [ForeignKey("State")]
-    public int? StateId { get; set; }   
-
-    [ForeignKey("Country")]
-    public int? CountryId { get; set; }
-
+    public string? City { get; set; }
+    public string? State { get; set; }   
+    public string? Country { get; set; }
     public int? PinCode { get; set; }
 }

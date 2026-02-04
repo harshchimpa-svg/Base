@@ -15,6 +15,7 @@ using Domain.Entities.Customers;
 using Domain.Entities.DietDocuments;
 using Domain.Entities.Diets;
 using Domain.Entities.DietTypes;
+using Domain.Entities.Employees;
 using Domain.Entities.ExerciseDocuments;
 using Domain.Entities.Exercises;
 using About = Domain.Entities.Abouts.About;
@@ -31,6 +32,10 @@ using Domain.Entities.GymCategorys;
 using Domain.Entities.GymProducts;
 using Domain.Entities.ProductDocuments;
 using Domain.Entities.GymCartItem;
+using Domain.Entities.PaymentLoges;
+using Domain.Entities.SalePayments;
+using Domain.Entities.SaleProducts;
+using Domain.Entities.Sales;
 
 namespace Persistence.DataContext;
 
@@ -67,9 +72,15 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<Sale> Sale { get; set; }
+    public DbSet<SaleProduct> SaleProduct { get; set; }
+    public DbSet<SalePayment> SalePayment { get; set; } 
+    public DbSet<Employee> Employee { get; set; } 
+    public DbSet<PaymentLoge> PaymentLoge { get; set; } 
+
     
-
-
+    
+    
 
 
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;

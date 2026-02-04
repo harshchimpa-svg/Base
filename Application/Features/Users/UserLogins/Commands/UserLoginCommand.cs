@@ -28,7 +28,7 @@ internal class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Resul
         _userIdAndOrganizationIdRepository = userIdAndOrganizationIdRepository;
     }
 
-    async Task<Result<string>> IRequestHandler<UserLoginCommand, Result<string>>.Handle(UserLoginCommand request, CancellationToken cancellationToken)
+     async Task<Result<string>> IRequestHandler<UserLoginCommand, Result<string>>.Handle(UserLoginCommand request, CancellationToken cancellationToken)
     {
         var useOrga = await _userIdAndOrganizationIdRepository.Get();
 

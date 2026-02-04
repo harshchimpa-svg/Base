@@ -33,16 +33,18 @@ internal class CreateAboutCommandHandler: IRequestHandler<CreateAboutCommand, Re
     {
         var imageUrl = await _fileService.UploadAsync(request.Profile, "About");
 
-        var document = new About
+        var about = new About
         {
-            Profile = imageUrl,
+            Name = request.Name,
+            SubTitel = request.SubTitel,
+            Profile = imageUrl,  
+            IsActive = true
         };
-        
-        var About = _mapper.Map<About>(request);
 
-        await _unitOfWork.Repository<About>().AddAsync(About);
+        await _unitOfWork.Repository<About>().AddAsync(about);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("About created successfully.");
     }
+
 }

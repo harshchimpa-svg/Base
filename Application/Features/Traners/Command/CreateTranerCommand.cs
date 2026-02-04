@@ -39,9 +39,9 @@ public class CreateTranerCommand : IRequest<Result<string>>
 
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
-    public int? CityId { get; set; }
-    public int? StateId { get; set; }
-    public int? CountryId { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }   
+    public string? Country { get; set; }
     public int? PinCode { get; set; }
     
     
@@ -95,7 +95,7 @@ internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand
             Height = request.Height,
             UserLevelType  = request.UserLevelType,
             DateOfBirth = request.DateOfBirth,
-            message = request.message,
+            Message = request.message,
         };
         
         await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);
@@ -106,9 +106,9 @@ internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand
             UserId = user.Id,
             Address1 = request.Address1,
             Address2 = request.Address2,
-            CityId  = request.CityId,
-            StateId = request.StateId,
-            CountryId = request.CountryId,
+            City  = request.City,
+            State = request.State,
+            Country = request.Country,
             PinCode = request.PinCode,
         };
         await _unitOfWork.Repository<UserAddress>().AddAsync(UserAddress);

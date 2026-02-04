@@ -31,12 +31,12 @@ namespace WebApi.Controllers.Clientses
             var result = await _mediator.Send(new UpdateClientCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
-
+        
         [HttpGet]
-        public async Task<IActionResult> GetClients()
+        public async Task<IActionResult> GetAll([FromQuery] GetAllClientQueries query)
         {
-            var Clients = await _mediator.Send(new GetAllClientQueries());
-            return ResponseHelper.GenerateResponse(Clients);
+            var data = await _mediator.Send(query);
+            return Ok(data);
         }
 
         [HttpGet("{id}")]

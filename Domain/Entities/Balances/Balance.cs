@@ -1,14 +1,16 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
+using Domain.Common.Enums.BalanceTypes;
 using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Customers;
 
 namespace Domain.Entities.Balances;
 
 public class Balance: BaseAuditableEntity
 {
-    [ForeignKey("User")]
-    public string? UserId { get; set; }
-    public User User { get; set; }
-    public decimal Credit { get; set; }
-    public decimal Debit { get; set; }
+    [ForeignKey("Customer")]
+    public int? CustomerId { get; set; }
+    public Customer Customer { get; set; }
+    public BalanceType BalanceType { get; set; }
+    public decimal Amount { get; set; }
 }

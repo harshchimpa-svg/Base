@@ -1,4 +1,5 @@
 using Application.Common.Mappings.Commons;
+using Application.Dto.Balences;
 using Application.Dto.CommonDtos;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
@@ -11,4 +12,5 @@ public class GetCustomerDto: BaseDto, IMapFrom<Customer>
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Notes { get; set; }
+    public GetBalenceDto Balence { get; set; }
 }

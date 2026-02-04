@@ -51,7 +51,7 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
 
         if (!ValidationManager.IsValidPhoneNumber(username))
         {
-            if (!username.EndsWith("@gmail.com"))
+            if (!username.EndsWith("@"))
             {
                 return Result<string>.BadRequest("Only Gmail or phone number is allowed.");
             }

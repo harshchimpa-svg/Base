@@ -29,12 +29,12 @@ namespace WebApi.Controllers.Balance
             var result = await _mediator.Send(new UpdateBalenceCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
-
+        
         [HttpGet]
-        public async Task<IActionResult> GetBalance()
+        public async Task<IActionResult> GetAll([FromQuery] GetAllBalenceQuery query)
         {
-            var balance = await _mediator.Send(new GetAllBalenceQuery());
-            return ResponseHelper.GenerateResponse(balance);
+            var data = await _mediator.Send(query);
+            return Ok(data);
         }
 
         [HttpGet("{id}")]
