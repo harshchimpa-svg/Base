@@ -17,6 +17,7 @@ namespace WebApi.Controllers.Locations
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
 
         public async Task<ActionResult> CreateLocation(CreateLocationCommand command)
@@ -25,6 +26,7 @@ namespace WebApi.Controllers.Locations
             return ResponseHelper.GenerateResponse(location);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateLocation(int id, CreateLocationCommand command)
@@ -34,6 +36,7 @@ namespace WebApi.Controllers.Locations
 
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
 
         public async Task<IActionResult> GetLocation()
@@ -42,6 +45,7 @@ namespace WebApi.Controllers.Locations
             return ResponseHelper.GenerateResponse(location);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
 
         public async Task<ActionResult> GetLocationById(int id)
@@ -50,6 +54,7 @@ namespace WebApi.Controllers.Locations
             return ResponseHelper.GenerateResponse(location);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteLocation(int id)

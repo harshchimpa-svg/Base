@@ -20,6 +20,7 @@ namespace WebApi.Controllers.Sales
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateServices(CreateSaleCommand command)
         {
@@ -27,6 +28,7 @@ namespace WebApi.Controllers.Sales
             return ResponseHelper.GenerateResponse(Services);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateServices(int id, CreateSaleCommand command)
         {
@@ -34,6 +36,7 @@ namespace WebApi.Controllers.Sales
             return ResponseHelper.GenerateResponse(result);
         }
         
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllSaleQueries query)
         {
@@ -41,6 +44,7 @@ namespace WebApi.Controllers.Sales
             return Ok(data);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetServicesById(int id)
         {
@@ -48,6 +52,7 @@ namespace WebApi.Controllers.Sales
             return ResponseHelper.GenerateResponse(Services);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServices(int id)
         {

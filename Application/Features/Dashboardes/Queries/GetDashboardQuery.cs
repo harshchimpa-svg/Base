@@ -12,7 +12,6 @@ namespace Application.Features.Dashboards.Queries;
 public class GetAllDashBoardQuery : IRequest<Result<GetDashboardDto>>
 {
 }
-
 internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuery, Result<GetDashboardDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -24,18 +23,19 @@ internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuer
 
     public async Task<Result<GetDashboardDto>> Handle(GetAllDashBoardQuery request, CancellationToken cancellationToken)
     {
-        var payments = _unitOfWork
+        var payments = await _unitOfWork
             .Repository<PaymentLoge>()
             .Entities
-            .AsNoTracking(); 
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
 
-        var totalCredit = await payments
+        var totalCredit = payments
             .Where(x => x.TransactionType == TransactionType.Credit)
-            .SumAsync(x => (decimal?)x.Amount, cancellationToken) ?? 0;
+            .Sum(x => x.Amount);
 
-        var totalDebit = await payments
+        var totalDebit = payments
             .Where(x => x.TransactionType == TransactionType.Debit)
-            .SumAsync(x => (decimal?)x.Amount, cancellationToken) ?? 0;
+            .Sum(x => x.Amount);
 
         var dto = new GetDashboardDto
         {
@@ -46,5 +46,4 @@ internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuer
 
         return Result<GetDashboardDto>.Success(dto, "Dashboard summary");
     }
-
 }

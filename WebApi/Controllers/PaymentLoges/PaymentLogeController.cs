@@ -17,11 +17,12 @@ namespace WebApi.Controllers.PaymentLoges
             _mediator = mediator;
         }
         
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetCustomers()
+        public async Task<IActionResult> GetAll([FromQuery] GetAllPaymentLogeQueries query)
         {
-            var result = await _mediator.Send(new GetAllPaymentLogeQueries());
-            return ResponseHelper.GenerateResponse(result);
+            var data = await _mediator.Send(query);
+            return Ok(data);
         }
     }
 }

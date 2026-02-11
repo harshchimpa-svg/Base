@@ -1,4 +1,4 @@
-using Application.Features.Customers.Commands;
+/*using Application.Features.Customers.Commands;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Entities.Customers;
 using Domain.Entities.Employees;
@@ -40,4 +40,4 @@ internal class DeleateEmployeeCommandHandler : IRequestHandler<DeleateEmployeeCo
 
         return Result<bool>.Success(true, "Customer deleted successfully.");
     }
-}
+}*/

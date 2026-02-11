@@ -24,14 +24,13 @@ public class UserController : ControllerBase
         var data = await _mediator.Send(new GetUserByIdQuery(id));
         return ResponseHelper.GenerateResponse(data);
     }
-
+    
     [HttpGet("current")]
-    public async Task<IActionResult> GetCurrentUser()
+    public async Task<IActionResult> GetAll([FromQuery] GetCurrentUserQuery query)
     {
-        var data = await _mediator.Send(new GetCurrentUserQuery());
-        return ResponseHelper.GenerateResponse(data);
+        var data = await _mediator.Send(query);
+        return Ok(data);
     }
-
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetAllUserQuery query)
     {
@@ -48,8 +47,7 @@ public class UserController : ControllerBase
 
     [HttpPut("current")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> UpdateCurrentUser(
-        [FromForm] UpdateCurrentUserCommand command)
+    public async Task<IActionResult> UpdateCurrentUser([FromForm] UpdateCurrentUserCommand command)
     {
         var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);

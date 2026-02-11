@@ -17,6 +17,7 @@ namespace WebApi.Controllers.GymMemerships
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserMembershipCommand command)
         {
@@ -24,6 +25,7 @@ namespace WebApi.Controllers.GymMemerships
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(
             int id,
@@ -35,6 +37,7 @@ namespace WebApi.Controllers.GymMemerships
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -44,6 +47,7 @@ namespace WebApi.Controllers.GymMemerships
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -53,6 +57,7 @@ namespace WebApi.Controllers.GymMemerships
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -28,6 +28,6 @@ public class User : IdentityUser
     public bool IsDeleted { get; set; } = false;
     public string? OtherDetails { get; set; }
     public List<UserRole> UserRoles { get; set; }
-    public UserProfile UserProfile { get; set; }
-    public UserAddress UserAddress { get; set; }
+    public UserProfile? UserProfile { get; set; }
+    public UserAddress? UserAddress { get; set; }
 }

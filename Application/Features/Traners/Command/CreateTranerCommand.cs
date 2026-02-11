@@ -34,7 +34,6 @@ public class CreateTranerCommand : IRequest<Result<string>>
     public decimal Height { get; set; }
     public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string message { get; set; }
     
 
     public string? Address1 { get; set; }
@@ -95,7 +94,6 @@ internal class CreateTrannerCommandHandler : IRequestHandler<CreateTranerCommand
             Height = request.Height,
             UserLevelType  = request.UserLevelType,
             DateOfBirth = request.DateOfBirth,
-            Message = request.message,
         };
         
         await _unitOfWork.Repository<UserProfile>().AddAsync(userProfile);

@@ -16,6 +16,7 @@ public class TrannerController : ControllerBase
         _mediator = mediator;
     }
 
+    // [Authorize(Roles =  "Admin,Employee")]
     [HttpPost]
     public async Task<IActionResult> Create(CreateTranerCommand command)
     {
@@ -23,6 +24,7 @@ public class TrannerController : ControllerBase
         return Ok(result);
     }
 
+    // [Authorize(Roles =  "Admin,Employee")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update( UpdateTranerCommand command)
     {
@@ -30,7 +32,7 @@ public class TrannerController : ControllerBase
         return Ok(result);
     }
 
-
+    // [Authorize(Roles =  "Admin,Employee")]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetAllTrnerQuery query)
     {
@@ -38,6 +40,7 @@ public class TrannerController : ControllerBase
         return Ok(data);
     }
 
+    // [Authorize(Roles =  "Admin,Employee")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -45,6 +48,7 @@ public class TrannerController : ControllerBase
         return Ok(result);
     }
 
+    // [Authorize(Roles =  "Admin,Employee")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {

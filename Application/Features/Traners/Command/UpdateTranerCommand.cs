@@ -28,7 +28,6 @@ public class UpdateTranerCommand : IRequest<Result<string>>
     public decimal Height { get; set; }
     public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string message { get; set; }
 
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
@@ -94,7 +93,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
     {
         return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
                request.Height != null || request.UserLevelType != null ||
-               request.DateOfBirth != null || request.message != null;
+               request.DateOfBirth != null;
     }
 
     private bool HasAddressFields(UpdateTranerCommand request)
@@ -133,8 +132,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
             userProfile.UserLevelType = request.UserLevelType;
         if (request.DateOfBirth != null)
             userProfile.DateOfBirth = request.DateOfBirth;
-        if (request.message != null)
-            userProfile.Message = request.message;
+
 
         await _unitOfWork.Repository<UserProfile>().UpdateAsync(userProfile);
         await _unitOfWork.Save(cancellationToken);

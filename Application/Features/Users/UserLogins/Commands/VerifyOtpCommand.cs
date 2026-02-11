@@ -41,88 +41,94 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
         _jwtService = jwtService;
     }
 
-    public async Task<Result<string>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
+   public async Task<Result<string>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
+{
+    var useOrga = await _userIdAndOrganizationIdRepository.Get();
+
+    User? user = null;
+
+    var username = request.Username.Trim();
+
+    if (!ValidationManager.IsValidPhoneNumber(username))
     {
-        var useOrga = await _userIdAndOrganizationIdRepository.Get();
-
-        User? user = null;
-
-        var username = request.Username.Trim();
-
-        if (!ValidationManager.IsValidPhoneNumber(username))
+        if (!username.Contains("@"))
         {
-            if (!username.EndsWith("@"))
-            {
-                return Result<string>.BadRequest("Only Gmail or phone number is allowed.");
-            }
-
-            user = await _userManager.Users
-                .Where(x => x.Email == username)
-                .OrderByDescending(x => x.CreatedDate)
-                .FirstOrDefaultAsync();
-
-            if (user == null)
-            {
-                return Result<string>.BadRequest("Email not registered.");
-            }
-        }
-        else
-        {
-            user = await _userManager.Users
-                .Where(x => x.PhoneNumber != null && x.PhoneNumber == username)
-                .OrderByDescending(x => x.CreatedDate)
-                .FirstOrDefaultAsync();
-
-            if (user == null)
-            {
-                return Result<string>.BadRequest("Phone number not registered.");
-            }
+            return Result<string>.BadRequest("Only email or phone number is allowed.");
         }
 
-        OtpSentOn otpSentOn = ValidationManager.IsValidPhoneNumber(username) ? OtpSentOn.PhoneNumber : OtpSentOn.Email;
-
-        var otpEntity = await _unitOfWork.Repository<OTP>().Entities
-            .Where(x => x.UserId == user.Id
-                        && x.OtpSentOn == otpSentOn
-                        && (x.ForOtp == "Registration" || x.ForOtp == "Forgot")
-                        && !x.IsChecked)
+        user = await _userManager.Users
+            .Where(x => x.Email == username)
             .OrderByDescending(x => x.CreatedDate)
             .FirstOrDefaultAsync();
 
-        if (otpEntity == null)
+        if (user == null)
         {
-            return Result<string>.BadRequest("No otp requested!");
+            return Result<string>.BadRequest("Email not registered.");
         }
+    }
+    else
+    {
+        user = await _userManager.Users
+            .Where(x => x.PhoneNumber != null && x.PhoneNumber == username)
+            .OrderByDescending(x => x.CreatedDate)
+            .FirstOrDefaultAsync();
 
-        if (otpEntity.TimesChecked > 5)
+        if (user == null)
         {
-            return Result<string>.BadRequest("You checked otp too many times request new otp");
+            return Result<string>.BadRequest("Phone number not registered.");
         }
+    }
 
-        if (!otpEntity.CreatedDate.HasValue || (DateTime.UtcNow - otpEntity.CreatedDate.Value).TotalMinutes >= 5)
-        {
-            return Result<string>.BadRequest("Otp expired request new otp");
-        }
+    OtpSentOn otpSentOn = ValidationManager.IsValidPhoneNumber(username)
+        ? OtpSentOn.PhoneNumber
+        : OtpSentOn.Email;
 
-        if (otpEntity.Otp != request.Otp)
-        {
-            otpEntity.TimesChecked += 1;
-            await _unitOfWork.Repository<OTP>().UpdateAsync(otpEntity, otpEntity.Id);
-            await _unitOfWork.Save(cancellationToken);
-            return Result<string>.BadRequest("Incorrect otp!");
-        }
+    var otpEntity = await _unitOfWork.Repository<OTP>().Entities
+        .Where(x => x.UserId == user.Id
+                    && x.OtpSentOn == otpSentOn
+                    && (x.ForOtp == "Registration" || x.ForOtp == "Forgot")
+                    && !x.IsChecked)
+        .OrderByDescending(x => x.CreatedDate)
+        .FirstOrDefaultAsync();
 
-        otpEntity.IsChecked = true;
+    if (otpEntity == null)
+    {
+        return Result<string>.BadRequest("No otp requested!");
+    }
+
+    if (otpEntity.TimesChecked > 5)
+    {
+        return Result<string>.BadRequest("You checked otp too many times request new otp");
+    }
+
+    if (!otpEntity.CreatedDate.HasValue ||
+        (DateTime.UtcNow - otpEntity.CreatedDate.Value).TotalMinutes >= 5)
+    {
+        return Result<string>.BadRequest("Otp expired request new otp");
+    }
+
+    if (otpEntity.Otp != request.Otp)
+    {
+        otpEntity.TimesChecked += 1;
         await _unitOfWork.Repository<OTP>().UpdateAsync(otpEntity, otpEntity.Id);
         await _unitOfWork.Save(cancellationToken);
-
-        if (otpSentOn == OtpSentOn.PhoneNumber && !user.PhoneNumberConfirmed) user.PhoneNumberConfirmed = true;
-        else if (otpSentOn == OtpSentOn.Email && !user.EmailConfirmed) user.EmailConfirmed = true;
-
-        await _userManager.UpdateAsync(user);
-
-        var token = await _jwtService.GenerateToken(user.Id);
-
-        return Result<string>.Success(token, "Otp verified successfully", token);
+        return Result<string>.BadRequest("Incorrect otp!");
     }
+
+    otpEntity.IsChecked = true;
+    await _unitOfWork.Repository<OTP>().UpdateAsync(otpEntity, otpEntity.Id);
+    await _unitOfWork.Save(cancellationToken);
+
+    if (otpSentOn == OtpSentOn.PhoneNumber && !user.PhoneNumberConfirmed)
+        user.PhoneNumberConfirmed = true;
+    else if (otpSentOn == OtpSentOn.Email && !user.EmailConfirmed)
+        user.EmailConfirmed = true;
+
+    await _userManager.UpdateAsync(user);
+
+    var token = await _jwtService.GenerateToken(user.Id);
+
+    return Result<string>.Success(token, "Otp verified successfully", token);
+}
+
 }

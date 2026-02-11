@@ -1,6 +1,7 @@
 using Application.Features.Balence.Commands;
 using Application.Features.Balence.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Transaction
@@ -15,7 +16,7 @@ namespace WebApi.Controllers.Transaction
         {
             _mediator = mediator;
         }
-
+        
         [HttpPost]
         public async Task<ActionResult> CreateTransaction(CreateTransactionCommand command)
         {
@@ -23,6 +24,7 @@ namespace WebApi.Controllers.Transaction
             return ResponseHelper.GenerateResponse(transaction);
         }
 
+        // [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTransaction(int id, CreateTransactionCommand command)
         {
@@ -36,14 +38,16 @@ namespace WebApi.Controllers.Transaction
             var data = await _mediator.Send(query);
             return Ok(data);
         }
-
+        
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTransactionById(int id)
         {
             var transaction = await _mediator.Send(new GetTransactionByIdQuery(id));
             return ResponseHelper.GenerateResponse(transaction);
         }
-
+        
+        // [Authorize(Roles =  "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransaction(int id)
         {

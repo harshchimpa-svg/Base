@@ -1,5 +1,7 @@
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
+using Domain.Common.Enums.TransactionTypes;
+using Domain.Entities.Customers;
 using Domain.Entities.Transactions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,24 +9,24 @@ using Shared;
 
 namespace Application.Features.Balence.Commands;
 
-public class UpdateTransactionCommand: IRequest<Result<Transaction>>
+public class UpdateTransactionCommand : IRequest<Result<Transaction>>
 {
-
     public int Id { get; set; }
-    public CreateTransactionCommand CreateCommand { get; set; } = new();
+    public CreateTransactionCommand CreateCommand { get; set; }
 
     public UpdateTransactionCommand(int id, CreateTransactionCommand createCommand)
     {
         Id = id;
-        CreateCommand = createCommand;
+        CreateCommand = createCommand ;
     }
 }
-internal class UpdateCatagoryesCommandHandler : IRequestHandler<UpdateTransactionCommand, Result<Transaction>>
+
+internal class UpdateTransactionCommandHandler : IRequestHandler<UpdateTransactionCommand, Result<Transaction>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCatagoryesCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateTransactionCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
@@ -32,18 +34,37 @@ internal class UpdateCatagoryesCommandHandler : IRequestHandler<UpdateTransactio
 
     public async Task<Result<Transaction>> Handle(UpdateTransactionCommand request, CancellationToken cancellationToken)
     {
-        var Transaction = await _unitOfWork.Repository<Transaction>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var oldTransaction = await _unitOfWork.Repository<Transaction>()
+            .Entities
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-        if (Transaction == null)
-        {
-            return Result<Transaction>.BadRequest("Sorry id not found");
-        }
+        if (oldTransaction == null)
+            return Result<Transaction>.BadRequest("Transaction ID not found");
 
-        _mapper.Map(request.CreateCommand, Transaction);
+        var customer = await _unitOfWork.Repository<Customer>()
+            .Entities
+            .FirstOrDefaultAsync(x => x.Id == oldTransaction.CustomerId, cancellationToken);
 
-        await _unitOfWork.Repository<Transaction>().UpdateAsync(Transaction);
+        if (customer == null)
+            return Result<Transaction>.BadRequest("Customer not found");
+
+        if (oldTransaction.TransactionType == TransactionType.Credit)
+            customer.Balance -= oldTransaction.Amount;
+        else
+            customer.Balance += oldTransaction.Amount;
+
+        _mapper.Map(request.CreateCommand, oldTransaction);
+
+        if (oldTransaction.TransactionType == TransactionType.Credit)
+            customer.Balance += oldTransaction.Amount;
+        else
+            customer.Balance -= oldTransaction.Amount;
+
+        await _unitOfWork.Repository<Transaction>().UpdateAsync(oldTransaction);
+        await _unitOfWork.Repository<Customer>().UpdateAsync(customer);
+        
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<Transaction>.Success("Update Transaction...");
+        return Result<Transaction>.Success(oldTransaction, "Transaction updated successfully");
     }
 }

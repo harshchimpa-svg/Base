@@ -65,12 +65,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<SalePayment> SalePayment { get; set; } 
     public DbSet<Employee> Employee { get; set; } 
     public DbSet<PaymentLoge> PaymentLogs { get; set; } 
-
     
-    
-    
-
-
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

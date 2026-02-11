@@ -12,5 +12,7 @@ public class GetCustomerDto: BaseDto, IMapFrom<Customer>
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Notes { get; set; }
-    public GetTransactionDto Transaction { get; set; }
+
+    public decimal? Balance { get; set; }
+    public string? Profile { get; set; }
 }

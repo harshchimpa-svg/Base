@@ -1,8 +1,5 @@
 using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using Application.Interfaces.UnitOfWorkRepositories;
-using AutoMapper;
-using Domain.Common.Enums.Employees;
-using Domain.Commons.Enums.Users;
 using Domain.Entities.ApplicationUsers;
 using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
@@ -11,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
-using System.ComponentModel.DataAnnotations;
 using Application.Interfaces.Services;
 using Domain.Common.Enums.Users.UserRoleType;
 
@@ -23,16 +19,13 @@ public class UpdateCurrentUserCommand : IRequest<Result<string>>
     public string? LastName { get; set; }
     public string? OtherDetails { get; set; }
 
-    // Profile fields
-    public string? PhoneNumber { get; set; }
-    public string? Email { get; set; }
+    // Profile
     public decimal? Weight { get; set; }
     public decimal? Height { get; set; }
     public UserLevelType? UserLevelType { get; set; }
     public DateTime? DateOfBirth { get; set; }
-    public string? Message { get; set; }
 
-    // Address fields
+    // Address
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
     public string? City { get; set; }
@@ -43,13 +36,13 @@ public class UpdateCurrentUserCommand : IRequest<Result<string>>
     public IFormFile? ProfileImage { get; set; }
 }
 
-internal class UpdateCurrentUserCommandHandler 
+internal class UpdateCurrentUserCommandHandler
     : IRequestHandler<UpdateCurrentUserCommand, Result<string>>
 {
     private readonly UserManager<User> _userManager;
-    private readonly IFileService _fileService;
     private readonly IUserIdAndOrganizationIdRepository _userOrganization;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IFileService _fileService;
 
     public UpdateCurrentUserCommandHandler(
         UserManager<User> userManager,
@@ -71,9 +64,9 @@ internal class UpdateCurrentUserCommandHandler
         var user = await _userManager.FindByIdAsync(useOrga.UserId);
 
         if (user == null)
-            return Result<string>.NotFound("User not found.");
+            return Result<string>.NotFound("User not found");
 
-        // 🔹 Update User table
+        // 🔹 USER TABLE
         if (request.FirstName != null)
             user.FirstName = request.FirstName;
 
@@ -83,73 +76,65 @@ internal class UpdateCurrentUserCommandHandler
         if (request.OtherDetails != null)
             user.OtherDetails = request.OtherDetails;
 
-        var updateUserResult = await _userManager.UpdateAsync(user);
-        if (!updateUserResult.Succeeded)
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
         {
-            var errors = string.Join(", ", updateUserResult.Errors.Select(e => e.Description));
+            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
             return Result<string>.BadRequest(errors);
         }
 
-        // 🔹 Update Profile
-        await UpdateUserProfile(request, user.Id, cancellationToken);
+        var imageUrl = await UpdateUserProfile(request, user.Id, cancellationToken);
 
-        // 🔹 Update Address
         await UpdateUserAddress(request, user.Id, cancellationToken);
 
-        return Result<string>.Success(user.Id, "User updated successfully");
+        return Result<string>.Success(imageUrl ?? "", "User updated successfully");
     }
 
-    // ================= PROFILE ==================
-    private async Task UpdateUserProfile(
+    // ================= PROFILE =================
+    private async Task<string?> UpdateUserProfile(
         UpdateCurrentUserCommand request,
         string userId,
         CancellationToken cancellationToken)
     {
         var repo = _unitOfWork.Repository<UserProfile>();
 
-        var userProfile = await repo.Entities
+        var profile = await repo.Entities
             .FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
 
-        if (userProfile == null)
+        if (profile == null)
         {
-            userProfile = new UserProfile
-            {
-                UserId = userId
-            };
-            await repo.AddAsync(userProfile);
+            profile = new UserProfile { UserId = userId };
+            await repo.AddAsync(profile);
         }
 
-        if (request.PhoneNumber != null)
-            userProfile.PhoneNumber = request.PhoneNumber;
-
         if (request.Height.HasValue)
-            userProfile.Height = request.Height.Value;
+            profile.Height = request.Height.Value;
 
         if (request.Weight.HasValue)
-            userProfile.Weight = request.Weight.Value;
+            profile.Weight = request.Weight.Value;
 
         if (request.UserLevelType.HasValue)
-            userProfile.UserLevelType = request.UserLevelType.Value;
+            profile.UserLevelType = request.UserLevelType.Value;
 
         if (request.DateOfBirth.HasValue)
-            userProfile.DateOfBirth = request.DateOfBirth.Value;
-
-        if (request.Message != null)
-            userProfile.Message = request.Message;
+            profile.DateOfBirth = request.DateOfBirth.Value;
 
         if (request.ProfileImage != null)
         {
-            var imagePath = await _fileService.UploadAsync(
+            var path = await _fileService.UploadAsync(
                 request.ProfileImage,
                 "UserProfiles");
 
-            userProfile.ProfileImageUrl = imagePath;
+            profile.ProfileImageUrl = path;
         }
 
-        await repo.UpdateAsync(userProfile);
+        await repo.UpdateAsync(profile);
         await _unitOfWork.Save(cancellationToken);
+
+        return profile.ProfileImageUrl;
     }
 
+    // ================= ADDRESS =================
     private async Task UpdateUserAddress(
         UpdateCurrentUserCommand request,
         string userId,
@@ -157,37 +142,34 @@ internal class UpdateCurrentUserCommandHandler
     {
         var repo = _unitOfWork.Repository<UserAddress>();
 
-        var userAddress = await repo.Entities
+        var address = await repo.Entities
             .FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);
 
-        if (userAddress == null)
+        if (address == null)
         {
-            userAddress = new UserAddress
-            {
-                UserId = userId
-            };
-            await repo.AddAsync(userAddress);
+            address = new UserAddress { UserId = userId };
+            await repo.AddAsync(address);
         }
 
         if (request.Address1 != null)
-            userAddress.Address1 = request.Address1;
+            address.Address1 = request.Address1;
 
         if (request.Address2 != null)
-            userAddress.Address2 = request.Address2;
+            address.Address2 = request.Address2;
 
         if (request.City != null)
-            userAddress.City = request.City;
+            address.City = request.City;
 
         if (request.State != null)
-            userAddress.State = request.State;
+            address.State = request.State;
 
         if (request.Country != null)
-            userAddress.Country = request.Country;
+            address.Country = request.Country;
 
         if (request.PinCode.HasValue)
-            userAddress.PinCode = request.PinCode.Value;
+            address.PinCode = request.PinCode.Value;
 
-        await repo.UpdateAsync(userAddress);
+        await repo.UpdateAsync(address);
         await _unitOfWork.Save(cancellationToken);
     }
 }

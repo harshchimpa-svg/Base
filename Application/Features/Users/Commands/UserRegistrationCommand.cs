@@ -36,7 +36,7 @@ public class UserRegistrationCommand : IRequest<Result<string>>, ICreateMapFrom<
     public decimal Height { get; set; }
     public UserLevelType UserLevelType { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string message { get; set; }
+    public string? Message { get; set; }
 
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
@@ -120,7 +120,6 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             Height = request.Height,
             UserLevelType = request.UserLevelType,
             DateOfBirth = request.DateOfBirth,
-            Message = request.message
         });
 
         await _unitOfWork.Save(cancellationToken);

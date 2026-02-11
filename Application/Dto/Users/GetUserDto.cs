@@ -19,7 +19,7 @@ public class GetUserDto : IMapFrom<User>
     public bool IsActive { get; set; } = true;
     public string? OtherDetails { get; set; }
     public List<GetRoleDto> Roles { get; set; } = [];
-    public GetUserProfileDto UserProfile { get; set; }
-    public UserAddress UserAddress { get; set; }
+    public GetUserProfileDto? UserProfile { get; set; }
+    public GetUserAddressDto? UserAddress { get; set; }
 
 }

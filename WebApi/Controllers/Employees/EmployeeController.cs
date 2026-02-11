@@ -26,14 +26,13 @@ namespace WebApi.Controllers.Employees
             var Clients = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Clients);
         }
-
+        
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClients(int id, CreateEmployeeCommand command)
+        public async Task<IActionResult> Update( UpdateEmployeeCommand command)
         {
-            var result = await _mediator.Send(new UpdateEmployeeCommand(id, command));
-            return ResponseHelper.GenerateResponse(result);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
-
         [HttpGet]
         public async Task<IActionResult> GetClients()
         {
@@ -48,11 +47,11 @@ namespace WebApi.Controllers.Employees
             return ResponseHelper.GenerateResponse(Clients);
         }
 
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClients(int id)
         {
             var Clients = await _mediator.Send(new DeleateEmployeeCommand(id));
             return ResponseHelper.GenerateResponse(Clients);
-        }
+        }*/
     }
 }

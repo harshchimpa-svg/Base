@@ -14,9 +14,8 @@ public class UserProfile : BaseAuditableEntity
     public User User { get; set; }
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
+    public string? Message { get; set; }
     public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string Message { get; set; }
-    public string PhoneNumber { get; set; }
-    public string ProfileImageUrl { get; set; } 
+    public string? ProfileImageUrl { get; set; }
 }

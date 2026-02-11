@@ -27,14 +27,13 @@ public class UpdateUserCommand : IRequest<Result<string>>
     public string? OtherDetails { get; set; }
 
     // Profile fields
-    public string Name { get; set; }
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string message { get; set; }
+    public string? Message { get; set; }
 
     // Address fields
     public string? Address1 { get; set; }
@@ -102,7 +101,7 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Res
     {
         return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
                request.Height != null || request.UserLevelType != null ||
-               request.DateOfBirth != null || request.message != null;
+               request.DateOfBirth != null || request.Message != null;
     }
     
     private bool HasAddressFields(UpdateUserCommand request)
@@ -143,8 +142,7 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Res
             userProfile.UserLevelType = request.UserLevelType;
         if (request.DateOfBirth != null)
             userProfile.DateOfBirth = request.DateOfBirth;
-        if (request.message != null)
-            userProfile.Message = request.message;
+
 
         await _unitOfWork.Repository<UserProfile>().UpdateAsync(userProfile);
         await _unitOfWork.Save(cancellationToken);

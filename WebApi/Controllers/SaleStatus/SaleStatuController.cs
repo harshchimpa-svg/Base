@@ -16,6 +16,7 @@ namespace WebApi.Controllers.SaleStatus
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateServices(CreateSaleStatusCommand command)
         {

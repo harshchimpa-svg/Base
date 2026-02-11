@@ -83,10 +83,10 @@ internal class ForgetPasswordCommandHandler : IRequestHandler<ForgetPasswordComm
     {
         var totalOtpToday = await _unitOfWork.Repository<OTP>().Entities.Where(x => x.UserId == userId && x.CreatedDate.Value.Date == DateTime.UtcNow.Date).CountAsync();
 
-        /*if (totalOtpToday > 10)
+        if (totalOtpToday > 10)
         {
             throw new BadRequestException("You request otp too many times try again tomorrow!");
-        }*/
+        }
     }
 
     private async Task SendEmail(string email, int otp, string name, bool isRegisterOtp, bool isLoginOtp)
