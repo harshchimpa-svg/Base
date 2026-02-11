@@ -365,7 +365,7 @@ namespace Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Balance")
+                    b.Property<decimal?>("Balance")
                         .HasColumnType("numeric");
 
                     b.Property<string>("CreatedBy")
@@ -400,7 +400,6 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Profile")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UpdatedBy")
@@ -1293,6 +1292,51 @@ namespace Persistence.Migrations
                     b.ToTable("PaymentLogs");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProductDocuments.ProductDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("GymProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GymProductId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("ProductDocuments");
+                });
+
             modelBuilder.Entity("Domain.Entities.SalePayments.SalePayment", b =>
                 {
                     b.Property<int>("Id")
@@ -1456,51 +1500,6 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Sale");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ProductDocuments.ProductDocument", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("GymProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GymProductId");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("ProductDocuments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Services.Service", b =>
@@ -2284,6 +2283,23 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProductDocuments.ProductDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.GymProducts.GymProduct", "GymProduct")
+                        .WithMany()
+                        .HasForeignKey("GymProductId");
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GymProduct");
+
+                    b.Navigation("Organization");
+                });
+
             modelBuilder.Entity("Domain.Entities.SalePayments.SalePayment", b =>
                 {
                     b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
@@ -2333,23 +2349,6 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ProductDocuments.ProductDocument", b =>
-                {
-                    b.HasOne("Domain.Entities.GymProducts.GymProduct", "GymProduct")
-                        .WithMany()
-                        .HasForeignKey("GymProductId");
-
-                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GymProduct");
-
-                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Domain.Entities.Services.Service", b =>
