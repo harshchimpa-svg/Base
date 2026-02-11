@@ -11,23 +11,18 @@ namespace Application.Features.GymMemerships.Queries;
 public class GetUserMembershipQuery : IRequest<Result<List<GetUserMembershipDto>>>
 {
 }
-internal class GetUserMembershipQueryHandler
-    : IRequestHandler<GetUserMembershipQuery, Result<List<GetUserMembershipDto>>>
+internal class GetUserMembershipQueryHandler : IRequestHandler<GetUserMembershipQuery, Result<List<GetUserMembershipDto>>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetUserMembershipQueryHandler(
-        IUnitOfWork unitOfWork,
-        IMapper mapper)
+    public GetUserMembershipQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<Result<List<GetUserMembershipDto>>> Handle(
-        GetUserMembershipQuery request,
-        CancellationToken cancellationToken)
+    public async Task<Result<List<GetUserMembershipDto>>> Handle(GetUserMembershipQuery request, CancellationToken cancellationToken)
     {
         var list = await _unitOfWork.Repository<UserMembership>()
             .GetAll();

@@ -17,6 +17,7 @@ namespace WebApi.Controllers.GymDocuments
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<IActionResult> CreateGymDocument([FromForm] CreateGymDocumentCommand command)
         {
@@ -24,6 +25,7 @@ namespace WebApi.Controllers.GymDocuments
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGymDocument(int id, [FromForm] CreateGymDocumentCommand command)
         {
@@ -31,18 +33,23 @@ namespace WebApi.Controllers.GymDocuments
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetGym([FromQuery] GetAllGymDocumentQuery query)
         {
             var gyms = await _mediator.Send(query);
             return Ok(gyms);
         }
+        
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async  Task<IActionResult> GetGymDocumentById(int id)
         {
             var result = await _mediator.Send(new GetGymDocumentByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
+        
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGymDocument(int id)
         {

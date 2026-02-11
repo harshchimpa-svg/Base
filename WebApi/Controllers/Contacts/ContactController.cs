@@ -19,7 +19,7 @@ namespace WebApi.Controllers.Contacts
         {
             _mediator = mediator;
         }
-
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateContact(CreateContactCommand command)
         {
@@ -27,6 +27,7 @@ namespace WebApi.Controllers.Contacts
             return ResponseHelper.GenerateResponse(Vendor);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetContact()
         {

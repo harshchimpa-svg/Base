@@ -32,18 +32,18 @@ internal class UpdateDietTypesCommandsHandler : IRequestHandler<UpdateDietTypeCo
 
     public async Task<Result<DietType>> Handle(UpdateDietTypeCommands request, CancellationToken cancellationToken)
     {
-        var Balance = await _unitOfWork.Repository<DietType>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var Transaction = await _unitOfWork.Repository<DietType>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (Balance == null)
+        if (Transaction == null)
         {
             return Result<DietType>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, Balance);
+        _mapper.Map(request.CreateCommand, Transaction);
 
-        await _unitOfWork.Repository<DietType>().UpdateAsync(Balance);
+        await _unitOfWork.Repository<DietType>().UpdateAsync(Transaction);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<DietType>.Success("Update Balance...");
+        return Result<DietType>.Success("Update Transaction...");
     }
 }

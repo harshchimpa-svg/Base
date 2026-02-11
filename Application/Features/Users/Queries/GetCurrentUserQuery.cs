@@ -1,6 +1,7 @@
 using Application.Dto.Users.GetUserDtos;
 using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using AutoMapper;
+using Domain.Common.Enums.Users;
 using Domain.Entities.ApplicationUsers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -9,34 +10,52 @@ using Shared;
 
 namespace Application.Features.Users.Queries;
 
-public class GetCurrentUserQuery : IRequest<Result<GetUserDto>>;
-
-internal class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, Result<GetUserDto>>
+public class GetCurrentUserQuery : IRequest<PaginatedResult<GetUserDto>>
 {
-    private readonly UserManager<User> _userManager;
-    private readonly IMapper _mapper;
-    private readonly IUserIdAndOrganizationIdRepository _userOrganization;
+    public string? Email { get; set; }
+    public string? MobileNumber { get; set; }
+    public string? Name { get; set; }
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+}
 
-    public GetCurrentUserQueryHandler(UserManager<User> userManager, IMapper mapper, IUserIdAndOrganizationIdRepository userOrganization)
+internal class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, PaginatedResult<GetUserDto>>
+{
+    private readonly IMapper _mapper;
+    private readonly UserManager<User> _userManager;
+
+    public GetCurrentUserQueryHandler(IMapper mapper, UserManager<User> userManager)
     {
-        _userManager = userManager;
         _mapper = mapper;
-        _userOrganization = userOrganization;
+        _userManager = userManager;
     }
 
-    public async Task<Result<GetUserDto>> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetUserDto>> Handle(GetCurrentUserQuery request,
+        CancellationToken cancellationToken)
     {
-        var useOrga = await _userOrganization.Get();
+        var search = request;
 
-        var user = await _userManager.Users
-            .Include(x => x.UserRoles)
-                .ThenInclude(x => x.Role)
-            .Include(x => x.UserProfile)
+        var queryable = _userManager.Users
             .Include(x => x.UserAddress)
-            .FirstOrDefaultAsync(x => x.Id == useOrga.UserId, cancellationToken);
+            .Include(x => x.UserAddress)
+            .Include(x => x.UserProfile)
+            .Include(x => x.UserRoles).ThenInclude(x => x.Role)
+            .Where(u => u.UserType == UserType.WebUser &&
+                        (string.IsNullOrEmpty(search.Name) || u.FirstName.ToLower().Contains(search.Name.ToLower()))
+                        && (string.IsNullOrEmpty(search.MobileNumber) || u.PhoneNumber.Contains(search.MobileNumber))
+                        && (string.IsNullOrEmpty(search.Email) || u.Email.ToLower().Contains(search.Email.ToLower())))
+            .AsQueryable();
 
-        var userDto = _mapper.Map<GetUserDto>(user);
+        var count = await queryable.CountAsync();
 
-        return Result<GetUserDto>.Success(userDto, "User retrieved successfully.");
+        var users = await queryable
+            .OrderByDescending(x => x.CreatedDate)
+            .Skip((search.PageNumber - 1) * search.PageSize)
+            .Take(search.PageSize)
+            .ToListAsync();
+
+        var mapUser = _mapper.Map<List<GetUserDto>>(users);
+
+        return PaginatedResult<GetUserDto>.Create(mapUser, count, search.PageNumber, search.PageSize, 200);
     }
 }

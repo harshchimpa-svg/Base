@@ -28,13 +28,12 @@ public class UpdateTranerCommand : IRequest<Result<string>>
     public decimal Height { get; set; }
     public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string message { get; set; }
 
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
-    public int? CityId { get; set; }
-    public int? StateId { get; set; }
-    public int? CountryId { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }   
+    public string? Country { get; set; }
     public int? PinCode { get; set; }
 }
 
@@ -94,13 +93,13 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
     {
         return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
                request.Height != null || request.UserLevelType != null ||
-               request.DateOfBirth != null || request.message != null;
+               request.DateOfBirth != null;
     }
 
     private bool HasAddressFields(UpdateTranerCommand request)
     {
-        return request.Address1 != null || request.Address2 != null || request.CityId != null ||
-               request.StateId != null || request.CountryId != null || request.PinCode != null;
+        return request.Address1 != null || request.Address2 != null || request.City != null ||
+               request.State != null || request.Country != null || request.PinCode != null;
     }
 
     private async Task UpdateUserProfile(UpdateTranerCommand request, string userId, CancellationToken cancellationToken)
@@ -133,8 +132,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
             userProfile.UserLevelType = request.UserLevelType;
         if (request.DateOfBirth != null)
             userProfile.DateOfBirth = request.DateOfBirth;
-        if (request.message != null)
-            userProfile.message = request.message;
+
 
         await _unitOfWork.Repository<UserProfile>().UpdateAsync(userProfile);
         await _unitOfWork.Save(cancellationToken);
@@ -167,12 +165,12 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
             userAddress.Address1 = request.Address1;
         if (request.Address2 != null)
             userAddress.Address2 = request.Address2;
-        if (request.CityId != null)
-            userAddress.CityId = request.CityId;
-        if (request.StateId != null)
-            userAddress.StateId = request.StateId;
-        if (request.CountryId != null)
-            userAddress.CountryId = request.CountryId;
+        if (request.City != null)
+            userAddress.City = request.City;
+        if (request.State != null)
+            userAddress.State = request.State;
+        if (request.Country != null)
+            userAddress.Country = request.Country;
         if (request.PinCode != null)
             userAddress.PinCode = request.PinCode;
 

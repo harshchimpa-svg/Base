@@ -16,6 +16,7 @@ namespace WebApi.Controllers.DietDocuments
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateDiet(CreateDiteDocumentCommand command)
         {
@@ -23,6 +24,7 @@ namespace WebApi.Controllers.DietDocuments
             return ResponseHelper.GenerateResponse(diet);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDiet(int id, CreateDiteDocumentCommand command)
         {

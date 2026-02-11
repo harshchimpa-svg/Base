@@ -46,7 +46,6 @@ internal class UpdateAboutCommandHandler : IRequestHandler<UpdateAboutCommand, R
         if (About == null)
         {
             return Result<About>.BadRequest("Sorry id not found");
-            About.Profile = await _fileService.UploadAsync(request.CreateCommand.Profile, "documents");
         }
 
         _mapper.Map(request.CreateCommand, About);

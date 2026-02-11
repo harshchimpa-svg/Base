@@ -38,7 +38,7 @@ internal class CreateGymDocumentCommandHandler : IRequestHandler<CreateGymDocume
         {
             var gymExists = await _unitOfWork.Repository<Gym>().GetByID(request.GymId.Value);
 
-            if (gymExists == null)
+            if (gymExists == null) 
             {
                 return Result<string>.BadRequest("Gym Id is not exit");
             }

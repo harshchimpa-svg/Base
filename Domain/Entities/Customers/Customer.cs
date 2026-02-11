@@ -1,4 +1,5 @@
 using Domain.Common;
+using Domain.Entities.Transactions;
 
 namespace Domain.Entities.Customers;
 
@@ -8,4 +9,6 @@ public class Customer: BaseAuditableEntity
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public string Notes { get; set; }
+    public decimal? Balance { get; set; }
+    public string? Profile { get; set; }
 }

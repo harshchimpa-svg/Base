@@ -26,24 +26,28 @@ public class UserController : ControllerBase
     }
     
     [HttpGet("current")]
-    public async Task<IActionResult> GetCurrentUser()
+    public async Task<IActionResult> GetAll([FromQuery] GetCurrentUserQuery query)
     {
-        var data = await _mediator.Send(new GetCurrentUserQuery());
-        return ResponseHelper.GenerateResponse(data);
+        var data = await _mediator.Send(query);
+        return Ok(data);
     }
-    
-    
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetAllUserQuery query)
     {
         var data = await _mediator.Send(query);
         return Ok(data);
     }
-    
-    
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(UserRegistrationCommand command)
+    public async Task<IActionResult> Register([FromBody] UserRegistrationCommand command)
+    {
+        var data = await _mediator.Send(command);
+        return ResponseHelper.GenerateResponse(data);
+    }
+
+    [HttpPut("current")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UpdateCurrentUser([FromForm] UpdateCurrentUserCommand command)
     {
         var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);
@@ -57,19 +61,10 @@ public class UserController : ControllerBase
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [HttpPut("current")]
-    public async Task<IActionResult> UpdateCurrentUser(UpdateCurrentUserCommand command)
-    {
-        var data = await _mediator.Send(command);
-        return ResponseHelper.GenerateResponse(data);
-    }
-
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
         var data = await _mediator.Send(new DeleteUserCommand(id));
         return ResponseHelper.GenerateResponse(data);
     }
-
-
 }

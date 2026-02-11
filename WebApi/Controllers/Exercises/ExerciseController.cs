@@ -16,6 +16,7 @@ namespace WebApi.Controllers.Exercises
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateDiet(CreateExerciseCommand command)
         {
@@ -23,6 +24,7 @@ namespace WebApi.Controllers.Exercises
             return ResponseHelper.GenerateResponse(diet);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDiet(int id, CreateExerciseCommand command)
         {
@@ -30,6 +32,7 @@ namespace WebApi.Controllers.Exercises
             return ResponseHelper.GenerateResponse(result);
         }
         
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetExerciseQuery query)
         {
@@ -37,6 +40,7 @@ namespace WebApi.Controllers.Exercises
             return Ok(data);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetDietById(int id)
         {
@@ -44,6 +48,7 @@ namespace WebApi.Controllers.Exercises
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDiet(int id)
         {

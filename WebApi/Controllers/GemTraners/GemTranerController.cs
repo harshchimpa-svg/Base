@@ -17,6 +17,7 @@ namespace WebApi.Controllers.GemTraners
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateServices(CreateGymTranerCommands command)
         {
@@ -24,6 +25,7 @@ namespace WebApi.Controllers.GemTraners
             return ResponseHelper.GenerateResponse(Services);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateServices(int id, CreateGymTranerCommands command)
         {
@@ -31,6 +33,7 @@ namespace WebApi.Controllers.GemTraners
             return ResponseHelper.GenerateResponse(result);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetServices()
         {
@@ -38,6 +41,7 @@ namespace WebApi.Controllers.GemTraners
             return ResponseHelper.GenerateResponse(Services);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetServicesById(int id)
         {
@@ -45,6 +49,7 @@ namespace WebApi.Controllers.GemTraners
             return ResponseHelper.GenerateResponse(Services);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServices(int id)
         {

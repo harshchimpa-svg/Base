@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Abouts
 {
-    [Route("api/abouts")]
+    [Route("api/about")]
     [ApiController]
     public class AboutController : ControllerBase
     {
@@ -17,14 +17,14 @@ namespace WebApi.Controllers.Abouts
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAbout(CreateAboutCommand command)
+        public async Task<IActionResult> CreateAbout([FromForm] CreateAboutCommand command)
         {
             var about = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(about);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAbout(int id, CreateAboutCommand command)
+        public async Task<IActionResult> UpdateAbout(int id, [FromForm] CreateAboutCommand command)
         {
             var result = await _mediator.Send(new UpdateAboutCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -38,7 +38,7 @@ namespace WebApi.Controllers.Abouts
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetAboutById(int id)
+        public async Task<IActionResult> GetAboutById(int id)
         {
             var about = await _mediator.Send(new GetAboutByIdQuery(id));
             return ResponseHelper.GenerateResponse(about);

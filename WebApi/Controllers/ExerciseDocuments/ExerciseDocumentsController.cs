@@ -16,6 +16,7 @@ namespace WebApi.Controllers.ExerciseDocuments
             _mediator = mediator;
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateDiet(CreateExerciseDocumentCommand command)
         {
@@ -23,6 +24,7 @@ namespace WebApi.Controllers.ExerciseDocuments
             return ResponseHelper.GenerateResponse(diet);
         }
 
+        // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDiet(int id, CreateExerciseDocumentCommand command)
         {

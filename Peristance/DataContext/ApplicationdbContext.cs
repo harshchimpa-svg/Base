@@ -15,16 +15,21 @@ using Domain.Entities.Customers;
 using Domain.Entities.DietDocuments;
 using Domain.Entities.Diets;
 using Domain.Entities.DietTypes;
+using Domain.Entities.Employees;
 using Domain.Entities.ExerciseDocuments;
 using Domain.Entities.Exercises;
 using About = Domain.Entities.Abouts.About;
-using Balance = Domain.Entities.Balances.Balance;
 using Clients = Domain.Entities.Clientses.Clients;
 using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
 using Domain.Entities.Gyms;
 using Domain.Entities.GymTraners;
+using Domain.Entities.PaymentLoges;
+using Domain.Entities.SalePayments;
+using Domain.Entities.SaleProducts;
+using Domain.Entities.Sales;
+using Domain.Entities.Transactions;
 using Domain.Entities.GymDocuments;
 using Domain.Entities.GymMemerships;
 using Domain.Entities.GymCategorys;
@@ -45,11 +50,11 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<Category> Categori { get; set; }
+    public DbSet<Category> Categories { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
     public DbSet<Clients> Clients { get; set; }
-    public DbSet<Balance> Balance { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     public DbSet<About> About { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Customer> Customer { get; set; }
@@ -61,6 +66,12 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<DietDocument> DietDocument { get; set; }
     public DbSet<Exercise> Exercise { get; set; }
     public DbSet<ExerciseDocument> ExerciseDocument { get; set; }
+    public DbSet<Sale> Sale { get; set; }
+    public DbSet<SaleProduct> SaleProduct { get; set; }
+    public DbSet<SalePayment> SalePayment { get; set; } 
+    public DbSet<Employee> Employee { get; set; } 
+    public DbSet<PaymentLoge> PaymentLogs { get; set; } 
+    
     public DbSet<GymDocument> GymDocuments { get; set; }
     public DbSet<UserMembership> UserMembership { get; set; }
     public DbSet<GymCategory> GymCategories { get; set; }
