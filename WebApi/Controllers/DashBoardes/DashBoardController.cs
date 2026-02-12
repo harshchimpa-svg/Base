@@ -1,6 +1,7 @@
 ﻿using Application.Features.Categoryes.Queries;
 using Application.Features.Dashboards.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.DashBoardes
@@ -16,6 +17,7 @@ namespace WebApi.Controllers.DashBoardes
             _mediator = mediator;
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetLocation()
         {

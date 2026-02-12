@@ -1,6 +1,7 @@
 using Application.Features.Abouts.Commands;
 using Application.Features.Abouts.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Abouts
@@ -16,13 +17,15 @@ namespace WebApi.Controllers.Abouts
             _mediator = mediator;
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateAbout([FromForm] CreateAboutCommand command)
         {
             var about = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(about);
         }
-
+        
+        [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAbout(int id, [FromForm] CreateAboutCommand command)
         {
@@ -30,6 +33,7 @@ namespace WebApi.Controllers.Abouts
             return ResponseHelper.GenerateResponse(result);
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetAbout()
         {
@@ -37,6 +41,7 @@ namespace WebApi.Controllers.Abouts
             return ResponseHelper.GenerateResponse(about);
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAboutById(int id)
         {
@@ -44,6 +49,7 @@ namespace WebApi.Controllers.Abouts
             return ResponseHelper.GenerateResponse(about);
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAbout(int id)
         {

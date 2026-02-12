@@ -7,9 +7,12 @@ using AutoMapper;
 using Domain.Common.Enums.Otps;
 using Domain.Common.Enums.Users;
 using Domain.Common.Enums.Users.UserRoleType;
+using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
+using Domain.Entities.Employees;
 using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
+using Domain.Entities.Users.UserRoles;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared;
@@ -54,11 +57,13 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
     private readonly IUserIdAndOrganizationIdRepository _userIdAndOrganizationIdRepository;
     private readonly IOtpRepository _otpRepository;
     private readonly IEmailService _emailService;
+    private readonly RoleManager<Role> _roleManager;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateEmployeeCommandHandler(
         UserManager<User> userManager,
         IMapper mapper,
+        RoleManager<Role> roleManager,
         IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository,
         IOtpRepository otpRepository,
         IEmailService emailService,
@@ -66,6 +71,7 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
     {
         _unitOfWork = unitOfWork;
         _userManager = userManager;
+        _roleManager = roleManager;
         _mapper = mapper;
         _userIdAndOrganizationIdRepository = userIdAndOrganizationIdRepository;
         _otpRepository = otpRepository;
@@ -122,7 +128,12 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
 
         await _unitOfWork.Save(cancellationToken);
 
-        if (request.IsOtp && request.Email != null)
+        await _userManager.AddToRoleAsync(user,"employee"); 
+
+
+
+
+    if (request.IsOtp && request.Email != null)
         {
             var otp = await _otpRepository.GenerateAndAddOtpAsync(
                 user.Id, "Registration", OtpSentOn.Email, cancellationToken);
@@ -133,7 +144,7 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
                 $"Hello {request.FirstName},\n\nYour OTP is: {otp.Otp}\n\nThanks,\nSupport Team");
         }
 
-        return request.IsOtp ? Result<string>.Success("User registered. OTP sent.") : Result<string>.Success("User registered successfully.");
+        return request.IsOtp ? Result<string>.Success("Employee registered. OTP sent.") : Result<string>.Success("Employee registered successfully.");
     }
 }
 // Employee.RoleId = "1a916884-1fbb-4cc1-86b5-bc06125fb7f2";

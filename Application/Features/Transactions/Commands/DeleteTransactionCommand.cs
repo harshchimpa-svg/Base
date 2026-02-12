@@ -46,7 +46,7 @@ internal class DeleteTransactionCommandHandler : IRequestHandler<DeleteTransacti
         if (transaction.TransactionType == TransactionType.Credit)
             customer.Balance =customer.Balance + transaction.Amount; 
         else
-            customer.Balance = customer.Balance - transaction.Amount; 
+            customer.Balance = customer.Balance - transaction.Amount;
 
         await _unitOfWork.Repository<Customer>().UpdateAsync(customer);
 

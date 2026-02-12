@@ -3,6 +3,7 @@ using Application.Features.Clientses.Queries;
 using Application.Features.Employees.Commands;
 using Application.Features.Employees.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Employees
@@ -20,6 +21,7 @@ namespace WebApi.Controllers.Employees
             _mediator = mediator;
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpPost]
         public async Task<ActionResult> CreateClients(CreateEmployeeCommand command)
         {
@@ -27,12 +29,15 @@ namespace WebApi.Controllers.Employees
             return ResponseHelper.GenerateResponse(Clients);
         }
         
+        [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update( UpdateEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+        
+        [Authorize(Roles =  "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetClients()
         {
@@ -40,6 +45,7 @@ namespace WebApi.Controllers.Employees
             return ResponseHelper.GenerateResponse(Clients);
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetClientsById(int id)
         {
