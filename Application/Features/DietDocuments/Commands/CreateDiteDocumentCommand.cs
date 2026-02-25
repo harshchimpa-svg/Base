@@ -26,11 +26,11 @@ internal class CreateDiteDocumentCommandHandler : IRequestHandler<CreateDiteDocu
 
     public async Task<Result<string>> Handle(CreateDiteDocumentCommand request, CancellationToken cancellationToken)
     {
-        var Customer = _mapper.Map<DietDocument>(request);
+        var DietDocument = _mapper.Map<DietDocument>(request);
 
-        await _unitOfWork.Repository<DietDocument>().AddAsync(Customer);
+        await _unitOfWork.Repository<DietDocument>().AddAsync(DietDocument);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<string>.Success("Customer created successfully.");
+        return Result<string>.Success("DietDocument created successfully.");
     }
 }

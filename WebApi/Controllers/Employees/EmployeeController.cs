@@ -38,14 +38,6 @@ namespace WebApi.Controllers.Employees
         }
         
         [Authorize(Roles =  "Admin")]
-        [HttpGet]
-        public async Task<IActionResult> GetClients()
-        {
-            var Clients = await _mediator.Send(new GetAllEmployeeQueries());
-            return ResponseHelper.GenerateResponse(Clients);
-        }
-
-        [Authorize(Roles =  "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetClientsById(int id)
         {
@@ -53,6 +45,13 @@ namespace WebApi.Controllers.Employees
             return ResponseHelper.GenerateResponse(Clients);
         }
 
+        [Authorize(Roles =  "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeQueries query)
+        {
+            var data = await _mediator.Send(query);
+            return Ok(data);
+        }
         /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClients(int id)
         {

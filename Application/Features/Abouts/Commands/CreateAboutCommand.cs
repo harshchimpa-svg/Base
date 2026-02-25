@@ -13,7 +13,7 @@ public class CreateAboutCommand : IRequest<Result<string>>, ICreateMapFrom<About
 {
     public string Name { get; set; }
     public IFormFile Profile { get; set; }
-    public string SubTitel { get; set; }
+    public string SubTitle { get; set; }
 }
 
 internal class CreateAboutCommandHandler : IRequestHandler<CreateAboutCommand, Result<string>>
@@ -37,7 +37,7 @@ internal class CreateAboutCommandHandler : IRequestHandler<CreateAboutCommand, R
         var about = new About
         {
             Name = request.Name,
-            SubTitel = request.SubTitel,
+            SubTitel = request.SubTitle,
             Profile = imageUrl,
             IsActive = true
         };

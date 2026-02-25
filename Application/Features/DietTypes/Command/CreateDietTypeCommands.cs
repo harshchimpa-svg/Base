@@ -24,12 +24,12 @@ internal class CreateGymCommandHandler : IRequestHandler<CreateDietTypeCommands,
 
     public async Task<Result<string>> Handle(CreateDietTypeCommands request, CancellationToken cancellationToken)
     {
-        var gym = _mapper.Map<DietType>(request);
+        var DietTypes = _mapper.Map<DietType>(request);
 
-        await _unitOfWork.Repository<DietType>().AddAsync(gym);
+        await _unitOfWork.Repository<DietType>().AddAsync(DietTypes);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<string>.Success("Gym Created Successfully");
+        return Result<string>.Success("DietTypes Created Successfully");
         
     }
 }

@@ -33,16 +33,16 @@ internal class UpdateClientsCommandHandler : IRequestHandler<UpdateClientCommand
     public async Task<Result<Clients>> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
     {
 
-        var location = await _unitOfWork.Repository<Clients>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var Clients = await _unitOfWork.Repository<Clients>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (location == null)
+        if (Clients == null)
         {
             return Result<Clients>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, location);
+        _mapper.Map(request.CreateCommand, Clients);
 
-        await _unitOfWork.Repository<Clients>().UpdateAsync(location);
+        await _unitOfWork.Repository<Clients>().UpdateAsync(Clients);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<Clients>.Success("Update Clients...");

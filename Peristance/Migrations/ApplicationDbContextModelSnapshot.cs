@@ -115,6 +115,9 @@ namespace Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -408,9 +411,14 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Customer");
                 });
@@ -1562,6 +1570,69 @@ namespace Persistence.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ShopeSettings.ShopeSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GstNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("OnerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ShopeName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("ShopeSetting");
+                });
+
             modelBuilder.Entity("Domain.Entities.Transactions.Transaction", b =>
                 {
                     b.Property<int>("Id")
@@ -1599,6 +1670,10 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -1981,7 +2056,13 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.ApplicationUsers.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Organization");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.DietDocuments.DietDocument", b =>
@@ -2372,6 +2453,23 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
 
                     b.Navigation("Vendor");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ShopeSettings.ShopeSetting", b =>
+                {
+                    b.HasOne("Domain.Entities.Employees.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("Domain.Entities.Organizations.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Domain.Entities.Transactions.Transaction", b =>

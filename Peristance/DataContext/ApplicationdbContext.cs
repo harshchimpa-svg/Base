@@ -36,6 +36,7 @@ using Domain.Entities.GymCategorys;
 using Domain.Entities.GymProducts;
 using Domain.Entities.ProductDocuments;
 using Domain.Entities.GymCartItem;
+using Domain.Entities.ShopeSettings;
 
 namespace Persistence.DataContext;
 
@@ -78,7 +79,8 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
-    
+    public DbSet<ShopeSetting> ShopeSetting { get; set; }
+
 
 
 

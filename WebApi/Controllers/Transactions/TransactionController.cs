@@ -17,7 +17,7 @@ namespace WebApi.Controllers.Transaction
             _mediator = mediator;
         }
 
-        [Authorize(Roles =  "Admin,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         [HttpPost]
         public async Task<ActionResult> CreateTransaction(CreateTransactionCommand command)
         {
@@ -25,7 +25,7 @@ namespace WebApi.Controllers.Transaction
             return ResponseHelper.GenerateResponse(transaction);
         }
 
-        [Authorize(Roles =  "Admin,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTransaction(int id, CreateTransactionCommand command)
         {
@@ -33,7 +33,7 @@ namespace WebApi.Controllers.Transaction
             return ResponseHelper.GenerateResponse(result);
         }
 
-        [Authorize(Roles =  "Admin,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllTransactionQuery query)
         {
@@ -41,7 +41,7 @@ namespace WebApi.Controllers.Transaction
             return Ok(data);
         }
 
-        [Authorize(Roles =  "Admin,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTransactionById(int id)
         {
@@ -49,7 +49,15 @@ namespace WebApi.Controllers.Transaction
             return ResponseHelper.GenerateResponse(transaction);
         }
 
-        [Authorize(Roles =  "Admin")]
+        [Authorize(Roles = "Admin,Employee")]
+        [HttpGet("recent-activity")]
+        public async Task<IActionResult> GetRecentActivity([FromQuery] GetRecentActivityQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return ResponseHelper.GenerateResponse(result);
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransaction(int id)
         {
@@ -57,7 +65,7 @@ namespace WebApi.Controllers.Transaction
             return ResponseHelper.GenerateResponse(transaction);
         }
 
-        [Authorize(Roles =  "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("all/{customerId}")]
         public async Task<IActionResult> DeleteAllByCustomer(int customerId)
         {

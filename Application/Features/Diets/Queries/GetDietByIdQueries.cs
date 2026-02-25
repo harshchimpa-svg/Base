@@ -34,15 +34,15 @@ internal class GetDietByIdQueriesHandler : IRequestHandler<GetDietByIdQueries, R
     public async Task<Result<GetDietDto>> Handle(GetDietByIdQueries request, CancellationToken cancellationToken)
 
     {
-        var Clients = await _unitOfWork.Repository<Diet>().GetByID(request.Id);
+        var Diets = await _unitOfWork.Repository<Diet>().GetByID(request.Id);
 
-        if (Clients == null)
+        if (Diets == null)
         {
-            return Result<GetDietDto>.BadRequest("Clients not found.");
+            return Result<GetDietDto>.BadRequest("Diets not found.");
         }
 
-        var mapData = _mapper.Map<GetDietDto>(Clients);
+        var mapData = _mapper.Map<GetDietDto>(Diets);
 
-        return Result<GetDietDto>.Success(mapData, "Clients");
+        return Result<GetDietDto>.Success(mapData, "Diets");
     }
 }

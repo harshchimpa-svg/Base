@@ -25,6 +25,15 @@ namespace WebApi.Controllers.Customers
             return ResponseHelper.GenerateResponse(customer);
         }
 
+        [HttpPost("Reminder")]
+        public async Task<ActionResult> Create(ReminderCustomer command)
+        {
+            var customer = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(customer);
+        }
+        
+        
+        
         [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCustomer(int id,[FromForm]  CreateCustomerCommand command)

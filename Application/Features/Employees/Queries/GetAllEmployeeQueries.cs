@@ -1,66 +1,73 @@
 using Application.Dto.Employees;
 using Application.Dto.Users.GetUserDtos;
-using Application.Features.Tranners.Queries;
-using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
+using Domain.Common.Enums.Users;
 using Domain.Entities.ApplicationUsers;
-using Domain.Entities.Employees;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Application.Features.Employees.Queries;
 
 public class GetAllEmployeeQueries: IRequest<PaginatedResult<GetUserDto>>
-
 {
-public string? Name { get; set; }
-public string? MobileNumber { get; set; }
-public string? Email { get; set; }
-public int PageNumber { get; set; } = 1;
-public int PageSize { get; set; } = 10;
+    public string? Email { get; set; }
+    public string? MobileNumber { get; set; }
+    public string? Name { get; set; }
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
 }
-internal class GetAllTrannerQueryHandler : IRequestHandler<GetAllEmployeeQueries, PaginatedResult<GetUserDto>>
 
+internal class GetAllEmployeeQueriesHandler : IRequestHandler<GetAllEmployeeQueries, PaginatedResult<GetUserDto>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllTrannerQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,UserManager<User> userManager)
+    public GetAllEmployeeQueriesHandler(
+        IMapper mapper,
+        UserManager<User> userManager,
+        IHttpContextAccessor httpContextAccessor)
     {
-        _userManager = userManager;
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
+        _userManager = userManager;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<PaginatedResult<GetUserDto>> Handle(GetAllEmployeeQueries request, CancellationToken cancellationToken)
-
     {
-        var search = request;
+        var currentUserId = _httpContextAccessor.HttpContext?
+            .User?
+            .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(currentUserId))
+            return PaginatedResult<GetUserDto>.Create(new List<GetUserDto>(), 0, request.PageNumber, request.PageSize, 401);
 
         var queryable = _userManager.Users
             .Include(x => x.UserAddress)
-            .Include(x => x.UserAddress)
             .Include(x => x.UserProfile)
             .Include(x => x.UserRoles).ThenInclude(x => x.Role)
-            .Where(u => 
-                (string.IsNullOrEmpty(search.Name) || u.FirstName.ToLower().Contains(search.Name.ToLower()))
-                && (string.IsNullOrEmpty(search.MobileNumber) || u.PhoneNumber.Contains(search.MobileNumber))
-                && (string.IsNullOrEmpty(search.Email) || u.Email.ToLower().Contains(search.Email.ToLower())))
+            .Where(u => u.UserType == UserType.Employee
+                        && u.CreatedBy == currentUserId 
+                        && !u.IsDeleted
+                        && (string.IsNullOrEmpty(request.Name) || u.FirstName.ToLower().Contains(request.Name.ToLower()))
+                        && (string.IsNullOrEmpty(request.MobileNumber) || u.PhoneNumber.Contains(request.MobileNumber))
+                        && (string.IsNullOrEmpty(request.Email) || u.Email.ToLower().Contains(request.Email.ToLower())))
             .AsQueryable();
 
-        var count = await queryable.CountAsync();
+        var count = await queryable.CountAsync(cancellationToken);
 
         var users = await queryable
             .OrderByDescending(x => x.CreatedDate)
-            .Skip((int)((search.PageNumber - 1) * search.PageSize))
-            .Take((int)search.PageSize)
-            .ToListAsync();
+            .Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize)
+            .ToListAsync(cancellationToken);
 
         var mapUser = _mapper.Map<List<GetUserDto>>(users);
 
-        return PaginatedResult<GetUserDto>.Create(mapUser, count, search.PageNumber, search.PageSize, 200);
+        return PaginatedResult<GetUserDto>.Create(mapUser, count, request.PageNumber, request.PageSize, 200);
     }
 }

@@ -18,7 +18,7 @@ namespace WebApi.Controllers.PaymentLoges
             _mediator = mediator;
         }
         
-        [Authorize(Roles =  "Admin,Employee")]
+        [Authorize(Roles =  "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllPaymentLogeQueries query)
         {

@@ -29,14 +29,14 @@ internal class GetAboutByIdQueryHandler : IRequestHandler<GetAboutByIdQuery, Res
 
     public async Task<Result<GetAboutDto>> Handle(GetAboutByIdQuery request, CancellationToken cancellationToken)
     {
-        var Vendor = await _unitOfWork.Repository<About>().GetByID(request.Id);
+        var About = await _unitOfWork.Repository<About>().GetByID(request.Id);
 
-        if (Vendor == null)
+        if (About == null)
         {
             return Result<GetAboutDto>.BadRequest("About not found.");
         }
 
-        var mapData = _mapper.Map<GetAboutDto>(Vendor);
+        var mapData = _mapper.Map<GetAboutDto>(About);
 
         return Result<GetAboutDto>.Success(mapData, "About");
     }

@@ -30,14 +30,14 @@ internal class GetCategoryesByIdQueryHandler : IRequestHandler<GetCategoriByIdQu
 
     public async Task<Result<GetCategoryDto>> Handle(GetCategoriByIdQuery request, CancellationToken cancellationToken)
     {
-        var location = await _unitOfWork.Repository<Category>().GetByID(request.Id);
+        var Category = await _unitOfWork.Repository<Category>().GetByID(request.Id);
 
-        if (location == null)
+        if (Category == null)
         {
             return Result<GetCategoryDto>.BadRequest("Catgory not found.");
         }
 
-        var mapData = _mapper.Map<GetCategoryDto>(location);
+        var mapData = _mapper.Map<GetCategoryDto>(Category);
 
         return Result<GetCategoryDto>.Success(mapData, "Catgory");
     }
