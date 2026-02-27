@@ -1,4 +1,4 @@
-using Application.Features.ExerciseDocuments.Commands;
+using Application.Features.ExerciseDocuments.Command;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

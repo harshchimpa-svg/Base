@@ -39,7 +39,7 @@ namespace WebApi.Controllers.GymCartItems
 
         public async Task<IActionResult> Get()
         {
-            var gym = await _mediator.Send(new GetCartItemQuery());
+            var gym = await _mediator.Send(new GetAllCartItemQuery());
             return ResponseHelper.GenerateResponse(gym);
         }
 

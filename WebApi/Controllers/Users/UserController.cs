@@ -1,5 +1,5 @@
 ﻿
-using Application.Features.Users.Commands;
+using Application.Features.Users.Command;
 using Application.Features.Users.Queries;
 using Application.Features.Users.Queries.GetAllUsers;
 using MediatR;

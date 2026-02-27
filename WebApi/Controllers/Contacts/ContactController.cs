@@ -31,7 +31,7 @@ namespace WebApi.Controllers.Contacts
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var Contacts = await _mediator.Send(new GetAllContactQueries());
+            var Contacts = await _mediator.Send(new GetAllContactQuery());
             return ResponseHelper.GenerateResponse(Contacts);
         }
     }

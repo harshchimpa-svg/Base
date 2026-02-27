@@ -32,14 +32,14 @@ internal class GetGymDocumentByIdQueryHandler : IRequestHandler<GetGymDocumentBy
 
     public async Task<Result<GetGymDocumentDto>> Handle(GetGymDocumentByIdQuery request, CancellationToken cancellationToken)
     {
-       var GymDocuments = await _unitOfWork.Repository<GymDocument>().GetByID(request.Id);
+       var gymDocuments = await _unitOfWork.Repository<GymDocument>().GetByID(request.Id);
 
-        if (GymDocuments == null)
+        if (gymDocuments == null)
         {
             return Result<GetGymDocumentDto>.BadRequest("GymDocuments not found");
         }
 
-        var mapdata = _mapper.Map<GetGymDocumentDto>(GymDocuments);
+        var mapdata = _mapper.Map<GetGymDocumentDto>(gymDocuments);
 
         return Result<GetGymDocumentDto>.Success(mapdata, "GymDocument");
     }

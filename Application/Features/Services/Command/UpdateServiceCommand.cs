@@ -33,16 +33,16 @@ internal class UpdateServicesCommandHandler : IRequestHandler<UpdateServiceComma
     public async Task<Result<Service>> Handle(UpdateServiceCommand request, CancellationToken cancellationToken)
     {
 
-        var Service = await _unitOfWork.Repository<Service>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var service = await _unitOfWork.Repository<Service>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (Service == null)
+        if (service == null)
         {
             return Result<Service>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, Service);
+        _mapper.Map(request.CreateCommand, service);
 
-        await _unitOfWork.Repository<Service>().UpdateAsync(Service);
+        await _unitOfWork.Repository<Service>().UpdateAsync(service);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<Service>.Success("Update Service...");

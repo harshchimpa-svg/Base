@@ -38,7 +38,7 @@ namespace WebApi.Controllers.Sales
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllSaleQueries query)
+        public async Task<IActionResult> Get([FromQuery] GetAllSaleQuery query)
         {
             var data = await _mediator.Send(query);
             return Ok(data);
@@ -48,7 +48,7 @@ namespace WebApi.Controllers.Sales
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Services = await _mediator.Send(new GetSaleByIdQueries(id));
+            var Services = await _mediator.Send(new GetSaleByIdQuery(id));
             return ResponseHelper.GenerateResponse(Services);
         }
 
@@ -56,7 +56,7 @@ namespace WebApi.Controllers.Sales
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var Services = await _mediator.Send(new DeleateSaleCommand(id));
+            var Services = await _mediator.Send(new DeleteSaleCommand(id));
             return ResponseHelper.GenerateResponse(Services);
         }
     }

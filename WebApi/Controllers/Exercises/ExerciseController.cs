@@ -52,7 +52,7 @@ namespace WebApi.Controllers.Exercises
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleateExerciseCommand(id));
+            var result = await _mediator.Send(new DeleteExerciseCommand(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

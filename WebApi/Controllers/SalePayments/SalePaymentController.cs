@@ -38,7 +38,7 @@ namespace WebApi.Controllers.SalePayments
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllSalePaymentsQueries query)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllSalePaymentsQuery query)
         {
             var data = await _mediator.Send(query);
             return Ok(data);
@@ -48,7 +48,7 @@ namespace WebApi.Controllers.SalePayments
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Services = await _mediator.Send(new GetSalePaymentByIdQueries(id));
+            var Services = await _mediator.Send(new GetSalePaymentByIdQuery(id));
             return ResponseHelper.GenerateResponse(Services);
         }
 
@@ -56,7 +56,7 @@ namespace WebApi.Controllers.SalePayments
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var Services = await _mediator.Send(new DeleateSalePaymentCommand(id));
+            var Services = await _mediator.Send(new DeleteSalePaymentCommand(id));
             return ResponseHelper.GenerateResponse(Services);
         }
     }

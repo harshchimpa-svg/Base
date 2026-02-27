@@ -41,7 +41,7 @@ namespace WebApi.Controllers.Locations
 
         public async Task<IActionResult> Get()
         {
-            var location = await _mediator.Send(new GetLocationQuery());
+            var location = await _mediator.Send(new GetAllLocationQuery());
             return ResponseHelper.GenerateResponse(location);
         }
 

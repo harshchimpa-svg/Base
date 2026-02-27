@@ -39,7 +39,7 @@ namespace WebApi.Controllers.Gyms
 
         public async Task<IActionResult> Get()
         {
-            var gym = await _mediator.Send(new GetGymQuery());
+            var gym = await _mediator.Send(new GetAllGymQuery());
             return ResponseHelper.GenerateResponse(gym);
         }
 

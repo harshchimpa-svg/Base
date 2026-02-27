@@ -1,3 +1,4 @@
+using Application.Features.Customers.Command;
 using Application.Features.Customers.Commands;
 using Application.Features.Customers.Queries;
 using MediatR;
@@ -52,7 +53,7 @@ namespace WebApi.Controllers.Customers
 
         [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllCustomerQueries query)
+        public async Task<IActionResult> Get([FromQuery] GetAllCustomerQuery query)
         {
             var categories = await _mediator.Send(query);
             return Ok(categories);
@@ -62,7 +63,7 @@ namespace WebApi.Controllers.Customers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetCustomerByIdQueries(id));
+            var result = await _mediator.Send(new GetCustomerByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
 

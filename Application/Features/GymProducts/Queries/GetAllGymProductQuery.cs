@@ -1,0 +1,38 @@
+﻿
+
+using Application.Dto.GymProducts;
+using Application.Dto.Gyms;
+using Application.Features.Gyms.Queries;
+using Application.Interfaces.UnitOfWorkRepositories;
+using AutoMapper;
+using Domain.Entities.GymProducts;
+using Domain.Entities.Gyms;
+using MediatR;
+using Shared;
+
+namespace Application.Features.GymProducts.Queries;
+
+public class GetAllGymProductQuery : IRequest<Result<List<GetGymProductDto>>>
+{
+}
+
+internal class GetAllGymProductQueryHandler : IRequestHandler<GetAllGymProductQuery, Result<List<GetGymProductDto>>>
+{
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public GetAllGymProductQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    {
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<Result<List<GetGymProductDto>>> Handle(GetAllGymProductQuery request, CancellationToken cancellationToken)
+    {
+        var gymProduct = await _unitOfWork.Repository<GymProduct>().GetAll();
+
+        var map = _mapper.Map<List<GetGymProductDto>>(gymProduct);
+
+        return Result<List<GetGymProductDto>>.Success(map, "GymProduct List");
+    }
+}

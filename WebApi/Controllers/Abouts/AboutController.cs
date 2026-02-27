@@ -53,7 +53,7 @@ namespace WebApi.Controllers.Abouts
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var about = await _mediator.Send(new DeleateAboutCommand(id));
+            var about = await _mediator.Send(new DeleteAboutCommand(id));
             return ResponseHelper.GenerateResponse(about);
         }
     }

@@ -11,12 +11,12 @@ public class CreateDietTypeCommands: IRequest<Result<string>>, ICreateMapFrom<Di
 {
     public string? Name { get; set; }
 }
-internal class CreateGymCommandHandler : IRequestHandler<CreateDietTypeCommands, Result<string>>
+internal class CreateDietTypeCommandHandler : IRequestHandler<CreateDietTypeCommands, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateGymCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateDietTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -24,9 +24,9 @@ internal class CreateGymCommandHandler : IRequestHandler<CreateDietTypeCommands,
 
     public async Task<Result<string>> Handle(CreateDietTypeCommands request, CancellationToken cancellationToken)
     {
-        var DietTypes = _mapper.Map<DietType>(request);
+        var dietTypes = _mapper.Map<DietType>(request);
 
-        await _unitOfWork.Repository<DietType>().AddAsync(DietTypes);
+        await _unitOfWork.Repository<DietType>().AddAsync(dietTypes);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("DietTypes Created Successfully");

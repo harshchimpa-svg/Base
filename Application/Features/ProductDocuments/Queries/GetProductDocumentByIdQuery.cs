@@ -30,14 +30,14 @@ internal class GetProductDocumentByIdQueryHandler : IRequestHandler<GetProductDo
 
     public async Task<Result<GetProductDocument>> Handle(GetProductDocumentByIdQuery request, CancellationToken cancellationToken)
     {
-        var ProductDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.Id);
+        var productDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.Id);
 
-        if (ProductDocument == null)
+        if (productDocument == null)
         {
             return Result<GetProductDocument>.BadRequest("Product not found");
         }
 
-        var mapdata = _mapper.Map<GetProductDocument>(ProductDocument);
+        var mapdata = _mapper.Map<GetProductDocument>(productDocument);
 
         return Result<GetProductDocument>.Success("ProductDocument not found");
     }

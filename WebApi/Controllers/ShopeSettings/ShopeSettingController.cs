@@ -41,7 +41,7 @@ namespace WebApi.Controllers.ShopeSettings
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var Services = await _mediator.Send(new GetAllShopeSettingQueries());
+            var Services = await _mediator.Send(new GetAllShopeSettingQuery());
             return ResponseHelper.GenerateResponse(Services);
         }
 
@@ -49,7 +49,7 @@ namespace WebApi.Controllers.ShopeSettings
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Services = await _mediator.Send(new GetShopeSettingByIdQueries(id));
+            var Services = await _mediator.Send(new GetShopeSettingByIdQuery(id));
             return ResponseHelper.GenerateResponse(Services);
         }
 

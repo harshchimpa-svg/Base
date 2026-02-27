@@ -43,9 +43,9 @@ internal class UpdateProductDocumentCommandHandler : IRequestHandler<UpdateProdu
     {
         if (request.CreateCommand.GymProductId.HasValue)
         {
-            var ProductDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.CreateCommand.GymProductId.Value);
+            var productDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.CreateCommand.GymProductId.Value);
 
-            if (ProductDocument == null)
+            if (productDocument == null)
             {
                 return Result<ProductDocument>.BadRequest("Produt  Id is not exist.");
             }
@@ -53,17 +53,17 @@ internal class UpdateProductDocumentCommandHandler : IRequestHandler<UpdateProdu
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)
             return Result<ProductDocument>.BadRequest("Image is required.");
 
-        var ProductDocuments = await _unitOfWork.Repository<ProductDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var productDocuments = await _unitOfWork.Repository<ProductDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (ProductDocuments == null)
+        if (productDocuments == null)
         {
             return Result<ProductDocument>.BadRequest("ProductDocument id not found");
-            ProductDocuments.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
+            productDocuments.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
         }
 
-        _mapper.Map(request.CreateCommand, ProductDocuments);
+        _mapper.Map(request.CreateCommand, productDocuments);
 
-        await _unitOfWork.Repository<ProductDocument>().UpdateAsync(ProductDocuments);
+        await _unitOfWork.Repository<ProductDocument>().UpdateAsync(productDocuments);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<ProductDocument>.Success("Update ProductDocuments...");

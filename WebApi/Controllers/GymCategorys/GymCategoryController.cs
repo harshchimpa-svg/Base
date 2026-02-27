@@ -1,5 +1,6 @@
-﻿using Application.Features.GymCategorys.Command;
-using Application.Features.GymCategorys.Queries;
+﻿
+using Application.Features.GymCategories.Command;
+using Application.Features.GymCategories.Queries;
 using Application.Features.Gyms.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;

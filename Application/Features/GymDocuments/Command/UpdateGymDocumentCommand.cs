@@ -50,17 +50,17 @@ internal class UpdateGymDocumentCommandHandler : IRequestHandler<UpdateGymDocume
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)
             return Result<GymDocument>.BadRequest("Image is required.");
 
-        var GymDocument = await _unitOfWork.Repository<GymDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var gymDocument = await _unitOfWork.Repository<GymDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (GymDocument == null)
+        if (gymDocument == null)
         {
             return Result<GymDocument>.BadRequest("Sorry id not found");
-            GymDocument.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
+            gymDocument.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
         }
 
-        _mapper.Map(request.CreateCommand, GymDocument);
+        _mapper.Map(request.CreateCommand, gymDocument);
 
-        await _unitOfWork.Repository<GymDocument>().UpdateAsync(GymDocument);
+        await _unitOfWork.Repository<GymDocument>().UpdateAsync(gymDocument);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<GymDocument>.Success("Update GymDocuments...");

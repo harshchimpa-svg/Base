@@ -1,6 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
-using Application.Features.Employees.Commands;
+using Application.Features.Employees.Command;
 using Application.Interfaces.Repositories.Organization;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;

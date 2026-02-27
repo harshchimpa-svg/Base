@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Clientses.Command;
+namespace Application.Features.Clients.Command;
 
 public class UpdateClientCommand: IRequest<Result<Client>>
 {
@@ -20,12 +20,12 @@ public class UpdateClientCommand: IRequest<Result<Client>>
         CreateCommand = createCommand;
     }
 }
-internal class UpdateClientsCommandHandler : IRequestHandler<UpdateClientCommand, Result<Client>>
+internal class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, Result<Client>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateClientsCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateClientCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

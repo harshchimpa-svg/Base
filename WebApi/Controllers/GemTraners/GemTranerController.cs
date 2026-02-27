@@ -1,4 +1,4 @@
-using Application.Features.GymTraners.Commands;
+using Application.Features.GymTraners.Command;
 using Application.Features.GymTraners.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ namespace WebApi.Controllers.GemTraner
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> Create(CreateGymTranerCommands command)
+        public async Task<ActionResult> Create(CreateGymTranerCommand command)
         {
             var Services = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Services);
@@ -27,7 +27,7 @@ namespace WebApi.Controllers.GemTraner
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CreateGymTranerCommands command)
+        public async Task<IActionResult> Update(int id, CreateGymTranerCommand command)
         {
             var result = await _mediator.Send(new UpdateGymTranerCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -37,7 +37,7 @@ namespace WebApi.Controllers.GemTraner
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var Services = await _mediator.Send(new GetAllGymTranerQueries());
+            var Services = await _mediator.Send(new GetAllGymTranerQuery());
             return ResponseHelper.GenerateResponse(Services);
         }
 
@@ -45,7 +45,7 @@ namespace WebApi.Controllers.GemTraner
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Services = await _mediator.Send(new GetGymTranerByIdQueries(id));
+            var Services = await _mediator.Send(new GetGymTranerByIdQuery(id));
             return ResponseHelper.GenerateResponse(Services);
         }
 

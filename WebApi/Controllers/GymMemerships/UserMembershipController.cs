@@ -40,7 +40,7 @@ namespace WebApi.Controllers.GymMemerships
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(
-                new GetUserMembershipQuery());
+                new GetAllUserMembershipQuery());
 
             return ResponseHelper.GenerateResponse(result);
         }

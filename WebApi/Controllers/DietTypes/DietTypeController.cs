@@ -52,7 +52,7 @@ namespace WebApi.Controllers.DietTypes
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteType(int id)
         {
-            var result = await _mediator.Send(new DeleateDietTypeCommands(id));
+            var result = await _mediator.Send(new DeleteDietTypeCommands(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

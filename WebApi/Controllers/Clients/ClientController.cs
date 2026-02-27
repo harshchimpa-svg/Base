@@ -1,6 +1,6 @@
 using Application.Features.Clients.Command;
-using Application.Features.Clientses.Command;
-using Application.Features.Clientses.Queries;
+using Application.Features.Clients.Command;
+using Application.Features.Clients.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +38,7 @@ namespace WebApi.Controllers.Clientses
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllClientQueries query)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllClientQuery query)
         {
             var data = await _mediator.Send(query);
             return Ok(data);
@@ -48,7 +48,7 @@ namespace WebApi.Controllers.Clientses
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Clients = await _mediator.Send(new GetClientByIdQueries(id));
+            var Clients = await _mediator.Send(new GetClientByIdQuery(id));
             return ResponseHelper.GenerateResponse(Clients);
         }
         

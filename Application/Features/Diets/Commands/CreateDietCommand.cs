@@ -1,5 +1,5 @@
 using Application.Common.Mappings.Commons;
-using Application.Features.Clientses.Command;
+using Application.Features.Clients.Command;
 using Application.Features.Diets.Queries;
 using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWorkRepositories;

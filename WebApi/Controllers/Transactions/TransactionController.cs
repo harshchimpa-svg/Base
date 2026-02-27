@@ -1,4 +1,4 @@
-using Application.Features.Balence.Commands;
+using Application.Features.Balence.Command;
 using Application.Features.Balence.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

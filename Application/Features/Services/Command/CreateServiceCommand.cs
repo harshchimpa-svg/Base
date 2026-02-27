@@ -30,9 +30,9 @@ internal class CreateServiceCommandHandler : IRequestHandler<CreateServiceComman
 
     public async Task<Result<string>> Handle(CreateServiceCommand request, CancellationToken cancellationToken)
     {
-        var Service = _mapper.Map<Service>(request);
+        var service = _mapper.Map<Service>(request);
 
-        await _unitOfWork.Repository<Service>().AddAsync(Service);
+        await _unitOfWork.Repository<Service>().AddAsync(service);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("Service created successfully.");

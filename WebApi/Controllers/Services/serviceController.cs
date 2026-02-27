@@ -38,7 +38,7 @@ namespace WebApi.Controllers.Services
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var Services = await _mediator.Send(new GetAllServiceQueries());
+            var Services = await _mediator.Send(new GetAllServiceQuery());
             return ResponseHelper.GenerateResponse(Services);
         }
 
@@ -46,7 +46,7 @@ namespace WebApi.Controllers.Services
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Services = await _mediator.Send(new GetServiceByIdQueries(id));
+            var Services = await _mediator.Send(new GetServiceByIdQuery(id));
             return ResponseHelper.GenerateResponse(Services);
         }
 

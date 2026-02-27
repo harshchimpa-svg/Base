@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Clientses.Command;
+namespace Application.Features.Clients.Command;
 
 public class DeleteClientCommand: IRequest<Result<bool>>
 {
@@ -14,11 +14,11 @@ public class DeleteClientCommand: IRequest<Result<bool>>
         Id = id;
     }
 }
-internal class DeleteClientsCommandHandler : IRequestHandler<DeleteClientCommand, Result<bool>>
+internal class DeleteClientCommandHandler : IRequestHandler<DeleteClientCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteClientsCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteClientCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

@@ -36,7 +36,7 @@ namespace WebApi.Controllers.Diets
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllDietQueries query)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllDietQuery query)
         {
             var data = await _mediator.Send(query);
             return Ok(data);
@@ -46,7 +46,7 @@ namespace WebApi.Controllers.Diets
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetDietByIdQueries(id));
+            var result = await _mediator.Send(new GetDietByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
 
@@ -54,7 +54,7 @@ namespace WebApi.Controllers.Diets
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleateDietCommand(id));
+            var result = await _mediator.Send(new DeleteDietCommand(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

@@ -29,14 +29,14 @@ internal class GetBalenceByIdQueryHandler : IRequestHandler<GetTransactionByIdQu
     
     public async Task<Result<GetTransactionDto>> Handle(GetTransactionByIdQuery request, CancellationToken cancellationToken)
     {
-        var Transaction = await _unitOfWork.Repository<Transaction>().GetByID(request.Id);
+        var transaction = await _unitOfWork.Repository<Transaction>().GetByID(request.Id);
 
-        if (Transaction == null)
+        if (transaction == null)
         {
             return Result<GetTransactionDto>.BadRequest("Transaction not found.");
         }
 
-        var mapData = _mapper.Map<GetTransactionDto>(Transaction);
+        var mapData = _mapper.Map<GetTransactionDto>(transaction);
 
         return Result<GetTransactionDto>.Success(mapData, "Transaction");
     }
