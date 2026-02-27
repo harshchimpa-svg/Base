@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Gyms
 {
-    [Route("api/[controller]")]
+    [Route("api/gyms")]
     [ApiController]
     public class GymController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace WebApi.Controllers.Gyms
 
         [HttpPost]
 
-        public async Task<ActionResult> CreateGym(CreateGymCommand command)
+        public async Task<ActionResult> Create(CreateGymCommand command)
         {
             var gym = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(gym);
@@ -29,7 +29,7 @@ namespace WebApi.Controllers.Gyms
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateGym(int id, CreateGymCommand command)
+        public async Task<IActionResult> Update(int id, CreateGymCommand command)
         {
             var result = await _mediator.Send(new UpdateGymCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -37,7 +37,7 @@ namespace WebApi.Controllers.Gyms
         }
         [HttpGet]
 
-        public async Task<IActionResult> GetGym()
+        public async Task<IActionResult> Get()
         {
             var gym = await _mediator.Send(new GetGymQuery());
             return ResponseHelper.GenerateResponse(gym);
@@ -45,7 +45,7 @@ namespace WebApi.Controllers.Gyms
 
         [HttpGet("{id}")]
 
-        public async Task<ActionResult> GetGymById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var gym = await _mediator.Send(new GetByIdGymQuery(id));
             return ResponseHelper.GenerateResponse(gym);
@@ -53,7 +53,7 @@ namespace WebApi.Controllers.Gyms
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> DeleteGym(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var gym = await _mediator.Send(new DeleteGymCommand(id));
             return ResponseHelper.GenerateResponse(gym);

@@ -36,12 +36,12 @@ internal class CreateProductDocumentCommandHandler : IRequestHandler<CreateProdu
     {
         if (request.GymProductId.HasValue)
         {
-            var gymExists = await _unitOfWork.Repository<GymProduct>()
+            var gymProduct = await _unitOfWork.Repository<GymProduct>()
                 .GetByID(request.GymProductId.Value);
 
-            if (gymExists == null)
+            if (gymProduct == null)
             {
-                return Result<string>.BadRequest("Product Id is not exist");
+                return Result<string>.BadRequest("gymProduct Id is not exist");
             }
         }
 

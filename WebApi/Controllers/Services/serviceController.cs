@@ -20,7 +20,7 @@ namespace WebApi.Controllers.Services
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateServices(CreateServiceCommand command)
+        public async Task<ActionResult> Create(CreateServiceCommand command)
         {
             var Services = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Services);
@@ -28,7 +28,7 @@ namespace WebApi.Controllers.Services
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateServices(int id, CreateServiceCommand command)
+        public async Task<IActionResult> Update(int id, CreateServiceCommand command)
         {
             var result = await _mediator.Send(new UpdateServiceCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -36,7 +36,7 @@ namespace WebApi.Controllers.Services
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetServices()
+        public async Task<IActionResult> Get()
         {
             var Services = await _mediator.Send(new GetAllServiceQueries());
             return ResponseHelper.GenerateResponse(Services);
@@ -44,7 +44,7 @@ namespace WebApi.Controllers.Services
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetServicesById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Services = await _mediator.Send(new GetServiceByIdQueries(id));
             return ResponseHelper.GenerateResponse(Services);
@@ -52,7 +52,7 @@ namespace WebApi.Controllers.Services
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteServices(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Services = await _mediator.Send(new DeleteServiceCommand(id));
             return ResponseHelper.GenerateResponse(Services);

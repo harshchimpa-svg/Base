@@ -20,7 +20,7 @@ namespace WebApi.Controllers.Locations
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
 
-        public async Task<ActionResult> CreateLocation(CreateLocationCommand command)
+        public async Task<ActionResult> Create(CreateLocationCommand command)
         {
             var location = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(location);
@@ -29,7 +29,7 @@ namespace WebApi.Controllers.Locations
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateLocation(int id, CreateLocationCommand command)
+        public async Task<IActionResult> Update(int id, CreateLocationCommand command)
         {
             var result = await _mediator.Send(new UpdateLocationCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -39,7 +39,7 @@ namespace WebApi.Controllers.Locations
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
 
-        public async Task<IActionResult> GetLocation()
+        public async Task<IActionResult> Get()
         {
             var location = await _mediator.Send(new GetLocationQuery());
             return ResponseHelper.GenerateResponse(location);
@@ -48,7 +48,7 @@ namespace WebApi.Controllers.Locations
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
 
-        public async Task<ActionResult> GetLocationById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var location = await _mediator.Send(new GetByIdLocationQuery(id));
             return ResponseHelper.GenerateResponse(location);
@@ -57,7 +57,7 @@ namespace WebApi.Controllers.Locations
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> DeleteLocation(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var location = await _mediator.Send(new DeleteLocationCommand(id));
             return ResponseHelper.GenerateResponse(location);

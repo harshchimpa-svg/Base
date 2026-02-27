@@ -3,10 +3,10 @@ using Application.Features.GymTraners.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.GemTraners
+namespace WebApi.Controllers.GemTraner
 
 {
-    [Route("api/[controller]")]
+    [Route("api/gemtraners")]
     [ApiController]
     public class GemTranersController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace WebApi.Controllers.GemTraners
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateServices(CreateGymTranerCommands command)
+        public async Task<ActionResult> Create(CreateGymTranerCommands command)
         {
             var Services = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Services);
@@ -27,7 +27,7 @@ namespace WebApi.Controllers.GemTraners
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateServices(int id, CreateGymTranerCommands command)
+        public async Task<IActionResult> Update(int id, CreateGymTranerCommands command)
         {
             var result = await _mediator.Send(new UpdateGymTranerCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -35,7 +35,7 @@ namespace WebApi.Controllers.GemTraners
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetServices()
+        public async Task<IActionResult> Get()
         {
             var Services = await _mediator.Send(new GetAllGymTranerQueries());
             return ResponseHelper.GenerateResponse(Services);
@@ -43,7 +43,7 @@ namespace WebApi.Controllers.GemTraners
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetServicesById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Services = await _mediator.Send(new GetGymTranerByIdQueries(id));
             return ResponseHelper.GenerateResponse(Services);
@@ -51,7 +51,7 @@ namespace WebApi.Controllers.GemTraners
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteServices(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Services = await _mediator.Send(new DeleteGymTranerCommand(id));
             return ResponseHelper.GenerateResponse(Services);

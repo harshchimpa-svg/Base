@@ -31,7 +31,7 @@ internal class GetClientsByIdQueriesHandler : IRequestHandler<GetClientByIdQueri
     public async Task<Result<GetClientsDto>> Handle(GetClientByIdQueries request, CancellationToken cancellationToken)
 
     {
-        var Clients = await _unitOfWork.Repository<Clients>().GetByID(request.Id);
+        var Clients = await _unitOfWork.Repository<Client>().GetByID(request.Id);
 
         if (Clients == null)
         {

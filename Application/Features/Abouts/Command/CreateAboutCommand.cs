@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared;
 
-namespace Application.Features.Abouts.Commands;
+namespace Application.Features.Abouts.Command;
 
 public class CreateAboutCommand : IRequest<Result<string>>, ICreateMapFrom<About>
 {

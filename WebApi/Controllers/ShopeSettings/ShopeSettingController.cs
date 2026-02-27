@@ -23,7 +23,7 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpPost]
-        public async Task<ActionResult> CreateServices(CreateShopeSettingCommand command)
+        public async Task<ActionResult> Create(CreateShopeSettingCommand command)
         {
             var Services = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Services);
@@ -31,7 +31,7 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateServices(int id, CreateShopeSettingCommand command)
+        public async Task<IActionResult> Update(int id, CreateShopeSettingCommand command)
         {
             var result = await _mediator.Send(new UpdateShopeSettingCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -39,7 +39,7 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpGet]
-        public async Task<IActionResult> GetServices()
+        public async Task<IActionResult> Get()
         {
             var Services = await _mediator.Send(new GetAllShopeSettingQueries());
             return ResponseHelper.GenerateResponse(Services);
@@ -47,7 +47,7 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetServicesById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Services = await _mediator.Send(new GetShopeSettingByIdQueries(id));
             return ResponseHelper.GenerateResponse(Services);
@@ -55,7 +55,7 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteServices(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Services = await _mediator.Send(new DeleteShopeSettingCommand(id));
             return ResponseHelper.GenerateResponse(Services);

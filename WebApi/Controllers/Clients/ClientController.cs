@@ -1,3 +1,4 @@
+using Application.Features.Clients.Command;
 using Application.Features.Clientses.Command;
 using Application.Features.Clientses.Queries;
 using MediatR;
@@ -10,18 +11,18 @@ namespace WebApi.Controllers.Clientses
     [Route("api/clients")]
     [ApiController]
 
-    public class ClientsController : ControllerBase
+    public class ClientController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ClientsController(IMediator mediator)
+        public ClientController(IMediator mediator)
         {
             _mediator = mediator;
         }
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateClients(CreateClientCommand command)
+        public async Task<ActionResult> Create(CreateClientCommand command)
         {
             var Clients = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Clients);
@@ -29,7 +30,7 @@ namespace WebApi.Controllers.Clientses
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClients(int id, CreateClientCommand command)
+        public async Task<IActionResult> Update(int id, CreateClientCommand command)
         {
             var result = await _mediator.Send(new UpdateClientCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -45,7 +46,7 @@ namespace WebApi.Controllers.Clientses
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetClientsById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Clients = await _mediator.Send(new GetClientByIdQueries(id));
             return ResponseHelper.GenerateResponse(Clients);
@@ -53,7 +54,7 @@ namespace WebApi.Controllers.Clientses
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClients(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Clients = await _mediator.Send(new DeleteClientCommand(id));
             return ResponseHelper.GenerateResponse(Clients);

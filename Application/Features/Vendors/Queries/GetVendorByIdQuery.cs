@@ -1,6 +1,4 @@
-using Application.Dto.Categoryes;
 using Application.Dto.Vendors;
-using Application.Features.Categoryes.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Catagories;

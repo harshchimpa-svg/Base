@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Abouts.Commands;
+namespace Application.Features.Abouts.Command;
 
 public class DeleateAboutCommand: IRequest<Result<bool>>
 {

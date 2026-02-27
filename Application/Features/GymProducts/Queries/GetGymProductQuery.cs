@@ -29,10 +29,10 @@ internal class GetGymProductQueryHandler : IRequestHandler<GetGymProductQuery, R
 
     public async Task<Result<List<GetGymProductDto>>> Handle(GetGymProductQuery request, CancellationToken cancellationToken)
     {
-        var gyms = await _unitOfWork.Repository<GymProduct>().GetAll();
+        var GymProduct = await _unitOfWork.Repository<GymProduct>().GetAll();
 
-        var map = _mapper.Map<List<GetGymProductDto>>(gyms);
+        var map = _mapper.Map<List<GetGymProductDto>>(GymProduct);
 
-        return Result<List<GetGymProductDto>>.Success(map, "Product List");
+        return Result<List<GetGymProductDto>>.Success(map, "GymProduct List");
     }
 }

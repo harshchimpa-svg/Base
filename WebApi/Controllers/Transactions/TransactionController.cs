@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Transaction
 {
-    [Route("api/transaction")]
+    [Route("api/transactions")]
     [ApiController]
     public class TransactionController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace WebApi.Controllers.Transaction
 
         [Authorize(Roles = "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateTransaction(CreateTransactionCommand command)
+        public async Task<ActionResult> Create(CreateTransactionCommand command)
         {
             var transaction = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(transaction);
@@ -27,7 +27,7 @@ namespace WebApi.Controllers.Transaction
 
         [Authorize(Roles = "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTransaction(int id, CreateTransactionCommand command)
+        public async Task<IActionResult> Update(int id, CreateTransactionCommand command)
         {
             var result = await _mediator.Send(new UpdateTransactionCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -59,7 +59,7 @@ namespace WebApi.Controllers.Transaction
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTransaction(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var transaction = await _mediator.Send(new DeleteTransactionCommand(id));
             return ResponseHelper.GenerateResponse(transaction);

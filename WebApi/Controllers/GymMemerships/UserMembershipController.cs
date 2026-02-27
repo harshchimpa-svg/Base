@@ -27,9 +27,7 @@ namespace WebApi.Controllers.GymMemerships
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(
-            int id,
-            CreateUserMembershipCommand command)
+        public async Task<IActionResult> Update(int id, CreateUserMembershipCommand command)
         {
             var result = await _mediator.Send(
                 new UpdateUserMembershipCommand(id, command));

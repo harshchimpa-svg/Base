@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.SaleStatus
 {
-    [Route("api/SaleStatus")]
+    [Route("api/sale-status")]
     [ApiController]
 
     public class SaleStatuController : ControllerBase
@@ -18,7 +18,7 @@ namespace WebApi.Controllers.SaleStatus
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateServices(CreateSaleStatusCommand command)
+        public async Task<ActionResult> Create(CreateSaleStatusCommand command)
         {
             var Services = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Services);

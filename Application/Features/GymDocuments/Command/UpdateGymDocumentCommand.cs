@@ -40,29 +40,29 @@ internal class UpdateGymDocumentCommandHandler : IRequestHandler<UpdateGymDocume
     {
         if (request.CreateCommand.GymId.HasValue)
         {
-            var gym = await _unitOfWork.Repository<GymDocument>().GetByID(request.CreateCommand.GymId.Value);
+            var GymDocuments = await _unitOfWork.Repository<GymDocument>().GetByID(request.CreateCommand.GymId.Value);
 
-            if (gym == null)
+            if (GymDocuments == null)
             {
-                return Result<GymDocument>.BadRequest("Gym Id is not exist.");
+                return Result<GymDocument>.BadRequest("GymDocuments Id is not exist.");
             }
         }
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)
             return Result<GymDocument>.BadRequest("Image is required.");
 
-        var Gym = await _unitOfWork.Repository<GymDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var GymDocument = await _unitOfWork.Repository<GymDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (Gym == null)
+        if (GymDocument == null)
         {
             return Result<GymDocument>.BadRequest("Sorry id not found");
-            Gym.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
+            GymDocument.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
         }
 
-        _mapper.Map(request.CreateCommand, Gym);
+        _mapper.Map(request.CreateCommand, GymDocument);
 
-        await _unitOfWork.Repository<GymDocument>().UpdateAsync(Gym);
+        await _unitOfWork.Repository<GymDocument>().UpdateAsync(GymDocument);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<GymDocument>.Success("Update Category...");
+        return Result<GymDocument>.Success("Update GymDocuments...");
     }
 }

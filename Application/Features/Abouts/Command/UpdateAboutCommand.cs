@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Abouts.Commands;
+namespace Application.Features.Abouts.Command;
 
 public class UpdateAboutCommand: IRequest<Result<About>>
 {
@@ -41,16 +41,16 @@ internal class UpdateAboutCommandHandler : IRequestHandler<UpdateAboutCommand, R
         if (request.CreateCommand == null || request.CreateCommand.Profile.Length == 0)
             return Result<About>.BadRequest("Image is required.");
          
-        var About = await _unitOfWork.Repository<About>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var about = await _unitOfWork.Repository<About>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (About == null)
+        if (about == null)
         {
             return Result<About>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, About);
+        _mapper.Map(request.CreateCommand, about);
 
-        await _unitOfWork.Repository<About>().UpdateAsync(About);
+        await _unitOfWork.Repository<About>().UpdateAsync(about);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<About>.Success("Update About...");

@@ -41,13 +41,13 @@ internal class CreateShopeSettingCommandHandler : IRequestHandler<CreateShopeSet
             ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrWhiteSpace(userId))
-            return Result<string>.BadRequest("User not authenticated");
+            return Result<string>.BadRequest("ShopeSetting not authenticated");
 
-        var shop = _mapper.Map<ShopeSetting>(request);
+        var ShopeSetting = _mapper.Map<ShopeSetting>(request);
 
-        shop.UserId = userId;  
+        ShopeSetting.UserId = userId;  
 
-        await _unitOfWork.Repository<ShopeSetting>().AddAsync(shop);
+        await _unitOfWork.Repository<ShopeSetting>().AddAsync(ShopeSetting);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("ShopeSetting created successfully.");

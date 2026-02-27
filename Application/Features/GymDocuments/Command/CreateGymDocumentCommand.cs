@@ -36,11 +36,11 @@ internal class CreateGymDocumentCommandHandler : IRequestHandler<CreateGymDocume
     {
         if (request.GymId.HasValue)
         {
-            var gymExists = await _unitOfWork.Repository<Gym>().GetByID(request.GymId.Value);
+            var GymDocuments = await _unitOfWork.Repository<Gym>().GetByID(request.GymId.Value);
 
-            if (gymExists == null) 
+            if (GymDocuments == null) 
             {
-                return Result<string>.BadRequest("Gym Id is not exit");
+                return Result<string>.BadRequest("GymDocuments Id is not exit");
             }
         }
         var imageUrl = await _fileService.UploadAsync(request.ImageUrl, "GymDocument");

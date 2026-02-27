@@ -24,9 +24,9 @@ internal class GetAllAboutQueryHandler : IRequestHandler<GetAllAboutQuery, Resul
 
     public async Task<Result<List<GetAboutDto>>> Handle(GetAllAboutQuery request, CancellationToken cancellationToken) 
     {
-        var About = await _unitOfWork.Repository<About>().GetAll();
+        var about = await _unitOfWork.Repository<About>().GetAll();
 
-        var map = _mapper.Map<List<GetAboutDto>>(About);
+        var map = _mapper.Map<List<GetAboutDto>>(about);
 
         return Result<List<GetAboutDto>>.Success(map, "About list");
     }

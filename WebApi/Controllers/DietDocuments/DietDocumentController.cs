@@ -18,15 +18,15 @@ namespace WebApi.Controllers.DietDocuments
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateDiet(CreateDiteDocumentCommand command)
+        public async Task<ActionResult> Create(CreateDiteDocumentCommand command)
         {
-            var diet = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(diet);
+            var DietDocuments = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(DietDocuments);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDiet(int id, CreateDiteDocumentCommand command)
+        public async Task<IActionResult> Update(int id, CreateDiteDocumentCommand command)
         {
             var result = await _mediator.Send(new UpdateDiteDocumentCommand(id, command));
             return ResponseHelper.GenerateResponse(result);

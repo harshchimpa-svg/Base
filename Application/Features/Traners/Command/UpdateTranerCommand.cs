@@ -1,7 +1,10 @@
 
-using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
+using System.ComponentModel.DataAnnotations;
+using Application.Features.Employees.Commands;
+using Application.Interfaces.Repositories.Organization;
 using Application.Interfaces.UnitOfWorkRepositories;
-using AutoMapper; 
+using AutoMapper;
+using Domain.Common.Enums.Users.UserRoleType;
 using Domain.Entities.ApplicationUsers;
 using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
@@ -9,26 +12,29 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
-using System.ComponentModel.DataAnnotations;
-using Domain.Common.Enums.Users.UserRoleType;
 
 namespace Application.Features.Tranners.Commands;
 
 public class UpdateTranerCommand : IRequest<Result<string>>
 {
+    [Required(ErrorMessage = "Id is required")]
+    public string Id { get; set; }
+
     [StringLength(50, ErrorMessage = "FirstName cannot exceed 50 characters")]
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? OtherDetails { get; set; }
 
-    public string Name { get; set; }
-    public int PhoneNumber { get; set; }
+    // Profile fields
+    public string PhoneNumber { get; set; }
     public string Email { get; set; }
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserLevelType UserLevelType  { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public string? Message { get; set; }
 
+    // Address fields
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
     public string? City { get; set; }
@@ -41,27 +47,26 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
-    private readonly IUserIdAndOrganizationIdRepository _userOrganization;
+    private readonly IOrganizationRepository _organizationRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateTranerCommandHandler(UserManager<User> userManager, IMapper mapper, IUserIdAndOrganizationIdRepository userOrganization, IUnitOfWork unitOfWork)
+    public UpdateTranerCommandHandler(UserManager<User> userManager, IMapper mapper, IOrganizationRepository organizationRepository, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _mapper = mapper;
-        _userOrganization = userOrganization;
+        _organizationRepository = organizationRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<string>> Handle(UpdateTranerCommand request, CancellationToken cancellationToken)
     {
-        var useOrga = await _userOrganization.Get();
-
-        var user = await _userManager.FindByIdAsync(useOrga.UserId);
+        var user = await _userManager.FindByIdAsync(request.Id);
         if (user == null)
         {
             return Result<string>.NotFound("User not found.");
         }
 
+        // Update user information - only update non-null fields
         if (request.FirstName != null)
             user.FirstName = request.FirstName;
         if (request.LastName != null)
@@ -76,11 +81,13 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
             return Result<string>.BadRequest($"Failed to update user: {errors}");
         }
 
+        // Update UserProfile if any profile fields are provided
         if (HasProfileFields(request))
         {
             await UpdateUserProfile(request, user.Id, cancellationToken);
         }
 
+        // Update UserAddress if any address fields are provided
         if (HasAddressFields(request))
         {
             await UpdateUserAddress(request, user.Id, cancellationToken);
@@ -93,9 +100,9 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
     {
         return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
                request.Height != null || request.UserLevelType != null ||
-               request.DateOfBirth != null;
+               request.DateOfBirth != null || request.Message != null;
     }
-
+    
     private bool HasAddressFields(UpdateTranerCommand request)
     {
         return request.Address1 != null || request.Address2 != null || request.City != null ||
@@ -111,6 +118,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
         UserProfile userProfile;
         if (!userProfileExists)
         {
+            // Create new profile if it doesn't exist
             userProfile = new UserProfile
             {
                 UserId = userId
@@ -125,6 +133,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
                 .FirstOrDefaultAsync(up => up.UserId == userId, cancellationToken);
         }
 
+        // Update only non-null profile fields
         if (request.PhoneNumber != null)
         if (request.Height != null)
             userProfile.Height = request.Height;
@@ -147,6 +156,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
         UserAddress userAddress;
         if (!userAddressExists)
         {
+            // Create new address if it doesn't exist
             userAddress = new UserAddress
             {
                 UserId = userId
@@ -161,6 +171,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
                 .FirstOrDefaultAsync(ua => ua.UserId == userId, cancellationToken);
         }
 
+        // Update only non-null address fields
         if (request.Address1 != null)
             userAddress.Address1 = request.Address1;
         if (request.Address2 != null)

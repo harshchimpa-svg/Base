@@ -29,10 +29,10 @@ internal class DeleteGymDocumentCommandHandler : IRequestHandler<DeleteGymDocume
 
     public async Task<Result<bool>> Handle(DeleteGymDocumentCommand request, CancellationToken cancellationToken)
     {
-        var gymExists = await _unitOfWork.Repository<GymDocument>().Entities
+        var GymDocuments = await _unitOfWork.Repository<GymDocument>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!gymExists)
+        if (!GymDocuments)
         {
             return Result<bool>.BadRequest("Gym Document not Found");
         }

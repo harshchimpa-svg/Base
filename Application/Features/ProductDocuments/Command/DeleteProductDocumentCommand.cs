@@ -30,10 +30,10 @@ internal class DeleteProductDocumentCommandHandler : IRequestHandler<DeleteProdu
 
     public async Task<Result<bool>> Handle(DeleteProductDocumentCommand request, CancellationToken cancellationToken)
     {
-        var gymExists = await _unitOfWork.Repository<ProductDocument>().Entities
+        var ProductDocument = await _unitOfWork.Repository<ProductDocument>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!gymExists)
+        if (!ProductDocument)
         {
             return Result<bool>.BadRequest("Product Document not Found");
         }

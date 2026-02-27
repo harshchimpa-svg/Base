@@ -1,4 +1,4 @@
-using Application.Features.Abouts.Commands;
+using Application.Features.Abouts.Command;
 using Application.Features.Abouts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +19,7 @@ namespace WebApi.Controllers.Abouts
 
         [Authorize(Roles =  "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAbout([FromForm] CreateAboutCommand command)
+        public async Task<IActionResult> Create([FromForm] CreateAboutCommand command)
         {
             var about = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(about);
@@ -27,7 +27,7 @@ namespace WebApi.Controllers.Abouts
         
         [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAbout(int id, [FromForm] CreateAboutCommand command)
+        public async Task<IActionResult> Update(int id, [FromForm] CreateAboutCommand command)
         {
             var result = await _mediator.Send(new UpdateAboutCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -35,7 +35,7 @@ namespace WebApi.Controllers.Abouts
 
         [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetAbout()
+        public async Task<IActionResult> Get()
         {
             var about = await _mediator.Send(new GetAllAboutQuery());
             return ResponseHelper.GenerateResponse(about);
@@ -43,7 +43,7 @@ namespace WebApi.Controllers.Abouts
 
         [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAboutById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var about = await _mediator.Send(new GetAboutByIdQuery(id));
             return ResponseHelper.GenerateResponse(about);
@@ -51,7 +51,7 @@ namespace WebApi.Controllers.Abouts
 
         [Authorize(Roles =  "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAbout(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var about = await _mediator.Send(new DeleateAboutCommand(id));
             return ResponseHelper.GenerateResponse(about);

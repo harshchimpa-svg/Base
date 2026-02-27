@@ -31,15 +31,15 @@
 
         public async Task<Result<GetGymTranerDto>> Handle(GetGymTranerByIdQueries request, CancellationToken cancellationToken)
         {
-            var Service = await _unitOfWork.Repository<Service>().GetByID(request.Id);
+            var GymTraners = await _unitOfWork.Repository<Service>().GetByID(request.Id);
 
-            if (Service == null)
+            if (GymTraners == null)
             {
-                return Result<GetGymTranerDto>.BadRequest("Service not found.");
+                return Result<GetGymTranerDto>.BadRequest("GymTraners not found.");
             }
 
-            var mapData = _mapper.Map<GetGymTranerDto>(Service);
+            var mapData = _mapper.Map<GetGymTranerDto>(GymTraners);
 
-            return Result<GetGymTranerDto>.Success(mapData, "Service");
+            return Result<GetGymTranerDto>.Success(mapData, "GymTraners");
         }
     }

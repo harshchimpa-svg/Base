@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Employees
 
 {
-    [Route("api/Employees")]
+    [Route("api/employees")]
     [ApiController]
 
     public class EmployeeController: ControllerBase
@@ -23,7 +23,7 @@ namespace WebApi.Controllers.Employees
 
         [Authorize(Roles =  "Admin")]
         [HttpPost]
-        public async Task<ActionResult> CreateClients(CreateEmployeeCommand command)
+        public async Task<ActionResult> Create(CreateEmployeeCommand command)
         {
             var Clients = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Clients);
@@ -31,15 +31,15 @@ namespace WebApi.Controllers.Employees
         
         [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update( UpdateEmployeeCommand command)
+        public async Task<IActionResult> Update(UpdateEmployeeCommand command)
         {
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            var data = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(data);
         }
         
         [Authorize(Roles =  "Admin")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetClientsById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Clients = await _mediator.Send(new GetEmployeeByIdQueries(id));
             return ResponseHelper.GenerateResponse(Clients);

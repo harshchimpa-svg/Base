@@ -1,5 +1,6 @@
-﻿using Application.Features.Categoryes.Command;
-using Application.Features.Categoryes.Queries;
+﻿using Application.Features.Categories.Command;
+using Application.Features.Categories.Queries;
+using Application.Features.Categoryes.Command;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace WebApi.Controllers.Categoryes
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromForm] CreateCategoriCommand command)
+        public async Task<IActionResult> Create([FromForm] CreateCategoryCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
@@ -27,15 +28,15 @@ namespace WebApi.Controllers.Categoryes
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromForm] CreateCategoriCommand command)
+        public async Task<IActionResult> Update(int id, [FromForm] CreateCategoryCommand command)
         {
-            var result = await _mediator.Send(new UpdateCategoriCommand(id, command));
+            var result = await _mediator.Send(new UpdateCategoryCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetCategory([FromQuery] GetAllCategoriQuery query)
+        public async Task<IActionResult> Get([FromQuery] GetAllCategoryQuery query)
         {
             var Categoryes = await _mediator.Send(query);
             return Ok(Categoryes);
@@ -43,17 +44,17 @@ namespace WebApi.Controllers.Categoryes
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategoryById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetCategoriByIdQuery(id));
+            var result = await _mediator.Send(new GetCategoryByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
         
         // [Authorize(Roles =  "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleteCategoriCommand(id));
+            var result = await _mediator.Send(new DeleteCategoryCommand(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

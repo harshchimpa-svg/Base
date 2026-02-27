@@ -5,23 +5,23 @@ using Domain.Entities.Clientses;
 using MediatR;
 using Shared;
 
-namespace Application.Features.Clientses.Command;
+namespace Application.Features.Clients.Command;
 
-public class CreateClientCommand: IRequest<Result<string>>, ICreateMapFrom<Clients>
+public class CreateClientCommand: IRequest<Result<string>>, ICreateMapFrom<Client>
 {
     public string Name { get; set; }
-    public string Email { get; set; }
+    public string Email { get; set; } 
     public string Phone { get; set; }
     public int? ServiceId { get; set; }
     public decimal Quantity  { get; set; }
 }
 
-internal class CreateClientsCommandHandler : IRequestHandler<CreateClientCommand, Result<string>>
+internal class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     
-    public CreateClientsCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateClientCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -29,9 +29,9 @@ internal class CreateClientsCommandHandler : IRequestHandler<CreateClientCommand
 
     public async Task<Result<string>> Handle(CreateClientCommand request, CancellationToken cancellationToken) 
     {
-        var Clients = _mapper.Map<Clients>(request);
+        var clients = _mapper.Map<Client>(request);
 
-        await _unitOfWork.Repository<Clients>().AddAsync(Clients);
+        await _unitOfWork.Repository<Client>().AddAsync(clients);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("Clients created successfully.");

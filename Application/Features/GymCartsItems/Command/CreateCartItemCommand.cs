@@ -39,12 +39,12 @@ internal class CreateCartItemCommandHandler : IRequestHandler<CreateCartItemComm
             }
         }
 
-        var gym = _mapper.Map<CartItem>(request);
+        var GymCartsItems = _mapper.Map<CartItem>(request);
 
-        await _unitOfWork.Repository<CartItem>().AddAsync(gym);
+        await _unitOfWork.Repository<CartItem>().AddAsync(GymCartsItems);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<string>.Success("CartItem Created Successfully");
+        return Result<string>.Success("GymCartsItems Created Successfully");
 
     }
 }

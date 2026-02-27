@@ -44,7 +44,7 @@ internal class CreateDietCommandHandler : IRequestHandler<CreateDietCommand, Res
 
             if (houseExists == null)
             {
-                return Result<string>.BadRequest("DietTypeId does not exist.");
+                return Result<string>.BadRequest("DietId does not exist.");
             }
         }
         var diet = _mapper.Map<Diet>(request);

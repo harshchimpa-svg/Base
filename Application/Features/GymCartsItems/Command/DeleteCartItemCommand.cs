@@ -30,17 +30,17 @@ internal class DeleteCartItemCommandHandler : IRequestHandler<DeleteCartItemComm
 
     public async Task<Result<bool>> Handle(DeleteCartItemCommand request, CancellationToken cancellationToken)
     {
-        var gymExists = await _unitOfWork.Repository<CartItem>().Entities
+        var GymCartsItems = await _unitOfWork.Repository<CartItem>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!gymExists)
+        if (!GymCartsItems)
         {
-            return Result<bool>.BadRequest("CartItem not Found");
+            return Result<bool>.BadRequest("GymCartsItems not Found");
         }
 
         await _unitOfWork.Repository<CartItem>().DeleteAsync(request.Id);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<bool>.Success(true, "CartItem deleted succesfully");
+        return Result<bool>.Success(true, "GymCartsItems deleted succesfully");
     }
 }

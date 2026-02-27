@@ -37,23 +37,23 @@ internal class UpdateGymProductHandler : IRequestHandler<UpdateGymProductCommand
     {
         if (request.CreateCommand.CategoryId.HasValue)
         {
-            var category = await _unitOfWork.Repository<GymProduct>().GetByID(request.CreateCommand.CategoryId.Value);
+            var GymProducts = await _unitOfWork.Repository<GymProduct>().GetByID(request.CreateCommand.CategoryId.Value);
 
-            if (category == null)
+            if (GymProducts == null)
             {
                 return Result<GymProduct>.BadRequest("Category id is not exist");
             }
         }
-        var gym = await _unitOfWork.Repository<GymProduct>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var GymProduct = await _unitOfWork.Repository<GymProduct>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
         {
-            if (gym == null)
+            if (GymProduct == null)
             {
-                return Result<GymProduct>.BadRequest("Category id is not exist");
+                return Result<GymProduct>.BadRequest("GymProduct id is not exist");
             }
 
-            _mapper.Map(request.CreateCommand, gym);
+            _mapper.Map(request.CreateCommand, GymProduct);
 
-            await _unitOfWork.Repository<GymProduct>().UpdateAsync(gym);
+            await _unitOfWork.Repository<GymProduct>().UpdateAsync(GymProduct);
             await _unitOfWork.Save(cancellationToken);
 
             return Result<GymProduct>.Success("Updated GymProduct");

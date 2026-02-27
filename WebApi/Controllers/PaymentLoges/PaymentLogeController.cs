@@ -20,7 +20,7 @@ namespace WebApi.Controllers.PaymentLoges
         
         [Authorize(Roles =  "Admin")]
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllPaymentLogeQueries query)
+        public async Task<IActionResult> Get([FromQuery] GetAllPaymentLogeQueries query)
         {
             var data = await _mediator.Send(query);
             return Ok(data);

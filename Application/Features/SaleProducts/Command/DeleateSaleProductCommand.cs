@@ -28,10 +28,10 @@ internal class DeleateSaleProductCommandHandler : IRequestHandler<DeleateSalePro
     
     public async Task<Result<bool>> Handle(DeleateSaleProductCommand request, CancellationToken cancellationToken)
     {
-        var locationExists = await _unitOfWork.Repository<SaleProduct>().Entities
+        var SalePayment = await _unitOfWork.Repository<SaleProduct>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!locationExists)
+        if (!SalePayment)
         {
             return Result<bool>.BadRequest("Diets not found.");
         }

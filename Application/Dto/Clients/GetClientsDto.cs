@@ -4,7 +4,7 @@ using Domain.Entities.Clientses;
 
 namespace Application.Dto.Clientses;
 
-public class GetClientsDto: BaseDto, IMapFrom<Clients>
+public class GetClientsDto: BaseDto, IMapFrom<Client>
 {
     public string Name { get; set; }
     public string Email { get; set; }
