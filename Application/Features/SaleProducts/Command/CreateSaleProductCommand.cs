@@ -30,11 +30,11 @@ internal class CreateSaleProductCommandHandler : IRequestHandler<CreateSaleProdu
 
     public async Task<Result<string>> Handle(CreateSaleProductCommand request, CancellationToken cancellationToken)
     {
-        var diet = _mapper.Map<SaleProduct>(request);
+        var SalePayment = _mapper.Map<SaleProduct>(request);
 
-        await _unitOfWork.Repository<SaleProduct>().AddAsync(diet);
+        await _unitOfWork.Repository<SaleProduct>().AddAsync(SalePayment);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<string>.Success("Diet created successfully.");
+        return Result<string>.Success("SalePayment created successfully.");
     }
 }

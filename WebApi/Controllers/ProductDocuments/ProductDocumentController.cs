@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymProductDocuments
 {
-    [Route("api/[controller]")]
+    [Route("api/product-documents")]
     [ApiController]
     public class ProductDocumentController : ControllerBase
     {
@@ -20,33 +20,33 @@ namespace WebApi.Controllers.GymProductDocuments
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProductDocument([FromForm] CreateProductDocumentCommand command)
+        public async Task<IActionResult> Create([FromForm] CreateProductDocumentCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProductDocument(int id, [FromForm] CreateProductDocumentCommand command)
+        public async Task<IActionResult> Update(int id, [FromForm] CreateProductDocumentCommand command)
         {
             var result = await _mediator.Send(new UpdateProductDocumentCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProduct([FromQuery] GetAllProductDocumentQuery query)
+        public async Task<IActionResult> Get([FromQuery] GetAllProductDocumentQuery query)
         {
             var gyms = await _mediator.Send(query);
             return Ok(gyms);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductDocumentById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetProductDocumentByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProductDocument(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteProductDocumentCommand(id));
             return ResponseHelper.GenerateResponse(result);

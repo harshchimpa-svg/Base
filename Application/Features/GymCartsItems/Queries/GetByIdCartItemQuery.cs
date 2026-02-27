@@ -33,15 +33,15 @@ internal class GetByIdCartItemQueryHandler : IRequestHandler<GetByIdCartItemQuer
 
     public async Task<Result<GetCartItemDto>> Handle(GetByIdCartItemQuery request, CancellationToken cancellationToken)
     {
-        var gym = await _unitOfWork.Repository<CartItem>().GetByID(request.Id);
+        var GymCartsItems = await _unitOfWork.Repository<CartItem>().GetByID(request.Id);
 
-        if (gym == null)
+        if (GymCartsItems == null)
         {
-            return Result<GetCartItemDto>.BadRequest("CartItem Not Found");
+            return Result<GetCartItemDto>.BadRequest("GymCartsItems Not Found");
         }
 
-        var mapData = _mapper.Map<GetCartItemDto>(gym);
+        var mapData = _mapper.Map<GetCartItemDto>(GymCartsItems);
 
-        return Result<GetCartItemDto>.Success(mapData, "CartItem");
+        return Result<GetCartItemDto>.Success(mapData, "GymCartsItems");
     }
 }

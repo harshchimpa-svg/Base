@@ -19,35 +19,35 @@ namespace WebApi.Controllers.Vendors
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateVendor(CreateVendorCommand command)
+        public async Task<ActionResult> Create(CreateVendorCommand command)
         {
             var Vendor = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Vendor);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVendor(int id, CreateVendorCommand command)
+        public async Task<IActionResult> Update(int id, CreateVendorCommand command)
         {
-            var result = await _mediator.Send(new UpdateVendorCommand(id, command));
+            var result = await _mediator.Send(new UpdateVendorCommand(id, command)); 
             return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetVendor()
+        public async Task<IActionResult> Get()
         {
             var Vendor = await _mediator.Send(new GetAllVendorQuery());
             return ResponseHelper.GenerateResponse(Vendor);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetVendorById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Vendor = await _mediator.Send(new GetVendorByIdQuery(id));
             return ResponseHelper.GenerateResponse(Vendor);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVendor(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Vendor = await _mediator.Send(new DeleteVendorCommand(id));
             return ResponseHelper.GenerateResponse(Vendor);

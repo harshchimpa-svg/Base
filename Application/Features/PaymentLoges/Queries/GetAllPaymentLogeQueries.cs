@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using Application.Dto.PaymentLoges;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
+using Domain.Entities.Customers;
 using Domain.Entities.PaymentLoges;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
@@ -13,27 +16,37 @@ public class GetAllPaymentLogeQueries : IRequest<PaginatedResult<GetPaymentLogeD
     public DateTime? FromDate { get; set; }
     public DateTime? ToDate { get; set; }
 
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
+    public string? CustomerId { get; set; } 
+
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
 }
 
 internal class GetAllPaymentLogeQueriesHandler
     : IRequestHandler<GetAllPaymentLogeQueries, PaginatedResult<GetPaymentLogeDto>>
 {
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllPaymentLogeQueriesHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllPaymentLogeQueriesHandler(IMapper mapper, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
+        _httpContextAccessor = httpContextAccessor;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<PaginatedResult<GetPaymentLogeDto>> Handle(GetAllPaymentLogeQueries request, CancellationToken cancellationToken)
     {
+        var userId = _httpContextAccessor
+            .HttpContext?
+            .User?
+            .FindFirstValue(ClaimTypes.NameIdentifier);
+        
         var queryable = _unitOfWork
             .Repository<PaymentLoge>()
             .Entities
+            .Where(x => x.UserId == userId) 
             .Include(x => x.User)
             .Include(x => x.Customer)
             .Include(x => x.Transaction)
@@ -48,7 +61,6 @@ internal class GetAllPaymentLogeQueriesHandler
         {
             queryable = queryable.Where(x => x.CreatedDate <= request.ToDate.Value);
         }
-
         int count = await queryable.CountAsync(cancellationToken);
 
         if (request.PageNumber != 0 && request.PageSize != 0)

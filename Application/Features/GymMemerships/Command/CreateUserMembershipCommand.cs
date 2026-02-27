@@ -19,8 +19,7 @@ public class CreateUserMembershipCommand : IRequest<Result<string>>,ICreateMapFr
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
 }
-internal class CreateUserMembershipCommandHandler
-    : IRequestHandler<CreateUserMembershipCommand, Result<string>>
+internal class CreateUserMembershipCommandHandler : IRequestHandler<CreateUserMembershipCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

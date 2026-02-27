@@ -1,3 +1,4 @@
+using Application.Features.Clients.Command;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Clientses;
@@ -7,7 +8,7 @@ using Shared;
 
 namespace Application.Features.Clientses.Command;
 
-public class UpdateClientCommand: IRequest<Result<Clients>>
+public class UpdateClientCommand: IRequest<Result<Client>>
 {
 
     public int Id { get; set; }
@@ -19,7 +20,7 @@ public class UpdateClientCommand: IRequest<Result<Clients>>
         CreateCommand = createCommand;
     }
 }
-internal class UpdateClientsCommandHandler : IRequestHandler<UpdateClientCommand, Result<Clients>>
+internal class UpdateClientsCommandHandler : IRequestHandler<UpdateClientCommand, Result<Client>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -30,21 +31,21 @@ internal class UpdateClientsCommandHandler : IRequestHandler<UpdateClientCommand
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<Result<Clients>> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Client>> Handle(UpdateClientCommand request, CancellationToken cancellationToken)
     {
 
-        var location = await _unitOfWork.Repository<Clients>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var clients = await _unitOfWork.Repository<Client>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (location == null)
+        if (clients == null)
         {
-            return Result<Clients>.BadRequest("Sorry id not found");
+            return Result<Client>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, location);
+        _mapper.Map(request.CreateCommand, clients);
 
-        await _unitOfWork.Repository<Clients>().UpdateAsync(location);
+        await _unitOfWork.Repository<Client>().UpdateAsync(clients);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<Clients>.Success("Update Clients...");
+        return Result<Client>.Success("Update clients...");
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Sales
 
 {
-    [Route("api/sale")]
+    [Route("api/sales")]
     [ApiController]
 
     public class SaleController : ControllerBase
@@ -22,7 +22,7 @@ namespace WebApi.Controllers.Sales
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateServices(CreateSaleCommand command)
+        public async Task<ActionResult> Create(CreateSaleCommand command)
         {
             var Services = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(Services);
@@ -30,7 +30,7 @@ namespace WebApi.Controllers.Sales
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateServices(int id, CreateSaleCommand command)
+        public async Task<IActionResult> Update(int id, CreateSaleCommand command)
         {
             var result = await _mediator.Send(new UpdateSaleCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -38,7 +38,7 @@ namespace WebApi.Controllers.Sales
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllSaleQueries query)
+        public async Task<IActionResult> Get([FromQuery] GetAllSaleQueries query)
         {
             var data = await _mediator.Send(query);
             return Ok(data);
@@ -46,7 +46,7 @@ namespace WebApi.Controllers.Sales
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetServicesById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var Services = await _mediator.Send(new GetSaleByIdQueries(id));
             return ResponseHelper.GenerateResponse(Services);
@@ -54,7 +54,7 @@ namespace WebApi.Controllers.Sales
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteServices(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var Services = await _mediator.Send(new DeleateSaleCommand(id));
             return ResponseHelper.GenerateResponse(Services);

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Exercises
 {
-    [Route("api/Exercise")]
+    [Route("api/exercise")]
     [ApiController]
     public class ExerciseController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace WebApi.Controllers.Exercises
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateDiet(CreateExerciseCommand command)
+        public async Task<ActionResult> Create(CreateExerciseCommand command)
         {
             var diet = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(diet);
@@ -26,7 +26,7 @@ namespace WebApi.Controllers.Exercises
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDiet(int id, CreateExerciseCommand command)
+        public async Task<IActionResult> Update(int id, CreateExerciseCommand command)
         {
             var result = await _mediator.Send(new UpdateExerciseCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -42,7 +42,7 @@ namespace WebApi.Controllers.Exercises
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetDietById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetByIdExerciseQuery(id));
             return ResponseHelper.GenerateResponse(result);
@@ -50,7 +50,7 @@ namespace WebApi.Controllers.Exercises
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDiet(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleateExerciseCommand(id));
             return ResponseHelper.GenerateResponse(result);

@@ -25,7 +25,7 @@ internal class DeleteClientsCommandHandler : IRequestHandler<DeleteClientCommand
     
     public async Task<Result<bool>> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
     {
-        var locationExists = await _unitOfWork.Repository<Clients>().Entities
+        var locationExists = await _unitOfWork.Repository<Client>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
         if (!locationExists)
@@ -33,7 +33,7 @@ internal class DeleteClientsCommandHandler : IRequestHandler<DeleteClientCommand
             return Result<bool>.BadRequest("Clients not found.");
         }
 
-        await _unitOfWork.Repository<Clients>().DeleteAsync(request.Id);
+        await _unitOfWork.Repository<Client>().DeleteAsync(request.Id);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<bool>.Success(true, "Clients deleted successfully.");

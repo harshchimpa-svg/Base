@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymProducts
 {
-    [Route("api/[controller]")]
+    [Route("api/gym-products")]
     [ApiController]
     public class GymProductController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace WebApi.Controllers.GymProducts
         }
         [HttpPost]
 
-        public async Task<ActionResult> CreateGymProduct(CreateGymProductCommand command)
+        public async Task<ActionResult> Create(CreateGymProductCommand command)
         {
             var gym = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(gym);
@@ -28,7 +28,7 @@ namespace WebApi.Controllers.GymProducts
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateGymProduct(int id, CreateGymProductCommand command)
+        public async Task<IActionResult> Update(int id, CreateGymProductCommand command)
         {
             var result = await _mediator.Send(new UpdateGymProductCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -36,7 +36,7 @@ namespace WebApi.Controllers.GymProducts
         }
         [HttpGet]
 
-        public async Task<IActionResult> GetGymProduct()
+        public async Task<IActionResult> Get()
         {
             var gym = await _mediator.Send(new GetGymProductQuery());
             return ResponseHelper.GenerateResponse(gym);
@@ -44,7 +44,7 @@ namespace WebApi.Controllers.GymProducts
 
         [HttpGet("{id}")]
 
-        public async Task<ActionResult> GetGymProductById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var gym = await _mediator.Send(new GetByIdGymProductQuery(id));
             return ResponseHelper.GenerateResponse(gym);
@@ -52,7 +52,7 @@ namespace WebApi.Controllers.GymProducts
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> DeleteGymProduct(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var gym = await _mediator.Send(new DeleteGymProductCommand(id));
             return ResponseHelper.GenerateResponse(gym);

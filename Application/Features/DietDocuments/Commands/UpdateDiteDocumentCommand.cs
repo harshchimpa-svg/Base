@@ -45,6 +45,6 @@ internal class UpdateDiteDocumentCommandHandler : IRequestHandler<UpdateDiteDocu
         await _unitOfWork.Repository<DietDocument>().UpdateAsync(Service);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<DietDocument>.Success("Update Service...");
+        return Result<DietDocument>.Success("Update DietDocuments...");
     }
 }

@@ -21,18 +21,18 @@ namespace WebApi.Controllers.Contacts
         }
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateContact(CreateContactCommand command)
+        public async Task<ActionResult> Create(CreateContactCommand command)
         {
-            var Vendor = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Vendor);
+            var Contacts = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(Contacts);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetContact()
+        public async Task<IActionResult> Get()
         {
-            var Vendor = await _mediator.Send(new GetAllContactQueries());
-            return ResponseHelper.GenerateResponse(Vendor);
+            var Contacts = await _mediator.Send(new GetAllContactQueries());
+            return ResponseHelper.GenerateResponse(Contacts);
         }
     }
 }

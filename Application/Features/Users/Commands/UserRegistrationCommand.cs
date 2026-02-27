@@ -125,6 +125,10 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
 
         await _unitOfWork.Save(cancellationToken);
 
+        await _userManager.AddToRoleAsync(user,"Admin"); 
+        
+        
+
         if (request.IsOtp && request.Email != null)
         {
             var otp = await _otpRepository.GenerateAndAddOtpAsync(

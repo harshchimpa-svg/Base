@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Route("api/tranner")]
+[Route("api/tranners")]
 public class TrannerController : ControllerBase
 {
     private readonly IMediator _mediator;

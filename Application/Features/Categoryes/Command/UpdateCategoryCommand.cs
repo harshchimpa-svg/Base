@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Categoryes.Command;
+namespace Application.Features.Categories.Command;
 
-public class UpdateCategoriCommand : IRequest<Result<Category>>
+public class UpdateCategoryCommand : IRequest<Result<Category>>
 {
 
     public int Id { get; set; } 
-    public CreateCategoriCommand CreateCommand { get; set; } = new();
+    public CreateCategoryCommand CreateCommand { get; set; } = new();
 
-    public UpdateCategoriCommand(int id, CreateCategoriCommand createCommand)
+    public UpdateCategoryCommand(int id, CreateCategoryCommand createCommand)
     {
         Id = id;
         CreateCommand = createCommand;
@@ -23,20 +23,20 @@ public class UpdateCategoriCommand : IRequest<Result<Category>>
 }
 public record GetCategoriDto(IFormFile File);
 
-internal class UpdateCategoriCommandHandler : IRequestHandler<UpdateCategoriCommand, Result<Category>>
+internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Result<Category>>
 {
     private readonly IMapper _mapper;
     private readonly IFileService _fileService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCategoriCommandHandler(IMapper mapper, IUnitOfWork CategoriRepository, IFileService fileService)
+    public UpdateCategoryCommandHandler(IMapper mapper, IUnitOfWork CategoriRepository, IFileService fileService)
     {
         _mapper = mapper;
         _fileService = fileService;
         _unitOfWork = CategoriRepository;
     }
     
-    public async Task<Result<Category>> Handle(UpdateCategoriCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Category>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         if (request.CreateCommand.ParentId.HasValue)                  
         {
@@ -50,19 +50,19 @@ internal class UpdateCategoriCommandHandler : IRequestHandler<UpdateCategoriComm
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)
             return Result<Category>.BadRequest("Image is required.");
          
-        var Categori = await _unitOfWork.Repository<Category>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var category = await _unitOfWork.Repository<Category>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (Categori == null)
+        if (category == null)
         {
             return Result<Category>.BadRequest("Sorry id not found");
-            Categori.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
+            category.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
         }
 
-        _mapper.Map(request.CreateCommand, Categori);
+        _mapper.Map(request.CreateCommand, category);
 
-        await _unitOfWork.Repository<Category>().UpdateAsync(Categori);
+        await _unitOfWork.Repository<Category>().UpdateAsync(category);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<Category>.Success("Update Categori...");
+        return Result<Category>.Success("Update Category...");
     }
 }

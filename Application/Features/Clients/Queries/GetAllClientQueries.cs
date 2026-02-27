@@ -27,7 +27,7 @@ internal class GetAllClientsQueriesHandler : IRequestHandler<GetAllClientQueries
 
     public async Task<PaginatedResult<GetClientsDto>> Handle(GetAllClientQueries request, CancellationToken cancellationToken)
     {
-        var queryable = _unitOfWork.Repository<Clients>().Entities.Include(s => s.Service)
+        var queryable = _unitOfWork.Repository<Client>().Entities.Include(s => s.Service)
             .AsQueryable();
 
         if (request.ServiceId.HasValue)

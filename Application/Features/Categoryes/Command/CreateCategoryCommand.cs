@@ -7,9 +7,9 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared;
 
-namespace Application.Features.Categoryes.Command;
+namespace Application.Features.Categories.Command;
 
-public class CreateCategoriCommand  : IRequest<Result<string>>, ICreateMapFrom<Category>
+public class CreateCategoryCommand  : IRequest<Result<string>>, ICreateMapFrom<Category>
 {
     public string Name { get; set; }
     public IFormFile ImageUrl { get; set; } 
@@ -17,20 +17,20 @@ public class CreateCategoriCommand  : IRequest<Result<string>>, ICreateMapFrom<C
     public int? ParentId { get; set; }
 }
 
-internal class CreateCategoriCommandHandler: IRequestHandler<CreateCategoriCommand, Result<string>>
+internal class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFileService _fileService;
     private readonly IMapper _mapper;
 
-    public CreateCategoriCommandHandler(IMapper mapper,IFileService fileService, IUnitOfWork unitOfWork)
+    public CreateCategoryCommandHandler(IMapper mapper,IFileService fileService, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _fileService = fileService;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<string>> Handle(CreateCategoriCommand request,CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateCategoryCommand request,CancellationToken cancellationToken)
     {
         if (request.ParentId.HasValue)
         {
@@ -41,18 +41,18 @@ internal class CreateCategoriCommandHandler: IRequestHandler<CreateCategoriComma
                 return Result<string>.BadRequest("Parent Id is not exist.");
             }
         }
-        var imageUrl = await _fileService.UploadAsync(request.ImageUrl, "Categori");
+        var imageUrl = await _fileService.UploadAsync(request.ImageUrl, "Categories");
 
         var document = new Category
         {
             ImageUrl = imageUrl,
         };
         
-        var Categori = _mapper.Map<Category>(request);
+        var category = _mapper.Map<Category>(request);
 
-        await _unitOfWork.Repository<Category>().AddAsync(Categori);
+        await _unitOfWork.Repository<Category>().AddAsync(category);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<string>.Success("Categori created successfully.");
+        return Result<string>.Success("Category created successfully.");
     }
 }

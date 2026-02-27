@@ -23,10 +23,10 @@ internal class GetAllContactQueriesHandler : IRequestHandler<GetAllContactQuerie
 
     public async Task<Result<List<GetContactDto>>> Handle(GetAllContactQueries request, CancellationToken cancellationToken)
     {
-        var Clients = await _unitOfWork.Repository<Contact>().GetAll();
+        var Contact = await _unitOfWork.Repository<Contact>().GetAll();
 
-        var map = _mapper.Map<List<GetContactDto>>(Clients);
+        var map = _mapper.Map<List<GetContactDto>>(Contact);
 
-        return Result<List<GetContactDto>>.Success(map, "Clients list");
+        return Result<List<GetContactDto>>.Success(map, "Contact list");
     }
 }

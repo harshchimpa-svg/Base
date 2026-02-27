@@ -18,5 +18,4 @@ public class Employee:BaseAuditableEntity
     [ForeignKey("RoleId")]
     public string? RoleId { get; set; }
     public Role Role { get; set; }
-    
 }

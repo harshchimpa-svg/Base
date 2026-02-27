@@ -25,10 +25,10 @@ internal class DeleateDietCommandHandler : IRequestHandler<DeleateDietCommand, R
     
     public async Task<Result<bool>> Handle(DeleateDietCommand request, CancellationToken cancellationToken)
     {
-        var locationExists = await _unitOfWork.Repository<Diet>().Entities
+        var DietsExists = await _unitOfWork.Repository<Diet>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!locationExists)
+        if (!DietsExists)
         {
             return Result<bool>.BadRequest("Diets not found.");
         }

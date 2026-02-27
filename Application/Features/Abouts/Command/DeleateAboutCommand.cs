@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Abouts.Commands;
+namespace Application.Features.Abouts.Command;
 
 public class DeleateAboutCommand: IRequest<Result<bool>>
 {
@@ -25,10 +25,10 @@ internal class DeleateAboutCommandHandler : IRequestHandler<DeleateAboutCommand,
 
     public async Task<Result<bool>> Handle(DeleateAboutCommand request, CancellationToken cancellationToken)
     {
-        var CategoriExists = await _unitOfWork.Repository<About>().Entities
+        var AbouteExists = await _unitOfWork.Repository<About>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!CategoriExists)
+        if (!AbouteExists)
         {
             return Result<bool>.BadRequest("About not found.");
         }

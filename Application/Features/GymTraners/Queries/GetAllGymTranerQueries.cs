@@ -26,9 +26,9 @@ internal class GetAllGymTranerQueriesHandler : IRequestHandler<GetAllGymTranerQu
 
     public async Task<Result<List<GetGymTranerDto>>> Handle(GetAllGymTranerQueries request, CancellationToken cancellationToken)
     {
-        var Service = await _unitOfWork.Repository<GemTraner>().GetAll();
+        var GymTraners = await _unitOfWork.Repository<GemTraner>().GetAll();
 
-        var map = _mapper.Map<List<GetGymTranerDto>>(Service);
+        var map = _mapper.Map<List<GetGymTranerDto>>(GymTraners);
 
         return Result<List<GetGymTranerDto>>.Success(map, "GemTraner list");
     }

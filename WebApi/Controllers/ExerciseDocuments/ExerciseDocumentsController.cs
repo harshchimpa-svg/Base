@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.ExerciseDocuments
 {
 
-    [Route("api/Exercise-documents")]
+    [Route("api/exercise-documents")]
     [ApiController]
     public class ExerciseDocumentsController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace WebApi.Controllers.ExerciseDocuments
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateDiet(CreateExerciseDocumentCommand command)
+        public async Task<ActionResult> Create(CreateExerciseDocumentCommand command)
         {
             var diet = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(diet);
@@ -26,7 +26,7 @@ namespace WebApi.Controllers.ExerciseDocuments
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDiet(int id, CreateExerciseDocumentCommand command)
+        public async Task<IActionResult> Update(int id, CreateExerciseDocumentCommand command)
         {
             var result = await _mediator.Send(new UpdateExerciseDocumentCommand(id, command));
             return ResponseHelper.GenerateResponse(result);

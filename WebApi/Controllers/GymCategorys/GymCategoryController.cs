@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymCategorys
 {
-    [Route("api/[controller]")]
+    [Route("api/gym-categories")]
     [ApiController]
     public class GymCategoryController : ControllerBase
     {
@@ -47,7 +47,7 @@ namespace WebApi.Controllers.GymCategorys
         }
         [HttpGet]
 
-        public async Task<IActionResult> GetAllGymCategory()
+        public async Task<IActionResult> GetAll()
         {
             var gym = await _mediator.Send(new GetAllGymCategoryQuery());
             return ResponseHelper.GenerateResponse(gym);
@@ -55,7 +55,7 @@ namespace WebApi.Controllers.GymCategorys
 
         [HttpGet("{id}")]
 
-        public async Task<ActionResult> GetGymCategoryById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var gym = await _mediator.Send(new GetByIdGymCategoryQuery(id));
             return ResponseHelper.GenerateResponse(gym);

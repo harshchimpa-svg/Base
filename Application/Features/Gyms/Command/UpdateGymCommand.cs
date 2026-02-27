@@ -43,7 +43,7 @@ internal class UpdateGymHandler : IRequestHandler<UpdateGymCommand, Result<Gym>>
         {
             if (gym == null)
             {
-                return Result<Gym>.BadRequest("soory id not found");
+                return Result<Gym>.BadRequest("Gyms id not found");
             }
 
             _mapper.Map(request.CreateCommand, gym);

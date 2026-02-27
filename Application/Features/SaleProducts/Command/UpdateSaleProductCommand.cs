@@ -35,16 +35,16 @@ internal class UpdateSaleProductCommandHandler : IRequestHandler<UpdateSaleProdu
     
     public async Task<Result<SaleProduct>> Handle(UpdateSaleProductCommand request, CancellationToken cancellationToken)
     {
-        var location = await _unitOfWork.Repository<SaleProduct>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var SalePayment = await _unitOfWork.Repository<SaleProduct>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (location == null)
+        if (SalePayment == null)
         {
-            return Result<SaleProduct>.BadRequest("Sorry id not found");
+            return Result<SaleProduct>.BadRequest("SalePayment id not found");
         }
 
-        _mapper.Map(request.CreateCommand, location);
+        _mapper.Map(request.CreateCommand, SalePayment);
 
-        await _unitOfWork.Repository<SaleProduct>().UpdateAsync(location);
+        await _unitOfWork.Repository<SaleProduct>().UpdateAsync(SalePayment);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<SaleProduct>.Success("Update SaleProduct...");

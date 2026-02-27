@@ -39,7 +39,7 @@ internal class UpdateDietCommandHandler : IRequestHandler<UpdateDietCommand, Res
 
             if (parent == null)
             {
-                return Result<Diet>.BadRequest("HouseId is not exist.");
+                return Result<Diet>.BadRequest("Diets id is not exist.");
             }
         }
         var location = await _unitOfWork.Repository<Diet>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
@@ -54,6 +54,6 @@ internal class UpdateDietCommandHandler : IRequestHandler<UpdateDietCommand, Res
         await _unitOfWork.Repository<Diet>().UpdateAsync(location);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<Diet>.Success("Update Clients...");
+        return Result<Diet>.Success("Update Diets...");
     }
 }

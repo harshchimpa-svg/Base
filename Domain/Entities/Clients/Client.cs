@@ -4,7 +4,7 @@ using Domain.Entities.Services;
 
 namespace Domain.Entities.Clientses;
 
-public class Clients:BaseAuditableEntity
+public class Client:BaseAuditableEntity
 {
     public string Name { get; set; }
     public string Email { get; set; }

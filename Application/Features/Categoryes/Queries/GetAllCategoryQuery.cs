@@ -6,25 +6,25 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Categoryes.Queries;
+namespace Application.Features.Categories.Queries;
 
-public class GetAllCategoriQuery : IRequest<PaginatedResult<GetCategoryDto>>
+public class GetAllCategoryQuery : IRequest<PaginatedResult<GetCategoryDto>>
 {
     public int? ParentId { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
-internal class GetAllCategoryesQueryHandler : IRequestHandler<GetAllCategoriQuery, PaginatedResult<GetCategoryDto>>
+internal class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQuery, PaginatedResult<GetCategoryDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllCategoryesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllCategoryQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
-    public async Task<PaginatedResult<GetCategoryDto>> Handle(GetAllCategoriQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetCategoryDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
     {
         var queryable = _unitOfWork.Repository<Category>().Entities.AsQueryable();
 

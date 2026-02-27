@@ -37,7 +37,7 @@ internal class UpdateGymTranerCommandHandler : IRequestHandler<UpdateGymTranerCo
 
         if (Service == null)
         {
-            return Result<GemTraner>.BadRequest("Sorry id not found");
+            return Result<GemTraner>.BadRequest("gym id not found");
         }
 
         _mapper.Map(request.CreateCommand, Service);

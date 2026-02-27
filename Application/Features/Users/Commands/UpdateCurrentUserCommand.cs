@@ -32,7 +32,6 @@ public class UpdateCurrentUserCommand : IRequest<Result<string>>
     public string? State { get; set; }
     public string? Country { get; set; }
     public int? PinCode { get; set; }
-
     public IFormFile? ProfileImage { get; set; }
 }
 
@@ -120,11 +119,11 @@ internal class UpdateCurrentUserCommandHandler
             profile.DateOfBirth = request.DateOfBirth.Value;
 
         if (request.ProfileImage != null)
-        {
-            var path = await _fileService.UploadAsync(
+        { 
+            var path = await _fileService.UploadAsync( 
                 request.ProfileImage,
                 "UserProfiles");
-
+            
             profile.ProfileImageUrl = path;
         }
 

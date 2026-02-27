@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymCartItems
 {
-    [Route("api/[controller]")]
+    [Route("api/cartitems")]
     [ApiController]
     public class CartItemController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace WebApi.Controllers.GymCartItems
 
         [HttpPost]
 
-        public async Task<ActionResult> CreateCartItem(CreateCartItemCommand command)
+        public async Task<ActionResult> Create(CreateCartItemCommand command)
         {
             var gym = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(gym);
@@ -29,7 +29,7 @@ namespace WebApi.Controllers.GymCartItems
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateCartItem(int id, CreateCartItemCommand command)
+        public async Task<IActionResult> Update(int id, CreateCartItemCommand command)
         {
             var result = await _mediator.Send(new UpdateCartItemCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -37,7 +37,7 @@ namespace WebApi.Controllers.GymCartItems
         }
         [HttpGet]
 
-        public async Task<IActionResult> GetCartItem()
+        public async Task<IActionResult> Get()
         {
             var gym = await _mediator.Send(new GetCartItemQuery());
             return ResponseHelper.GenerateResponse(gym);
@@ -45,7 +45,7 @@ namespace WebApi.Controllers.GymCartItems
 
         [HttpGet("{id}")]
 
-        public async Task<ActionResult> GetCartItemById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var gym = await _mediator.Send(new GetByIdCartItemQuery(id));
             return ResponseHelper.GenerateResponse(gym);
@@ -53,7 +53,7 @@ namespace WebApi.Controllers.GymCartItems
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> DeleteCartItem(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var gym = await _mediator.Send(new DeleteCartItemCommand(id));
             return ResponseHelper.GenerateResponse(gym);

@@ -9,7 +9,6 @@ namespace Application.Features.Customers.Commands;
 public class BlockCustomerCommand : IRequest<Result<string>>
 {
     public int Id { get; set; }
-    public bool IsActive { get; set; }
 }
 internal class BlockCustomerCommandHandler : IRequestHandler<BlockCustomerCommand, Result<string>>
 {
@@ -20,9 +19,7 @@ internal class BlockCustomerCommandHandler : IRequestHandler<BlockCustomerComman
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<string>> Handle(
-        BlockCustomerCommand request,
-        CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(BlockCustomerCommand request, CancellationToken cancellationToken)
     {
         var customer = await _unitOfWork.Repository<Customer>()
             .Entities

@@ -33,16 +33,16 @@ internal class CreateGymProductCommandHandler : IRequestHandler<CreateGymProduct
     {
         if (request.CategoryId.HasValue)
         {
-            var categoryExists = await _unitOfWork.Repository<GymCategory>().GetByID(request.CategoryId.Value);
-            if (categoryExists == null)
+            var GymProducts = await _unitOfWork.Repository<GymCategory>().GetByID(request.CategoryId.Value);
+            if (GymProducts == null)
             {
-                return Result<string>.BadRequest("Category id not exit");
+                return Result<string>.BadRequest("GymProduct id not exit");
             }
         }
 
-        var gym = _mapper.Map<GymProduct>(request);
+        var GymProduct = _mapper.Map<GymProduct>(request);
 
-        await _unitOfWork.Repository<GymProduct>().AddAsync(gym);
+        await _unitOfWork.Repository<GymProduct>().AddAsync(GymProduct);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("Product Created Successfully");

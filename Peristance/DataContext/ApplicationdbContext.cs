@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 using Domain.Entities.Catagories;
+using Domain.Entities.Clientses;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
 using Domain.Entities.DietDocuments;
@@ -19,7 +20,6 @@ using Domain.Entities.Employees;
 using Domain.Entities.ExerciseDocuments;
 using Domain.Entities.Exercises;
 using About = Domain.Entities.Abouts.About;
-using Clients = Domain.Entities.Clientses.Clients;
 using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
@@ -36,6 +36,7 @@ using Domain.Entities.GymCategorys;
 using Domain.Entities.GymProducts;
 using Domain.Entities.ProductDocuments;
 using Domain.Entities.GymCartItem;
+using Domain.Entities.ShopeSettings;
 
 namespace Persistence.DataContext;
 
@@ -53,7 +54,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Category> Categories { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
-    public DbSet<Clients> Clients { get; set; }
+    public DbSet<Client> Clients { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<About> About { get; set; }
     public DbSet<Contact> Contact { get; set; }
@@ -78,7 +79,8 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
-    
+    public DbSet<ShopeSetting> ShopeSetting { get; set; }
+
 
 
 

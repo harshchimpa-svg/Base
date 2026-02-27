@@ -8,6 +8,8 @@ using Domain.Entities.Transactions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Application.Features.Customers.Queries;
 
@@ -21,24 +23,33 @@ public class GetAllCustomerQueries : IRequest<PaginatedResult<GetCustomerDto>>
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
-
 internal class GetAllCustomersQueriesHandler : IRequestHandler<GetAllCustomerQueries, PaginatedResult<GetCustomerDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllCustomersQueriesHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetAllCustomersQueriesHandler(
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IHttpContextAccessor httpContextAccessor)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<PaginatedResult<GetCustomerDto>> Handle(GetAllCustomerQueries request,
-        CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetCustomerDto>> Handle(GetAllCustomerQueries request, CancellationToken cancellationToken)
     {
+        var userId = _httpContextAccessor
+            .HttpContext?
+            .User?
+            .FindFirstValue(ClaimTypes.NameIdentifier);
+
         var queryable = _unitOfWork
             .Repository<Customer>()
             .Entities
+            .Where(x => x.UserId == userId) 
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.Name))
@@ -71,7 +82,7 @@ internal class GetAllCustomersQueriesHandler : IRequestHandler<GetAllCustomerQue
 
         int count = await queryable.CountAsync(cancellationToken);
 
-        if (request.PageNumber != 0 && request.PageSize != 0)
+        if (request.PageNumber > 0 && request.PageSize > 0)
         {
             queryable = queryable
                 .Skip((request.PageNumber - 1) * request.PageSize)

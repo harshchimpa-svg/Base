@@ -7,18 +7,18 @@ namespace WebApi.Controllers.DietTypes
 {
     [Route("api/diteTypes")]
     [ApiController]
-    public class DietTypesController : ControllerBase
+    public class DietTypeController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public DietTypesController(IMediator mediator)
+        public DietTypeController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> CreateDietType(CreateDietTypeCommands command)
+        public async Task<ActionResult> Create(CreateDietTypeCommands command)
         {
             var dietType = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(dietType);
@@ -26,7 +26,7 @@ namespace WebApi.Controllers.DietTypes
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDietType(int id, CreateDietTypeCommands command)
+        public async Task<IActionResult> Update(int id, CreateDietTypeCommands command)
         {
             var result = await _mediator.Send(new UpdateDietTypeCommands(id, command));
             return ResponseHelper.GenerateResponse(result);
@@ -34,7 +34,7 @@ namespace WebApi.Controllers.DietTypes
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetDietTypes()
+        public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(new GetAllDietTypeQuery());
             return ResponseHelper.GenerateResponse(result);
@@ -42,7 +42,7 @@ namespace WebApi.Controllers.DietTypes
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetDietTypeById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetDietTypeByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
@@ -50,7 +50,7 @@ namespace WebApi.Controllers.DietTypes
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDietType(int id)
+        public async Task<IActionResult> DeleteType(int id)
         {
             var result = await _mediator.Send(new DeleateDietTypeCommands(id));
             return ResponseHelper.GenerateResponse(result);

@@ -36,24 +36,31 @@ internal class CreateProductDocumentCommandHandler : IRequestHandler<CreateProdu
     {
         if (request.GymProductId.HasValue)
         {
-            var gymExists = await _unitOfWork.Repository<GymProduct>().GetByID(request.GymProductId.Value);
+            var gymProduct = await _unitOfWork.Repository<GymProduct>()
+                .GetByID(request.GymProductId.Value);
 
-            if (gymExists == null)
+            if (gymProduct == null)
             {
-                return Result<string>.BadRequest("Product Id is not exit");
+                return Result<string>.BadRequest("gymProduct Id is not exist");
             }
         }
+
+        if (request.ImageUrl == null)
+        {
+            return Result<string>.BadRequest("Image is required");
+        }
+
         var imageUrl = await _fileService.UploadAsync(request.ImageUrl, "ProductDocument");
 
-        var document = new ProductDocument
-        {
-            ImageUrl = imageUrl,
-        };
         var productDocument = _mapper.Map<ProductDocument>(request);
+
+        productDocument.ImageUrl = imageUrl; 
+        productDocument.GymProductId = request.GymProductId;
 
         await _unitOfWork.Repository<ProductDocument>().AddAsync(productDocument);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("Product document Created");
     }
+
 }

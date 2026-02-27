@@ -43,9 +43,9 @@ internal class UpdateProductDocumentCommandHandler : IRequestHandler<UpdateProdu
     {
         if (request.CreateCommand.GymProductId.HasValue)
         {
-            var gym = await _unitOfWork.Repository<ProductDocument>().GetByID(request.CreateCommand.GymProductId.Value);
+            var ProductDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.CreateCommand.GymProductId.Value);
 
-            if (gym == null)
+            if (ProductDocument == null)
             {
                 return Result<ProductDocument>.BadRequest("Produt  Id is not exist.");
             }
@@ -53,20 +53,20 @@ internal class UpdateProductDocumentCommandHandler : IRequestHandler<UpdateProdu
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)
             return Result<ProductDocument>.BadRequest("Image is required.");
 
-        var Gym = await _unitOfWork.Repository<ProductDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var ProductDocuments = await _unitOfWork.Repository<ProductDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (Gym == null)
+        if (ProductDocuments == null)
         {
-            return Result<ProductDocument>.BadRequest("Sorry id not found");
-            Gym.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
+            return Result<ProductDocument>.BadRequest("ProductDocument id not found");
+            ProductDocuments.ImageUrl = await _fileService.UploadAsync(request.CreateCommand.ImageUrl, "documents");
         }
 
-        _mapper.Map(request.CreateCommand, Gym);
+        _mapper.Map(request.CreateCommand, ProductDocuments);
 
-        await _unitOfWork.Repository<ProductDocument>().UpdateAsync(Gym);
+        await _unitOfWork.Repository<ProductDocument>().UpdateAsync(ProductDocuments);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<ProductDocument>.Success("Update Category...");
+        return Result<ProductDocument>.Success("Update ProductDocuments...");
     }
 }
 

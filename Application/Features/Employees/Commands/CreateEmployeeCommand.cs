@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Application.Interfaces.Repositories.Otps;
 using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using Application.Interfaces.Services;
@@ -7,10 +8,12 @@ using AutoMapper;
 using Domain.Common.Enums.Otps;
 using Domain.Common.Enums.Users;
 using Domain.Common.Enums.Users.UserRoleType;
+using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
 using Domain.Entities.UserAddresses;
 using Domain.Entities.UserProfiles;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Shared;
 
@@ -51,89 +54,118 @@ internal class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComm
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUserIdAndOrganizationIdRepository _userIdAndOrganizationIdRepository;
     private readonly IOtpRepository _otpRepository;
     private readonly IEmailService _emailService;
+    private readonly RoleManager<Role> _roleManager;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateEmployeeCommandHandler(
         UserManager<User> userManager,
+        IHttpContextAccessor httpContextAccessor,
         IMapper mapper,
+        RoleManager<Role> roleManager,
         IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository,
         IOtpRepository otpRepository,
         IEmailService emailService,
         IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+        _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
+        _roleManager = roleManager;
         _mapper = mapper;
         _userIdAndOrganizationIdRepository = userIdAndOrganizationIdRepository;
         _otpRepository = otpRepository;
         _emailService = emailService;
     }
+    
+public async Task<Result<string>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+{
+    request.Email = request.Email?.ToLower();
 
-    public async Task<Result<string>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+    if (request.Email == null && request.PhoneNumber == null)
+        return Result<string>.BadRequest("Email or phone number is required");
+
+    var currentUserId = _httpContextAccessor.HttpContext?.User?
+        .FindFirst(ClaimTypes.NameIdentifier)?.Value
+        ?? _httpContextAccessor.HttpContext?.User?
+        .FindFirst("id")?.Value;
+
+    if (string.IsNullOrEmpty(currentUserId))
+        return Result<string>.BadRequest("Invalid or expired token");
+
+    var userOrgInfo = await _userIdAndOrganizationIdRepository.Get();
+
+    if (userOrgInfo.OrganizationId == null)
+        return Result<string>.BadRequest("Organization not found");
+
+    var organizationId = userOrgInfo.OrganizationId.Value;
+
+    var user = new User
     {
-        request.Email = request.Email?.ToLower();
+        UserName = Guid.NewGuid().ToString(),
+        Email = request.Email,
+        PhoneNumber = request.PhoneNumber,
+        FirstName = request.FirstName,
+        LastName = request.LastName,
+        OrganizationId = organizationId,
+        EmailConfirmed = !request.IsOtp,
+        PhoneNumberConfirmed = !request.IsOtp,
+        UserType = UserType.Employee,
+        CreatedBy = currentUserId
+    };
 
-        if (request.Email == null && request.PhoneNumber == null)
-            return Result<string>.BadRequest("Email or phone number is required");
+    var result = await _userManager.CreateAsync(user, request.Password);
 
-        var userOrgInfo = await _userIdAndOrganizationIdRepository.Get();
+    if (!result.Succeeded)
+        return Result<string>.BadRequest(string.Join(", ", result.Errors.Select(e => e.Description)));
 
-        var user = new User
-        {
-            UserName = Guid.NewGuid().ToString(),
-            Email = request.Email,
-            PhoneNumber = request.PhoneNumber,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            OrganizationId = userOrgInfo.OrganizationId!.Value,
-            EmailConfirmed = !request.IsOtp,
-            PhoneNumberConfirmed = !request.IsOtp,
+    await _unitOfWork.Repository<UserAddress>().AddAsync(new UserAddress
+    {
+        UserId = user.Id,
+        Address1 = request.Address1,
+        Address2 = request.Address2,
+        City = request.City,
+        State = request.State,
+        Country = request.Country,
+        PinCode = request.PinCode,
+        CreatedBy = currentUserId,
+        OrganizationId = organizationId
+    });
 
-            UserType = UserType.WebUser
-        };
+    await _unitOfWork.Repository<UserProfile>().AddAsync(new UserProfile
+    {
+        UserId = user.Id,
+        Weight = request.Weight,
+        Height = request.Height,
+        UserLevelType = request.UserLevelType,
+        DateOfBirth = request.DateOfBirth,
+        CreatedBy = currentUserId,
+        OrganizationId = organizationId
+    });
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+    await _unitOfWork.Save(cancellationToken);
 
-        if (!result.Succeeded)
-            return Result<string>.BadRequest(string.Join(", ", result.Errors.Select(e => e.Description)));
+    await _userManager.AddToRoleAsync(user, "employee");
 
-        await _unitOfWork.Repository<UserAddress>().AddAsync(new UserAddress
-        {
-            UserId = user.Id,
-            Address1 = request.Address1,
-            Address2 = request.Address2,
-            City = request.City,
-            State = request.State,
-            Country = request.Country,
-            PinCode = request.PinCode
-        });
+    if (request.IsOtp && request.Email != null)
+    {
+        var otp = await _otpRepository.GenerateAndAddOtpAsync(
+            user.Id, "Registration", OtpSentOn.Email, cancellationToken);
 
-        await _unitOfWork.Repository<UserProfile>().AddAsync(new UserProfile
-        {
-            UserId = user.Id,
-            Weight = request.Weight,
-            Height = request.Height,
-            UserLevelType = request.UserLevelType,
-            DateOfBirth = request.DateOfBirth,
-        });
-
-        await _unitOfWork.Save(cancellationToken);
-
-        if (request.IsOtp && request.Email != null)
-        {
-            var otp = await _otpRepository.GenerateAndAddOtpAsync(
-                user.Id, "Registration", OtpSentOn.Email, cancellationToken);
-
-            await _emailService.SendEmail(
-                request.Email,
-                "OTP Verification",
-                $"Hello {request.FirstName},\n\nYour OTP is: {otp.Otp}\n\nThanks,\nSupport Team");
-        }
-
-        return request.IsOtp ? Result<string>.Success("User registered. OTP sent.") : Result<string>.Success("User registered successfully.");
+        await _emailService.SendEmail(
+            request.Email,
+            "OTP Verification",
+            $"Hello {request.FirstName},\n\nYour OTP is: {otp.Otp}\n\nThanks,\nSupport Team");
     }
+
+    return request.IsOtp
+        ? Result<string>.Success("Employee registered. OTP sent.")
+        : Result<string>.Success("Employee registered successfully.");
+}
+
 }
 // Employee.RoleId = "1a916884-1fbb-4cc1-86b5-bc06125fb7f2";
+

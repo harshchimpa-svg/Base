@@ -59,6 +59,7 @@ internal class GetCustomersByIdQueriesHandler : IRequestHandler<GetCustomerByIdQ
             Email = customer.Email,
             PhoneNumber = customer.PhoneNumber,
             Notes = customer.Notes,
+            Profile =  customer.Profile,
             Balance = balance
         }, "Customer with balance");
     }

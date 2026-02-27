@@ -44,3 +44,4 @@ public class UserIdAndOrganizationIdRepository : IUserIdAndOrganizationIdReposit
         return result;
     }
 }
+    

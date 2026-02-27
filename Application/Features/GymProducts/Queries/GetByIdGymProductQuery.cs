@@ -33,15 +33,15 @@ internal class GetByIdGymProductQueryHandler : IRequestHandler<GetByIdGymProduct
 
     public async Task<Result<GetGymProductDto>> Handle(GetByIdGymProductQuery request, CancellationToken cancellationToken)
     {
-        var gym = await _unitOfWork.Repository<GymProduct>().GetByID(request.Id);
+        var GymProduct = await _unitOfWork.Repository<GymProduct>().GetByID(request.Id);
 
-        if (gym == null)
+        if (GymProduct == null)
         {
-            return Result<GetGymProductDto>.BadRequest("Product Not Found");
+            return Result<GetGymProductDto>.BadRequest("GymProduct Not Found");
         }
 
-        var mapData = _mapper.Map<GetGymProductDto>(gym);
+        var mapData = _mapper.Map<GetGymProductDto>(GymProduct);
 
-        return Result<GetGymProductDto>.Success(mapData, "Gym");
+        return Result<GetGymProductDto>.Success(mapData, "GymProduct");
     }
 }

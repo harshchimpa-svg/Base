@@ -29,5 +29,6 @@ public class User : IdentityUser
     public string? OtherDetails { get; set; }
     public List<UserRole> UserRoles { get; set; }
     public UserProfile? UserProfile { get; set; }
-    public UserAddress? UserAddress { get; set; }
+    public UserAddress? UserAddress { get; set; } 
+    public string? CreatedBy { get; set; }
 }

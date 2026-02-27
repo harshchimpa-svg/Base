@@ -7,36 +7,36 @@ using Shared;
 
 namespace Application.Features.Categoryes.Command;
 
-public class DeleteCategoriCommand : IRequest<Result<bool>>
+public class DeleteCategoryCommand : IRequest<Result<bool>>
 {
     public int Id { get; set; }
-    public DeleteCategoriCommand(int id)
+    public DeleteCategoryCommand(int id)
     {
         Id = id;
     }
 }
-internal class DeleteCategoriCommandHandler : IRequestHandler<DeleteCategoriCommand, Result<bool>>
+internal class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteCategoriCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<bool>> Handle(DeleteCategoriCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var CategoriExists = await _unitOfWork.Repository<Category>().Entities
+        var categoryExists = await _unitOfWork.Repository<Category>().Entities
                               .AnyAsync(x => x.Id == request.Id);
 
-        if (!CategoriExists)
+        if (!categoryExists)
         {
-            return Result<bool>.BadRequest("Categori not found.");
+            return Result<bool>.BadRequest("Category not found.");
         }
 
         await _unitOfWork.Repository<Category>().DeleteAsync(request.Id);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<bool>.Success(true, "Categori deleted successfully.");
+        return Result<bool>.Success(true, "Category deleted successfully.");
     }
 }

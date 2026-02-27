@@ -1,6 +1,6 @@
-﻿using Application.Features.Categoryes.Queries;
-using Application.Features.Dashboards.Queries;
+﻿using Application.Features.Dashboards.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.DashBoardes
@@ -16,11 +16,12 @@ namespace WebApi.Controllers.DashBoardes
             _mediator = mediator;
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetLocation()
+        public async Task<IActionResult> Get()
         {
-            var location = await _mediator.Send(new GetAllDashBoardQuery());
-            return ResponseHelper.GenerateResponse(location);
+            var DashBoardes = await _mediator.Send(new GetAllDashBoardQuery());
+            return ResponseHelper.GenerateResponse(DashBoardes);
         }
     }
 }
