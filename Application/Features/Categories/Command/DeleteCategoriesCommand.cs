@@ -7,15 +7,15 @@ using Shared;
 
 namespace Application.Features.Categoryes.Command;
 
-public class DeleteCategoryCommand : IRequest<Result<bool>>
+public class DeleteCategoriesCommand : IRequest<Result<bool>>
 {
     public int Id { get; set; }
-    public DeleteCategoryCommand(int id)
+    public DeleteCategoriesCommand(int id)
     {
         Id = id;
     }
 }
-internal class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, Result<bool>>
+internal class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoriesCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -24,7 +24,7 @@ internal class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComm
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<bool>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteCategoriesCommand request, CancellationToken cancellationToken)
     {
         var categoryExists = await _unitOfWork.Repository<Category>().Entities
                               .AnyAsync(x => x.Id == request.Id);

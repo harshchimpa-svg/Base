@@ -5,7 +5,7 @@ using Domain.Entities.Catagories;
 
 namespace Application.Dto.Categoryes;
 
-public class GetCategoryDto : BaseDto, IMapFrom<Category>
+public class GetCategoriesDto : BaseDto, IMapFrom<Category>
 {
     public string Name { get; set; }
     public string ImageUrl { get; set; }

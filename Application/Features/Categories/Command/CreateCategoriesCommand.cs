@@ -9,7 +9,7 @@ using Shared;
 
 namespace Application.Features.Categories.Command;
 
-public class CreateCategoryCommand  : IRequest<Result<string>>, ICreateMapFrom<Category>
+public class CreateCategoriesCommand  : IRequest<Result<string>>, ICreateMapFrom<Category>
 {
     public string Name { get; set; }
     public IFormFile ImageUrl { get; set; } 
@@ -17,7 +17,7 @@ public class CreateCategoryCommand  : IRequest<Result<string>>, ICreateMapFrom<C
     public int? ParentId { get; set; }
 }
 
-internal class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryCommand, Result<string>>
+internal class CreateCategoryCommandHandler: IRequestHandler<CreateCategoriesCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IFileService _fileService;
@@ -30,7 +30,7 @@ internal class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryComma
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<string>> Handle(CreateCategoryCommand request,CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateCategoriesCommand request,CancellationToken cancellationToken)
     {
         if (request.ParentId.HasValue)
         {
