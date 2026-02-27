@@ -20,7 +20,7 @@ namespace WebApi.Controllers.Categoryes
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CreateCategoryCommand command)
+        public async Task<IActionResult> Create([FromForm] CreateCategoriesCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
@@ -28,9 +28,9 @@ namespace WebApi.Controllers.Categoryes
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromForm] CreateCategoryCommand command)
+        public async Task<IActionResult> Update(int id, [FromForm] CreateCategoriesCommand command)
         {
-            var result = await _mediator.Send(new UpdateCategoryCommand(id, command));
+            var result = await _mediator.Send(new UpdateCategoriesCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
         
@@ -54,7 +54,7 @@ namespace WebApi.Controllers.Categoryes
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleteCategoryCommand(id));
+            var result = await _mediator.Send(new DeleteCategoriesCommand(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

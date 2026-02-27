@@ -9,13 +9,13 @@ using Shared;
 
 namespace Application.Features.Categories.Command;
 
-public class UpdateCategoryCommand : IRequest<Result<Category>>
+public class UpdateCategoriesCommand : IRequest<Result<Category>>
 {
 
     public int Id { get; set; } 
-    public CreateCategoryCommand CreateCommand { get; set; } = new();
+    public CreateCategoriesCommand CreateCommand { get; set; } = new();
 
-    public UpdateCategoryCommand(int id, CreateCategoryCommand createCommand)
+    public UpdateCategoriesCommand(int id, CreateCategoriesCommand createCommand)
     {
         Id = id;
         CreateCommand = createCommand;
@@ -23,7 +23,7 @@ public class UpdateCategoryCommand : IRequest<Result<Category>>
 }
 public record GetCategoriDto(IFormFile File);
 
-internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Result<Category>>
+internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoriesCommand, Result<Category>>
 {
     private readonly IMapper _mapper;
     private readonly IFileService _fileService;
@@ -36,7 +36,7 @@ internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComm
         _unitOfWork = CategoriRepository;
     }
     
-    public async Task<Result<Category>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Category>> Handle(UpdateCategoriesCommand request, CancellationToken cancellationToken)
     {
         if (request.CreateCommand.ParentId.HasValue)                  
         {
