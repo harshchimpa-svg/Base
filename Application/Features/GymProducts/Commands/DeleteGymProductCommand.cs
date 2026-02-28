@@ -34,7 +34,7 @@ internal class DeleteGymProductCommandHandler : IRequestHandler<DeleteGymProduct
 
         if (!gymExists)
         {
-            return Result<bool>.BadRequest("Product not Found");
+            return Result<bool>.BadRequest("GymProducts not Found");
         }
 
         await _unitOfWork.Repository<GymProduct>().DeleteAsync(request.Id);

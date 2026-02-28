@@ -42,16 +42,16 @@ internal class UpdateDietCommandHandler : IRequestHandler<UpdateDietCommand, Res
                 return Result<Diet>.BadRequest("Diets id is not exist.");
             }
         }
-        var location = await _unitOfWork.Repository<Diet>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var diet = await _unitOfWork.Repository<Diet>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (location == null)
+        if (diet == null)
         {
             return Result<Diet>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, location);
+        _mapper.Map(request.CreateCommand, diet);
 
-        await _unitOfWork.Repository<Diet>().UpdateAsync(location);
+        await _unitOfWork.Repository<Diet>().UpdateAsync(diet);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<Diet>.Success("Update Diets...");

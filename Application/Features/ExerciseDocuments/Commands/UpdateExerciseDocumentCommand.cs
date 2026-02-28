@@ -38,7 +38,7 @@ internal class UpdateExerciseDocumentCommandHandler : IRequestHandler<UpdateExer
 
         if (exerciseDocument == null)
         {
-            return Result<ExerciseDocument>.BadRequest("Sorry id not found");
+            return Result<ExerciseDocument>.BadRequest("ExerciseDocument id not found");
         }
 
         _mapper.Map(request.CreateCommand, exerciseDocument);
@@ -46,6 +46,6 @@ internal class UpdateExerciseDocumentCommandHandler : IRequestHandler<UpdateExer
         await _unitOfWork.Repository<ExerciseDocument>().UpdateAsync(exerciseDocument);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<ExerciseDocument>.Success("Update Service...");
+        return Result<ExerciseDocument>.Success("Update ExerciseDocument...");
     }
 }

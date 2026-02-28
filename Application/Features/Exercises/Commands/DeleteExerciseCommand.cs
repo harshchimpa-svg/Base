@@ -34,7 +34,7 @@ internal class DeleteExerciseCommandHandler : IRequestHandler<DeleteExerciseComm
 
         if (!exercise)
         {
-            return Result<bool>.BadRequest("Gym not Found");
+            return Result<bool>.BadRequest("Exercise not Found");
         }
 
         await _unitOfWork.Repository<Exercise>().DeleteAsync(request.Id);

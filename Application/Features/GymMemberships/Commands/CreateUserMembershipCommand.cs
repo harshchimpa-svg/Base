@@ -37,9 +37,9 @@ internal class CreateUserMembershipCommandHandler : IRequestHandler<CreateUserMe
     public async Task<Result<string>> Handle(CreateUserMembershipCommand request, CancellationToken cancellationToken)
     {
 
-        var userMembership = await _userManager.FindByIdAsync(request.UserId);
+        var user = await _userManager.FindByIdAsync(request.UserId);
 
-        if (userMembership == null)
+        if (user == null)
         {
             return Result<string>.BadRequest("User id not exist");
         }

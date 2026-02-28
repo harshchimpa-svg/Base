@@ -37,7 +37,7 @@ internal class UpdateDiteDocumentCommandHandler : IRequestHandler<UpdateDiteDocu
 
         if (dietdocument == null)
         {
-            return Result<DietDocument>.BadRequest("Sorry id not found");
+            return Result<DietDocument>.BadRequest("DietDocument id not found");
         }
 
         _mapper.Map(request.CreateCommand, dietdocument);

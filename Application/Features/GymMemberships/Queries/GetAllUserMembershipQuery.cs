@@ -29,7 +29,6 @@ internal class GetAllUserMembershipQueryHandler : IRequestHandler<GetAllUserMemb
 
         var map = _mapper.Map<List<GetUserMembershipDto>>(list);
 
-        return Result<List<GetUserMembershipDto>>
-            .Success(map, "User Membership List");
+        return Result<List<GetUserMembershipDto>>.Success(map, "User Membership List");
     }
 }

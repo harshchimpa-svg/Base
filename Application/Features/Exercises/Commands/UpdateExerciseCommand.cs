@@ -35,7 +35,7 @@ internal class UpdateExerciseCommandHandler : IRequestHandler<UpdateExerciseComm
             
             if (dietType == null)
             {
-                return Result<Exercise>.BadRequest("DietTypeId is not exist");
+                return Result<Exercise>.BadRequest("ExerciseId is not exist");
             }
         }
         var exercise = await _unitOfWork.Repository<Exercise>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
