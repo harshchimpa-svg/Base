@@ -20,8 +20,8 @@ namespace WebApi.Controllers.DietDocuments
         [HttpPost]
         public async Task<ActionResult> Create(CreateDiteDocumentCommand command)
         {
-            var DietDocuments = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(DietDocuments);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

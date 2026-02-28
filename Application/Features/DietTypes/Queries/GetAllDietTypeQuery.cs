@@ -22,9 +22,9 @@ internal class GetAllDietTypeQueryHandler : IRequestHandler<GetAllDietTypeQuery,
     }
     public async Task<Result<List<GetDietTypeDto>>> Handle(GetAllDietTypeQuery request, CancellationToken cancellationToken)
     {
-        var DietTypes = await _unitOfWork.Repository<DietType>().GetAll();
+        var dietTypes = await _unitOfWork.Repository<DietType>().GetAll();
 
-        var map = _mapper.Map<List<GetDietTypeDto>>(DietTypes);
+        var map = _mapper.Map<List<GetDietTypeDto>>(dietTypes);
 
         return Result<List<GetDietTypeDto>>.Success(map, "DietTypes list");
     }

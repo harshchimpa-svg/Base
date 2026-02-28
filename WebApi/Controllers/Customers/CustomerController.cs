@@ -22,15 +22,15 @@ namespace WebApi.Controllers.Customers
         [HttpPost]
         public async Task<ActionResult> Create([FromForm]CreateCustomerCommand command)
         {
-            var customer = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(customer);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpPost("Reminder")]
         public async Task<ActionResult> CreateReminder(ReminderCustomer command)
         {
-            var customer = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(customer);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         
@@ -55,8 +55,8 @@ namespace WebApi.Controllers.Customers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllCustomerQuery query)
         {
-            var categories = await _mediator.Send(query);
-            return Ok(categories);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         
         [Authorize(Roles =  "Admin,Employee")]

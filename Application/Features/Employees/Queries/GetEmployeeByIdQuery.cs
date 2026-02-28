@@ -10,7 +10,7 @@ using Shared;
 
 namespace Application.Features.Employees.Queries;
 
-public class GetEmployeeByIdQuery: IRequest<Result<GetEmployeeDTO>>
+public class GetEmployeeByIdQuery: IRequest<Result<GetEmployeeDto>>
 {
     public int Id { get; set; }
 
@@ -19,7 +19,7 @@ public class GetEmployeeByIdQuery: IRequest<Result<GetEmployeeDTO>>
         Id = id;
     }
 }
-internal class GetEmployeeByIdQueriesHandler : IRequestHandler<GetEmployeeByIdQuery, Result<GetEmployeeDTO>>
+internal class GetEmployeeByIdQueriesHandler : IRequestHandler<GetEmployeeByIdQuery, Result<GetEmployeeDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -30,17 +30,17 @@ internal class GetEmployeeByIdQueriesHandler : IRequestHandler<GetEmployeeByIdQu
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetEmployeeDTO>> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetEmployeeDto>> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
     {
         var employee = await _unitOfWork.Repository<Employee>().GetByID(request.Id);
 
         if (employee == null)
         {
-            return Result<GetEmployeeDTO>.BadRequest("Employee not found.");
+            return Result<GetEmployeeDto>.BadRequest("Employee not found.");
         }
 
-        var mapData = _mapper.Map<GetEmployeeDTO>(employee);
+        var mapData = _mapper.Map<GetEmployeeDto>(employee);
 
-        return Result<GetEmployeeDTO>.Success(mapData, "Employee");
+        return Result<GetEmployeeDto>.Success(mapData, "Employee");
     }
 }

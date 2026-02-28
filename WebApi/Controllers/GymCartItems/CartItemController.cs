@@ -23,8 +23,8 @@ namespace WebApi.Controllers.GymCartItems
 
         public async Task<ActionResult> Create(CreateCartItemCommand command)
         {
-            var gym = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(gym);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpPut("{id}")]
@@ -39,24 +39,24 @@ namespace WebApi.Controllers.GymCartItems
 
         public async Task<IActionResult> Get()
         {
-            var gym = await _mediator.Send(new GetAllCartItemQuery());
-            return ResponseHelper.GenerateResponse(gym);
+            var result = await _mediator.Send(new GetAllCartItemQuery());
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet("{id}")]
 
         public async Task<ActionResult> GetById(int id)
         {
-            var gym = await _mediator.Send(new GetByIdCartItemQuery(id));
-            return ResponseHelper.GenerateResponse(gym);
+            var result = await _mediator.Send(new GetByIdCartItemQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> Delete(int id)
         {
-            var gym = await _mediator.Send(new DeleteCartItemCommand(id));
-            return ResponseHelper.GenerateResponse(gym);
+            var result = await _mediator.Send(new DeleteCartItemCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

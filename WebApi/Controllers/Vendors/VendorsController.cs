@@ -21,8 +21,8 @@ namespace WebApi.Controllers.Vendors
         [HttpPost]
         public async Task<ActionResult> Create(CreateVendorCommand command)
         {
-            var Vendor = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpPut("{id}")]
@@ -35,22 +35,22 @@ namespace WebApi.Controllers.Vendors
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var Vendor = await _mediator.Send(new GetAllVendorQuery());
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(new GetAllVendorQuery());
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Vendor = await _mediator.Send(new GetVendorByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(new GetVendorByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var Vendor = await _mediator.Send(new DeleteVendorCommand(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(new DeleteVendorCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

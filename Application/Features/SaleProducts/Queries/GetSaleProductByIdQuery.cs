@@ -34,15 +34,15 @@ internal class GetSaleProductQueryHandler : IRequestHandler<GetSaleProductByIdQu
     public async Task<Result<GetSaleProductDto>> Handle(GetSaleProductByIdQuery request, CancellationToken cancellationToken)
 
     {
-        var SalePayment = await _unitOfWork.Repository<SaleProduct>().GetByID(request.Id);
+        var saleProduct = await _unitOfWork.Repository<SaleProduct>().GetByID(request.Id);
 
-        if (SalePayment == null)
+        if (saleProduct == null)
         {
-            return Result<GetSaleProductDto>.BadRequest("SalePayment not found.");
+            return Result<GetSaleProductDto>.BadRequest("SaleProduct not found.");
         }
 
-        var mapData = _mapper.Map<GetSaleProductDto>(SalePayment);
+        var mapData = _mapper.Map<GetSaleProductDto>(saleProduct);
 
-        return Result<GetSaleProductDto>.Success(mapData, "SalePayment");
+        return Result<GetSaleProductDto>.Success(mapData, "SaleProduct");
     }
 }

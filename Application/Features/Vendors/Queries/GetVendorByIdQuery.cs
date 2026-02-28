@@ -29,14 +29,14 @@ internal class GetVendorsByIdQueryHandler : IRequestHandler<GetVendorByIdQuery, 
 
     public async Task<Result<GetVendorDto>> Handle(GetVendorByIdQuery request, CancellationToken cancellationToken)
     {
-        var Vendor = await _unitOfWork.Repository<Category>().GetByID(request.Id);
+        var vendor = await _unitOfWork.Repository<Category>().GetByID(request.Id);
 
-        if (Vendor == null)
+        if (vendor == null)
         {
             return Result<GetVendorDto>.BadRequest("Vendor not found.");
         }
 
-        var mapData = _mapper.Map<GetVendorDto>(Vendor);
+        var mapData = _mapper.Map<GetVendorDto>(vendor);
 
         return Result<GetVendorDto>.Success(mapData, "Vendor");
     }

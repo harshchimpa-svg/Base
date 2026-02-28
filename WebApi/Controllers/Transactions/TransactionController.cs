@@ -21,8 +21,8 @@ namespace WebApi.Controllers.Transaction
         [HttpPost]
         public async Task<ActionResult> Create(CreateTransactionCommand command)
         {
-            var transaction = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(transaction);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [Authorize(Roles = "Admin,Employee")]
@@ -37,16 +37,16 @@ namespace WebApi.Controllers.Transaction
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllTransactionQuery query)
         {
-            var data = await _mediator.Send(query);
-            return Ok(data);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [Authorize(Roles = "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTransactionById(int id)
         {
-            var transaction = await _mediator.Send(new GetTransactionByIdQuery(id));
-            return ResponseHelper.GenerateResponse(transaction);
+            var result = await _mediator.Send(new GetTransactionByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [Authorize(Roles = "Admin,Employee")]
@@ -61,8 +61,8 @@ namespace WebApi.Controllers.Transaction
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var transaction = await _mediator.Send(new DeleteTransactionCommand(id));
-            return ResponseHelper.GenerateResponse(transaction);
+            var result = await _mediator.Send(new DeleteTransactionCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [Authorize(Roles = "Admin")]

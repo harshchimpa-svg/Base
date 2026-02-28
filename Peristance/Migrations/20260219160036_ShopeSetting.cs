@@ -13,7 +13,7 @@ namespace Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ShopeSetting",
+                name: "ShopSetting",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -51,12 +51,12 @@ namespace Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShopeSetting_EmployeeId",
-                table: "ShopeSetting",
+                table: "ShopSetting",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShopeSetting_OrganizationId",
-                table: "ShopeSetting",
+                table: "ShopSetting",
                 column: "OrganizationId");
         }
 
@@ -64,7 +64,7 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ShopeSetting");
+                name: "ShopSetting");
         }
     }
 }

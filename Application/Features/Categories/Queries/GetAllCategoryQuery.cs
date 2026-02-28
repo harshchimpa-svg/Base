@@ -8,13 +8,13 @@ using Shared;
 
 namespace Application.Features.Categories.Queries;
 
-public class GetAllCategoryQuery : IRequest<PaginatedResult<GetCategoriesDto>>
+public class GetAllCategoryQuery : IRequest<PaginatedResult<GetCategoryDto>>
 {
     public int? ParentId { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
-internal class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQuery, PaginatedResult<GetCategoriesDto>>
+internal class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQuery, PaginatedResult<GetCategoryDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -24,7 +24,7 @@ internal class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQuery,
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
-    public async Task<PaginatedResult<GetCategoriesDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetCategoryDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
     {
         var queryable = _unitOfWork.Repository<Category>().Entities.AsQueryable();
 
@@ -43,8 +43,8 @@ internal class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQuery,
         }
         var query = await queryable.ToListAsync();
 
-        var map = _mapper.Map<List<GetCategoriesDto>>(query);
+        var map = _mapper.Map<List<GetCategoryDto>>(query);
 
-        return PaginatedResult<GetCategoriesDto>.Create(map, count, request.PageNumber, request.PageSize);
+        return PaginatedResult<GetCategoryDto>.Create(map, count, request.PageNumber, request.PageSize);
     }
 }

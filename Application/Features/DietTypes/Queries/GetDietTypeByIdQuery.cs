@@ -29,14 +29,14 @@ internal class GetDietTypeByIdQueryHandler : IRequestHandler<GetDietTypeByIdQuer
     
     public async Task<Result<GetDietTypeDto>> Handle(GetDietTypeByIdQuery request, CancellationToken cancellationToken)
     {
-        var location = await _unitOfWork.Repository<DietType>().GetByID(request.Id);
+        var dietType = await _unitOfWork.Repository<DietType>().GetByID(request.Id);
 
-        if (location == null)
+        if (dietType == null)
         {
             return Result<GetDietTypeDto>.BadRequest("DietType not found.");
         }
 
-        var mapData = _mapper.Map<GetDietTypeDto>(location);
+        var mapData = _mapper.Map<GetDietTypeDto>(dietType);
 
         return Result<GetDietTypeDto>.Success(mapData, "DietType");
     }

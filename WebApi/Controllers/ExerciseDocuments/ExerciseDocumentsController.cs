@@ -20,8 +20,8 @@ namespace WebApi.Controllers.ExerciseDocuments
         [HttpPost]
         public async Task<ActionResult> Create(CreateExerciseDocumentCommand command)
         {
-            var diet = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(diet);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

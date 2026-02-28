@@ -960,7 +960,7 @@ namespace Persistence.Migrations
                     b.ToTable("GymProducts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.GymTraners.GemTraner", b =>
+            modelBuilder.Entity("Domain.Entities.GymTraners.GymTrainer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1004,7 +1004,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GemTraner");
+                    b.ToTable("GymTrainer");
                 });
 
             modelBuilder.Entity("Domain.Entities.Gyms.Gym", b =>
@@ -1240,7 +1240,7 @@ namespace Persistence.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLoge", b =>
+            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1570,7 +1570,7 @@ namespace Persistence.Migrations
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ShopeSettings.ShopeSetting", b =>
+            modelBuilder.Entity("Domain.Entities.ShopeSettings.ShopSetting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1630,7 +1630,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("ShopeSetting");
+                    b.ToTable("ShopSetting");
                 });
 
             modelBuilder.Entity("Domain.Entities.Transactions.Transaction", b =>
@@ -2242,7 +2242,7 @@ namespace Persistence.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Domain.Entities.GymTraners.GemTraner", b =>
+            modelBuilder.Entity("Domain.Entities.GymTraners.GymTrainer", b =>
                 {
                     b.HasOne("Domain.Entities.Gyms.Gym", "Gym")
                         .WithMany()
@@ -2331,7 +2331,7 @@ namespace Persistence.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLoge", b =>
+            modelBuilder.Entity("Domain.Entities.PaymentLoges.PaymentLog", b =>
                 {
                     b.HasOne("Domain.Entities.Customers.Customer", "Customer")
                         .WithMany()
@@ -2455,7 +2455,7 @@ namespace Persistence.Migrations
                     b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ShopeSettings.ShopeSetting", b =>
+            modelBuilder.Entity("Domain.Entities.ShopeSettings.ShopSetting", b =>
                 {
                     b.HasOne("Domain.Entities.Employees.Employee", "Employee")
                         .WithMany()

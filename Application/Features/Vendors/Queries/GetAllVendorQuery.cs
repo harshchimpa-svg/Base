@@ -23,9 +23,9 @@ internal class GetAllVendorsQueryHandler : IRequestHandler<GetAllVendorQuery, Re
 
     public async Task<Result<List<GetVendorDto>>> Handle(GetAllVendorQuery request, CancellationToken cancellationToken) 
     {
-        var Vendor = await _unitOfWork.Repository<Vendor>().GetAll();
+        var vendor = await _unitOfWork.Repository<Vendor>().GetAll();
 
-        var map = _mapper.Map<List<GetVendorDto>>(Vendor);
+        var map = _mapper.Map<List<GetVendorDto>>(vendor);
 
         return Result<List<GetVendorDto>>.Success(map, "Vendor list");
     }

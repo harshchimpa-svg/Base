@@ -23,16 +23,16 @@ namespace WebApi.Controllers.Contacts
         [HttpPost]
         public async Task<ActionResult> Create(CreateContactCommand command)
         {
-            var Contacts = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Contacts);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var Contacts = await _mediator.Send(new GetAllContactQuery());
-            return ResponseHelper.GenerateResponse(Contacts);
+            var result = await _mediator.Send(new GetAllContactQuery());
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }
