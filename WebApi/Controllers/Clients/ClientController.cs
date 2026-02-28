@@ -24,8 +24,8 @@ namespace WebApi.Controllers.Clientses
         [HttpPost]
         public async Task<ActionResult> Create(CreateClientCommand command)
         {
-            var Clients = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Clients);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]
@@ -40,24 +40,24 @@ namespace WebApi.Controllers.Clientses
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllClientQuery query)
         {
-            var data = await _mediator.Send(query);
-            return Ok(data);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Clients = await _mediator.Send(new GetClientByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Clients);
+            var result = await _mediator.Send(new GetClientByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var Clients = await _mediator.Send(new DeleteClientCommand(id));
-            return ResponseHelper.GenerateResponse(Clients);
+            var result = await _mediator.Send(new DeleteClientCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

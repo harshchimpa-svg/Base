@@ -8,7 +8,7 @@ using Shared;
 
 namespace Application.Features.Categories.Queries;
 
-public class GetCategoryByIdQuery : IRequest<Result<GetCategoriesDto>>
+public class GetCategoryByIdQuery : IRequest<Result<GetCategoryDto>>
 {
     public int Id { get; set; }
 
@@ -17,7 +17,7 @@ public class GetCategoryByIdQuery : IRequest<Result<GetCategoriesDto>>
         Id = id;
     }
 }
-internal class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, Result<GetCategoriesDto>>
+internal class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, Result<GetCategoryDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -28,17 +28,17 @@ internal class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuer
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetCategoriesDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetCategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
         var category = await _unitOfWork.Repository<Category>().GetByID(request.Id);
 
         if (category == null)
         {
-            return Result<GetCategoriesDto>.BadRequest("Catgory not found.");
+            return Result<GetCategoryDto>.BadRequest("Catgory not found.");
         }
 
-        var mapData = _mapper.Map<GetCategoriesDto>(category);
+        var mapData = _mapper.Map<GetCategoryDto>(category);
 
-        return Result<GetCategoriesDto>.Success(mapData, "Catgory");
+        return Result<GetCategoryDto>.Success(mapData, "Catgory");
     }
 }

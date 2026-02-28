@@ -10,11 +10,11 @@ using Shared;
 
 namespace Application.Features.ShopeSettings.Queries;
 
-public class GetAllShopeSettingQuery : IRequest<Result<List<GetShopeSettingDto>>>
+public class GetAllShopeSettingQuery : IRequest<Result<List<GetShopSettingDto>>>
 {
 }
 
-internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopeSettingQuery, Result<List<GetShopeSettingDto>>>
+internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopeSettingQuery, Result<List<GetShopSettingDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -30,20 +30,20 @@ internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopeSetti
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Result<List<GetShopeSettingDto>>> Handle(GetAllShopeSettingQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<GetShopSettingDto>>> Handle(GetAllShopeSettingQuery request, CancellationToken cancellationToken)
     {
         var user = _httpContextAccessor.HttpContext?.User;
 
         if (user == null || !user.Identity!.IsAuthenticated)
-            return Result<List<GetShopeSettingDto>>.BadRequest("User not authenticated");
+            return Result<List<GetShopSettingDto>>.BadRequest("User not authenticated");
 
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? user.FindFirst("id")?.Value ?? user.FindFirst("sub")?.Value;
 
         var role = user.FindFirst(ClaimTypes.Role)?.Value ?? user.FindFirst("role")?.Value;
 
-        if (string.IsNullOrWhiteSpace(userId)) return Result<List<GetShopeSettingDto>>.BadRequest("UserId not found in token");
+        if (string.IsNullOrWhiteSpace(userId)) return Result<List<GetShopSettingDto>>.BadRequest("UserId not found in token");
  
-        IQueryable<ShopeSetting> query = _unitOfWork.Repository<ShopeSetting>().Entities;
+        IQueryable<ShopSetting> query = _unitOfWork.Repository<ShopSetting>().Entities;
 
         if (!string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
         {
@@ -54,9 +54,9 @@ internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopeSetti
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
-        var result = _mapper.Map<List<GetShopeSettingDto>>(shopSettings);
+        var result = _mapper.Map<List<GetShopSettingDto>>(shopSettings);
 
-        return Result<List<GetShopeSettingDto>>
+        return Result<List<GetShopSettingDto>>
             .Success(result, "ShopSetting list");
     }
 

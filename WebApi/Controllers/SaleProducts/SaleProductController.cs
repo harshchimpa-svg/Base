@@ -22,8 +22,8 @@ namespace WebApi.Controllers.SaleProducts
         [HttpPost]
         public async Task<ActionResult> Create(CreateSaleProductCommand command)
         {
-            var Services = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Services);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
@@ -38,24 +38,24 @@ namespace WebApi.Controllers.SaleProducts
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllSaleProductQuery query)
         {
-            var data = await _mediator.Send(query);
-            return Ok(data);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Services = await _mediator.Send(new GetSaleProductByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Services);
+            var result = await _mediator.Send(new GetSaleProductByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var Services = await _mediator.Send(new DeleteSaleProductCommand(id));
-            return ResponseHelper.GenerateResponse(Services);
+            var result = await _mediator.Send(new DeleteSaleProductCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

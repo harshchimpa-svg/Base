@@ -26,9 +26,9 @@ internal class CreateDiteDocumentCommandHandler : IRequestHandler<CreateDiteDocu
 
     public async Task<Result<string>> Handle(CreateDiteDocumentCommand request, CancellationToken cancellationToken)
     {
-        var DietDocument = _mapper.Map<DietDocument>(request);
+        var dietDocument = _mapper.Map<DietDocument>(request);
 
-        await _unitOfWork.Repository<DietDocument>().AddAsync(DietDocument);
+        await _unitOfWork.Repository<DietDocument>().AddAsync(dietDocument);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("DietDocument created successfully.");

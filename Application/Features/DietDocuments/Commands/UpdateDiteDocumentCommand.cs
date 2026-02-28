@@ -33,16 +33,16 @@ internal class UpdateDiteDocumentCommandHandler : IRequestHandler<UpdateDiteDocu
     public async Task<Result<DietDocument>> Handle(UpdateDiteDocumentCommand request, CancellationToken cancellationToken)
     {
 
-        var Service = await _unitOfWork.Repository<DietDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var dietdocument = await _unitOfWork.Repository<DietDocument>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
-        if (Service == null)
+        if (dietdocument == null)
         {
             return Result<DietDocument>.BadRequest("Sorry id not found");
         }
 
-        _mapper.Map(request.CreateCommand, Service);
+        _mapper.Map(request.CreateCommand, dietdocument);
 
-        await _unitOfWork.Repository<DietDocument>().UpdateAsync(Service);
+        await _unitOfWork.Repository<DietDocument>().UpdateAsync(dietdocument);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<DietDocument>.Success("Update DietDocuments...");

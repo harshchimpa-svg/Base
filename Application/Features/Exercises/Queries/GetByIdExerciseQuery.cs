@@ -33,14 +33,14 @@ internal class GetByIdExerciseQueryHandler : IRequestHandler<GetByIdExerciseQuer
 
     public async Task<Result<GetExerciseDto>> Handle(GetByIdExerciseQuery request, CancellationToken cancellationToken)
     {
-        var gym = await _unitOfWork.Repository<Exercise>().GetByID(request.Id);
+        var exercise = await _unitOfWork.Repository<Exercise>().GetByID(request.Id);
 
-        if (gym == null)
+        if (exercise == null)
         {
             return Result<GetExerciseDto>.BadRequest("Exercise Not Found");
         }
 
-        var mapData = _mapper.Map<GetExerciseDto>(gym);
+        var mapData = _mapper.Map<GetExerciseDto>(exercise);
 
         return Result<GetExerciseDto>.Success(mapData, "Exercise");
     }

@@ -40,11 +40,11 @@ internal class CreateDietCommandHandler : IRequestHandler<CreateDietCommand, Res
     {
         if (request.DietTypeId.HasValue)
         {
-            var houseExists = await _unitOfWork.Repository<DietType>().GetByID(request.DietTypeId.Value);
+            var dietTypeExists = await _unitOfWork.Repository<DietType>().GetByID(request.DietTypeId.Value);
 
-            if (houseExists == null)
+            if (dietTypeExists == null)
             {
-                return Result<string>.BadRequest("DietId does not exist.");
+                return Result<string>.BadRequest("DietType does not exist.");
             }
         }
         var diet = _mapper.Map<Diet>(request);

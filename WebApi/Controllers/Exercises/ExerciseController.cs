@@ -20,8 +20,8 @@ namespace WebApi.Controllers.Exercises
         [HttpPost]
         public async Task<ActionResult> Create(CreateExerciseCommand command)
         {
-            var diet = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(diet);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
@@ -36,8 +36,8 @@ namespace WebApi.Controllers.Exercises
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetExerciseQuery query)
         {
-            var data = await _mediator.Send(query);
-            return Ok(data);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

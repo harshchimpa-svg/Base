@@ -25,32 +25,32 @@ namespace WebApi.Controllers.Employees
         [HttpPost]
         public async Task<ActionResult> Create(CreateEmployeeCommand command)
         {
-            var Clients = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Clients);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(UpdateEmployeeCommand command)
         {
-            var data = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(data);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         [Authorize(Roles =  "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var Clients = await _mediator.Send(new GetEmployeeByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Clients);
+            var result = await _mediator.Send(new GetEmployeeByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [Authorize(Roles =  "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeQuery query)
         {
-            var data = await _mediator.Send(query);
-            return Ok(data);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClients(int id)

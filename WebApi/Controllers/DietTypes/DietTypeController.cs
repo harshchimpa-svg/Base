@@ -20,8 +20,8 @@ namespace WebApi.Controllers.DietTypes
         [HttpPost]
         public async Task<ActionResult> Create(CreateDietTypeCommands command)
         {
-            var dietType = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(dietType);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

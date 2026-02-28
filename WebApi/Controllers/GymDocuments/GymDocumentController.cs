@@ -37,8 +37,8 @@ namespace WebApi.Controllers.GymDocuments
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllGymDocumentQuery query)
         {
-            var gyms = await _mediator.Send(query);
-            return Ok(gyms);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]

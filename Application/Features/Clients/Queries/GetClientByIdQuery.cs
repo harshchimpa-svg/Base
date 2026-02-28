@@ -7,7 +7,7 @@ using Shared;
 
 namespace Application.Features.Clients.Queries;
 
-public class GetClientByIdQuery: IRequest<Result<GetClientsDto>>
+public class GetClientByIdQuery: IRequest<Result<GetClientDto>>
 {
     public int Id { get; set; }
 
@@ -16,7 +16,7 @@ public class GetClientByIdQuery: IRequest<Result<GetClientsDto>>
         Id = id;
     }
 }
-internal class GetClientsByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Result<GetClientsDto>>
+internal class GetClientsByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Result<GetClientDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -28,18 +28,18 @@ internal class GetClientsByIdQueryHandler : IRequestHandler<GetClientByIdQuery, 
     }
 
 
-    public async Task<Result<GetClientsDto>> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetClientDto>> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
 
     {
         var clients = await _unitOfWork.Repository<Client>().GetByID(request.Id);
 
         if (clients == null)
         {
-            return Result<GetClientsDto>.BadRequest("Clients not found.");
+            return Result<GetClientDto>.BadRequest("Clients not found.");
         }
 
-        var mapData = _mapper.Map<GetClientsDto>(clients);
+        var mapData = _mapper.Map<GetClientDto>(clients);
 
-        return Result<GetClientsDto>.Success(mapData, "Clients");
+        return Result<GetClientDto>.Success(mapData, "Clients");
     }
 }

@@ -1135,7 +1135,7 @@ namespace Persistence.Migrations
             //    });
 
             //migrationBuilder.CreateTable(
-            //    name: "GemTraner",
+            //    name: "GymTrainer",
             //    columns: table => new
             //    {
             //        Id = table.Column<int>(type: "integer", nullable: false)
@@ -1388,17 +1388,17 @@ namespace Persistence.Migrations
 
             //migrationBuilder.CreateIndex(
             //    name: "IX_GemTraner_GymId",
-            //    table: "GemTraner",
+            //    table: "GymTrainer",
             //    column: "GymId");
 
             //migrationBuilder.CreateIndex(
             //    name: "IX_GemTraner_OrganizationId",
-            //    table: "GemTraner",
+            //    table: "GymTrainer",
             //    column: "OrganizationId");
 
             //migrationBuilder.CreateIndex(
             //    name: "IX_GemTraner_UserId",
-            //    table: "GemTraner",
+            //    table: "GymTrainer",
             //    column: "UserId");
 
             //migrationBuilder.CreateIndex(
@@ -1624,7 +1624,7 @@ namespace Persistence.Migrations
             //    name: "ExerciseDocument");
 
             //migrationBuilder.DropTable(
-            //    name: "GemTraner");
+            //    name: "GymTrainer");
 
             //migrationBuilder.DropTable(
             //    name: "GymDocuments");

@@ -22,8 +22,8 @@ namespace WebApi.Controllers.Locations
 
         public async Task<ActionResult> Create(CreateLocationCommand command)
         {
-            var location = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(location);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
@@ -41,8 +41,8 @@ namespace WebApi.Controllers.Locations
 
         public async Task<IActionResult> Get()
         {
-            var location = await _mediator.Send(new GetAllLocationQuery());
-            return ResponseHelper.GenerateResponse(location);
+            var result = await _mediator.Send(new GetAllLocationQuery());
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
@@ -50,8 +50,8 @@ namespace WebApi.Controllers.Locations
 
         public async Task<ActionResult> GetById(int id)
         {
-            var location = await _mediator.Send(new GetByIdLocationQuery(id));
-            return ResponseHelper.GenerateResponse(location);
+            var result = await _mediator.Send(new GetByIdLocationQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]
@@ -59,8 +59,8 @@ namespace WebApi.Controllers.Locations
 
         public async Task<IActionResult> Delete(int id)
         {
-            var location = await _mediator.Send(new DeleteLocationCommand(id));
-            return ResponseHelper.GenerateResponse(location);
+            var result = await _mediator.Send(new DeleteLocationCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

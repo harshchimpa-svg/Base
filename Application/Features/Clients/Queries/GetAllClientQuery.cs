@@ -8,13 +8,13 @@ using Shared;
 
 namespace Application.Features.Clients.Queries;
 
-public class GetAllClientQuery : IRequest<PaginatedResult<GetClientsDto>>
+public class GetAllClientQuery : IRequest<PaginatedResult<GetClientDto>>
 {
     public int? ServiceId { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
-internal class GetAllClientQueryHandler : IRequestHandler<GetAllClientQuery,PaginatedResult<GetClientsDto>>
+internal class GetAllClientQueryHandler : IRequestHandler<GetAllClientQuery,PaginatedResult<GetClientDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -25,7 +25,7 @@ internal class GetAllClientQueryHandler : IRequestHandler<GetAllClientQuery,Pagi
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<PaginatedResult<GetClientsDto>> Handle(GetAllClientQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetClientDto>> Handle(GetAllClientQuery request, CancellationToken cancellationToken)
     {
         var queryable = _unitOfWork.Repository<Client>().Entities.Include(s => s.Service)
             .AsQueryable();
@@ -45,8 +45,8 @@ internal class GetAllClientQueryHandler : IRequestHandler<GetAllClientQuery,Pagi
         }
         var query = await queryable.ToListAsync();
 
-        var map = _mapper.Map<List<GetClientsDto>>(query);
+        var map = _mapper.Map<List<GetClientDto>>(query);
 
-        return PaginatedResult <GetClientsDto>.Create(map, count, request.PageNumber, request.PageSize);
+        return PaginatedResult <GetClientDto>.Create(map, count, request.PageNumber, request.PageSize);
     }
 }

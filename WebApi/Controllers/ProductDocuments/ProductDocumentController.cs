@@ -36,8 +36,8 @@ namespace WebApi.Controllers.GymProductDocuments
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] GetAllProductDocumentQuery query)
         {
-            var gyms = await _mediator.Send(query);
-            return Ok(gyms);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

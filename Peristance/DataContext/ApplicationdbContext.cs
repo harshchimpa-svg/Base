@@ -62,7 +62,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
     public DbSet<DietType> DietType { get; set; }
-    public DbSet<GemTraner> GemTraner { get; set; }
+    public DbSet<GymTrainer> GemTraner { get; set; }
     public DbSet<Diet> Diet { get; set; }
     public DbSet<DietDocument> DietDocument { get; set; }
     public DbSet<Exercise> Exercise { get; set; }
@@ -71,7 +71,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<SaleProduct> SaleProduct { get; set; }
     public DbSet<SalePayment> SalePayment { get; set; } 
     public DbSet<Employee> Employee { get; set; } 
-    public DbSet<PaymentLoge> PaymentLogs { get; set; } 
+    public DbSet<PaymentLog> PaymentLogs { get; set; } 
     
     public DbSet<GymDocument> GymDocuments { get; set; }
     public DbSet<UserMembership> UserMembership { get; set; }
@@ -79,7 +79,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
-    public DbSet<ShopeSetting> ShopeSetting { get; set; }
+    public DbSet<ShopSetting> ShopeSetting { get; set; }
 
 
 

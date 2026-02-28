@@ -38,6 +38,6 @@ internal class GetAboutByIdQueryHandler : IRequestHandler<GetAboutByIdQuery, Res
 
         var mapData = _mapper.Map<GetAboutDto>(about);
 
-        return Result<GetAboutDto>.Success(mapData, "about");
+        return Result<GetAboutDto>.Success(mapData, "About");
     }
 }
