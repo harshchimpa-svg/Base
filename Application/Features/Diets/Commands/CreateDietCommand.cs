@@ -1,10 +1,7 @@
 using Application.Common.Mappings.Commons;
-using Application.Features.Clients.Command;
-using Application.Features.Diets.Queries;
 using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.Clientses;
 using Domain.Entities.DietDocuments;
 using Domain.Entities.Diets;
 using Domain.Entities.DietTypes;
@@ -59,7 +56,7 @@ internal class CreateDietCommandHandler : IRequestHandler<CreateDietCommand, Res
             var dietImage = new DietDocument()
             {
                 Document = url,
-                DietId = diet.Id,
+                DietId = diet.Id
             };
             
             await _unitOfWork.Repository<DietDocument>().AddAsync(dietImage);

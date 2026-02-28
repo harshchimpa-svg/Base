@@ -49,7 +49,7 @@ internal class UpdateCartItemHandler : IRequestHandler<UpdateCartItemCommand, Re
         {
             if (gymCartsItems == null)
             {
-                return Result<CartItem>.BadRequest("soory id not found");
+                return Result<CartItem>.BadRequest("CartItem id not found");
             }
 
             _mapper.Map(request.CreateCommand, gymCartsItems);

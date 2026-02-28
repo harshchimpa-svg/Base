@@ -33,6 +33,6 @@ internal class GetAllGymCategoryQueryHandler : IRequestHandler<GetAllGymCategory
 
         var map = _mapper.Map<List<GetGymCategoryDto>>(gymCategory);
 
-        return Result<List<GetGymCategoryDto>>.Success(map, "Gym List");
+        return Result<List<GetGymCategoryDto>>.Success(map, "GymCategory");
     }
 }
