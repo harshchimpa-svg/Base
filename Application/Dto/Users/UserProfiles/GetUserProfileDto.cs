@@ -13,7 +13,7 @@ public class GetUserProfileDto : IMapFrom<UserProfile>
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
     public UserLevelType UserLevelType  { get; set; }
-    public decimal age { get; set; }
+    public decimal Age { get; set; }
     public string? ProfileImageUrl { get; set; } 
     public string? Message { get; set; }
 }

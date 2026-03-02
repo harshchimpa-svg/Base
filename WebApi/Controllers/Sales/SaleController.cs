@@ -1,5 +1,6 @@
 using Application.Features.Sales.Command;
 using Application.Features.Sales.Queries;
+using Application.Features.SaleStatus.Command;
 using Application.Features.Services.Command;
 using Application.Features.Services.Queries;
 using MediatR;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Sales
 
 {
-    [Route("api/sales")]
+    [Route("api/sale")]
     [ApiController]
 
     public class SaleController : ControllerBase
@@ -27,6 +28,13 @@ namespace WebApi.Controllers.Sales
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
         }
+        
+        [HttpPost("sale-status")]
+        public async Task<ActionResult> Create(CreateSaleStatusCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
+        }
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
@@ -41,7 +49,7 @@ namespace WebApi.Controllers.Sales
         public async Task<IActionResult> Get([FromQuery] GetAllSaleQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

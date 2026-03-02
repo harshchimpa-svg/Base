@@ -31,6 +31,7 @@ public class UserController : ControllerBase
         var data = await _mediator.Send(query);
         return Ok(data);
     }
+    
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetAllUserQuery query)
     {
@@ -56,7 +57,6 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, UpdateUserCommand command)
     {
-        command.Id = id;
         var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);
     }

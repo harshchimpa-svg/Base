@@ -14,8 +14,9 @@ public class Employee:BaseAuditableEntity
     public string Address2 { get; set; } 
     public string City { get; set; }
     public string State { get; set; }
-    public string country { get; set; }
-    [ForeignKey("RoleId")]
+    public string Country { get; set; }
+    
+    [ForeignKey("Role")]
     public string? RoleId { get; set; }
     public Role Role { get; set; }
 }

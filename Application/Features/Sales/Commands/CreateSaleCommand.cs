@@ -15,7 +15,7 @@ namespace Application.Features.Sales.Command;
 
 public class CreateSaleCommand : IRequest<Result<string>>, ICreateMapFrom<Sale>
 {
-    public string? UserId { get; set; }
+    public string UserId { get; set; }
     public string? InvoiceNo { get; set; }
     public decimal Discount { get; set; }
     public decimal NetAmount { get; set; }

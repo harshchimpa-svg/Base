@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Transaction
 {
-    [Route("api/transactions")]
+    [Route("api/transaction")]
     [ApiController]
     public class TransactionController : ControllerBase
     {
@@ -38,7 +38,7 @@ namespace WebApi.Controllers.Transaction
         public async Task<IActionResult> GetAll([FromQuery] GetAllTransactionQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         [Authorize(Roles = "Admin,Employee")]

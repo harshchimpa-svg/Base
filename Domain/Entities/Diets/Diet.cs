@@ -6,7 +6,7 @@ namespace Domain.Entities.Diets;
 
 public class Diet:BaseAuditableEntity
 {
- [ForeignKey("DietTypeId")]
+ [ForeignKey("DietType")]
  public int? DietTypeId { get; set; }
  public DietType DietType { get; set; }
  public   string Name { get; set; }

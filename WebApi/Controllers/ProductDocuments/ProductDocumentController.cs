@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymProductDocuments
 {
-    [Route("api/product-documents")]
+    [Route("api/product-document")]
     [ApiController]
     public class ProductDocumentController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace WebApi.Controllers.GymProductDocuments
         public async Task<IActionResult> Get([FromQuery] GetAllProductDocumentQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

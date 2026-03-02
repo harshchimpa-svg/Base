@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Customers
 {
-    [Route("api/customers")]
+    [Route("api/customer")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace WebApi.Controllers.Customers
             return ResponseHelper.GenerateResponse(result);
         }
 
-        [HttpPost("Reminder")]
+        [HttpPost("reminder")]
         public async Task<ActionResult> CreateReminder(ReminderCustomer command)
         {
             var result = await _mediator.Send(command);
@@ -56,7 +56,7 @@ namespace WebApi.Controllers.Customers
         public async Task<IActionResult> Get([FromQuery] GetAllCustomerQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         [Authorize(Roles =  "Admin,Employee")]
