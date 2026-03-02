@@ -1,13 +1,13 @@
-using Application.Features.Abouts.Commands;
+using Application.Features.Abouts.Command;
 using Application.Features.Abouts.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Abouts
 {
-    [Route("api/[controller]")]
+    [Route("api/about")]
     [ApiController]
-
     public class AboutController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,39 +17,44 @@ namespace WebApi.Controllers.Abouts
             _mediator = mediator;
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpPost]
-        public async Task<ActionResult> CreateVendor(CreateAboutCommand command)
+        public async Task<IActionResult> Create([FromForm] CreateAboutCommand command)
         {
-            var Vendor = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(Vendor);
+            var about = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(about);
         }
-
+        
+        [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVendor(int id, CreateAboutCommand command)
+        public async Task<IActionResult> Update(int id, [FromForm] CreateAboutCommand command)
         {
             var result = await _mediator.Send(new UpdateAboutCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-        public async Task<IActionResult> GetVendor()
+        public async Task<IActionResult> Get()
         {
-            var Vendor = await _mediator.Send(new GetAllAboutQuery());
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(new GetAllAboutQuery());
+            return ResponseHelper.GenerateResponse(result);
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetVendorById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var Vendor = await _mediator.Send(new GetAboutByIdQuery(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(new GetAboutByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
         }
 
+        [Authorize(Roles =  "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVendor(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var Vendor = await _mediator.Send(new DeleateAboutCommand(id));
-            return ResponseHelper.GenerateResponse(Vendor);
+            var result = await _mediator.Send(new DeleteAboutCommand(id));
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

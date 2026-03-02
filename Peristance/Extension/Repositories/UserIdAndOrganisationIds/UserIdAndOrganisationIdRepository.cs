@@ -40,7 +40,8 @@ public class UserIdAndOrganizationIdRepository : IUserIdAndOrganizationIdReposit
         {
             result.OrganizationId = Convert.ToInt32(organizationId);
         }
-
+        
         return result;
     }
 }
+    

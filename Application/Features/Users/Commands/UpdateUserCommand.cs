@@ -14,7 +14,7 @@ using Shared;
 using System.ComponentModel.DataAnnotations;
 using Domain.Common.Enums.Users.UserRoleType;
 
-namespace Application.Features.Users.Commands;
+namespace Application.Features.Users.Command;
 
 public class UpdateUserCommand : IRequest<Result<string>>
 {
@@ -27,21 +27,20 @@ public class UpdateUserCommand : IRequest<Result<string>>
     public string? OtherDetails { get; set; }
 
     // Profile fields
-    public string Name { get; set; }
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public string Email { get; set; }
     public decimal Weight { get; set; }
     public decimal Height { get; set; }
-    public UserRoleType UserRoleType  { get; set; }
-    public decimal age { get; set; }
-    public string message { get; set; }
+    public UserLevelType UserLevelType  { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    public string? Message { get; set; }
 
     // Address fields
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
-    public int? CityId { get; set; }
-    public int? StateId { get; set; }
-    public int? CountryId { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; }   
+    public string? Country { get; set; }
     public int? PinCode { get; set; }
 }
 
@@ -100,15 +99,15 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Res
 
     private bool HasProfileFields(UpdateUserCommand request)
     {
-        return request.Gender != null || request.DOB != null || request.MaritalStatus != null ||
-               request.ProfilePicture != null || request.FacebookId != null ||
-               request.LinkedInId != null || request.InstagramId != null;
+        return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
+               request.Height != null || request.UserLevelType != null ||
+               request.DateOfBirth != null || request.Message != null;
     }
     
     private bool HasAddressFields(UpdateUserCommand request)
     {
-        return request.Address1 != null || request.Address2 != null || request.CityId != null ||
-               request.StateId != null || request.CountryId != null || request.PinCode != null;
+        return request.Address1 != null || request.Address2 != null || request.City != null ||
+               request.State != null || request.Country != null || request.PinCode != null;
     }
 
     private async Task UpdateUserProfile(UpdateUserCommand request, string userId, CancellationToken cancellationToken)
@@ -136,18 +135,14 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Res
         }
 
         // Update only non-null profile fields
-        if (request.Gender != null)
-            userProfile.Gender = request.Gender;
-        if (request.DOB != null)
-            userProfile.DOB = request.DOB;
-        if (request.MaritalStatus != null)
-            userProfile.MaritalStatus = request.MaritalStatus;
-        if (request.FacebookId != null)
-            userProfile.FacebookId = request.FacebookId;
-        if (request.LinkedInId != null)
-            userProfile.LinkedInId = request.LinkedInId;
-        if (request.InstagramId != null)
-            userProfile.InstagramId = request.InstagramId;
+        if (request.PhoneNumber != null)
+        if (request.Height != null)
+            userProfile.Height = request.Height;
+        if (request.UserLevelType != null)
+            userProfile.UserLevelType = request.UserLevelType;
+        if (request.DateOfBirth != null)
+            userProfile.DateOfBirth = request.DateOfBirth;
+
 
         await _unitOfWork.Repository<UserProfile>().UpdateAsync(userProfile);
         await _unitOfWork.Save(cancellationToken);
@@ -182,12 +177,12 @@ internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Res
             userAddress.Address1 = request.Address1;
         if (request.Address2 != null)
             userAddress.Address2 = request.Address2;
-        if (request.CityId != null)
-            userAddress.CityId = request.CityId;
-        if (request.StateId != null)
-            userAddress.StateId = request.StateId;
-        if (request.CountryId != null)
-            userAddress.CountryId = request.CountryId;
+        if (request.City != null)
+            userAddress.City = request.City;
+        if (request.State != null)
+            userAddress.State = request.State;
+        if (request.Country != null)
+            userAddress.Country = request.Country;
         if (request.PinCode != null)
             userAddress.PinCode = request.PinCode;
 

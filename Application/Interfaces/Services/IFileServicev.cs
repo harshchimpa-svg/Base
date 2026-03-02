@@ -4,8 +4,6 @@ namespace Application.Interfaces.Services
 {
     public interface IFileService
     {
-        Task<string> UploadAsync(
-            IFormFile file,
-            string folderName);
+        Task<string> UploadAsync(IFormFile file, string folderName);
     }
 }

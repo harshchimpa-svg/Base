@@ -1,6 +1,6 @@
 using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
-using Domain.Entities.Catagoryes;
+using Domain.Entities.Catagories;
 using Domain.Entities.Services;
 
 namespace Application.Dto.Services;

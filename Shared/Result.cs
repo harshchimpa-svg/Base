@@ -79,4 +79,7 @@ public class Result<T> : IResult<T>
         };
     }
     #endregion
+
+
+
 }

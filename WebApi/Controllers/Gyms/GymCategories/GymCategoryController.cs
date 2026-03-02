@@ -1,0 +1,62 @@
+﻿
+using Application.Features.GymCategories.Command;
+using Application.Features.GymCategories.Queries;
+using Application.Features.Gyms.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApi.Controllers.GymCategorys
+{
+    [Route("api/gym-category")]
+    [ApiController]
+    public class GymCategoryController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public GymCategoryController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateGymCategoryCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update( int id, [FromBody] UpdateGymCategoryCommand command)
+        {
+            if (id != command.Id)
+                return BadRequest("Id mismatch");
+
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteGymCategoryCommand(id));
+            return ResponseHelper.GenerateResponse(result);
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _mediator.Send(new GetAllGymCategoryQuery());
+            return ResponseHelper.GenerateResponse(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var result = await _mediator.Send(new GetByIdGymCategoryQuery(id));
+            return ResponseHelper.GenerateResponse(result);
+        }
+    }
+}
+

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Shared;
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.Features.Users.Commands;
+namespace Application.Features.Users.Command;
 
 public class DeleteUserCommand : IRequest<Result<string>>
 {

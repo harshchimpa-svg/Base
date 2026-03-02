@@ -1,0 +1,61 @@
+using Application.Features.Diets.Commands;
+using Application.Features.Diets.Queries;
+using Application.Features.DietTypes.Command;
+using Application.Features.DietTypes.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApi.Controllers.Diets
+{
+    [Route("api/diet")]
+    [ApiController]
+    public class DietController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public DietController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        // [Authorize(Roles =  "Admin,Employee")]
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateDietCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
+        }
+
+        // [Authorize(Roles =  "Admin,Employee")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CreateDietCommand command)
+        {
+            var result = await _mediator.Send(new UpdateDietCommand(id, command));
+            return ResponseHelper.GenerateResponse(result);
+        }
+        
+        // [Authorize(Roles =  "Admin,Employee")]
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllDietQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return ResponseHelper.GenerateResponse(result);
+        }
+
+        // [Authorize(Roles =  "Admin,Employee")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById(int id)
+        {
+            var result = await _mediator.Send(new GetDietByIdQuery(id));
+            return ResponseHelper.GenerateResponse(result);
+        }
+
+        // [Authorize(Roles =  "Admin,Employee")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteDietCommand(id));
+            return ResponseHelper.GenerateResponse(result);
+        }
+    }
+}

@@ -9,14 +9,34 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
+using Domain.Entities.Catagories;
+using Domain.Entities.Clientses;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
+using Domain.Entities.DietDocuments;
+using Domain.Entities.Diets;
+using Domain.Entities.DietTypes;
+using Domain.Entities.Employees;
+using Domain.Entities.ExerciseDocuments;
+using Domain.Entities.Exercises;
 using About = Domain.Entities.Abouts.About;
-using Balance = Domain.Entities.Balances.Balance;
-using Category = Domain.Entities.Catagoryes.Category;
-using Clients = Domain.Entities.Clientses.Clients;
 using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
+using Domain.Entities.Locations;
+using Domain.Entities.Gyms;
+using Domain.Entities.GymTraners;
+using Domain.Entities.PaymentLoges;
+using Domain.Entities.SalePayments;
+using Domain.Entities.SaleProducts;
+using Domain.Entities.Sales;
+using Domain.Entities.Transactions;
+using Domain.Entities.GymDocuments;
+using Domain.Entities.GymMemerships;
+using Domain.Entities.GymCategorys;
+using Domain.Entities.GymProducts;
+using Domain.Entities.ProductDocuments;
+using Domain.Entities.GymCartItem;
+using Domain.Entities.ShopeSettings;
 
 namespace Persistence.DataContext;
 
@@ -31,21 +51,40 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Organization> Organizations { get; set; }
     public DbSet<OTP> OTPs { get; set; }
     public DbSet<Role> Roles { get; set; }
-    public DbSet<Category> Category { get; set; }
+    public DbSet<Category> Categories { get; set; }
     public DbSet<Service> Services { get; set; }
     public DbSet<Vendor> Vendors { get; set; }
-    public DbSet<Clients> Clients { get; set; }
-    public DbSet<Balance> Balance { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     public DbSet<About> About { get; set; }
     public DbSet<Contact> Contact { get; set; }
     public DbSet<Customer> Customer { get; set; }
+    public DbSet<Location> Locations { get; set; }
+    public DbSet<Gym> Gyms { get; set; }
+    public DbSet<DietType> DietType { get; set; }
+    public DbSet<GymTrainer> GemTraner { get; set; }
+    public DbSet<Diet> Diet { get; set; }
+    public DbSet<DietDocument> DietDocument { get; set; }
+    public DbSet<Exercise> Exercise { get; set; }
+    public DbSet<ExerciseDocument> ExerciseDocument { get; set; }
+    public DbSet<Sale> Sale { get; set; }
+    public DbSet<SaleProduct> SaleProduct { get; set; }
+    public DbSet<SalePayment> SalePayment { get; set; } 
+    public DbSet<Employee> Employee { get; set; } 
+    public DbSet<PaymentLog> PaymentLogs { get; set; } 
+    
+    public DbSet<GymDocument> GymDocuments { get; set; }
+    public DbSet<UserMembership> UserMembership { get; set; }
+    public DbSet<GymCategory> GymCategories { get; set; }
+    public DbSet<GymProduct> GymProducts { get; set; }
+    public DbSet<ProductDocument> ProductDocuments { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<ShopSetting> ShopeSetting { get; set; }
 
 
 
 
 
- 
-     
     public IReadOnlyCollection<int> CurrentOrgIds => _currentOrgIds;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,9 +92,6 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-
-
 
         modelBuilder.Entity<Role>()
             .HasIndex(r => r.NormalizedName)

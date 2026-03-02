@@ -39,11 +39,11 @@
   <ItemGroup>
     <Folder Include="wwwroot\Documents\" />
     <Folder Include="wwwroot\Documents\" />
-    <Folder Include="wwwroot\uploads\Category\" />
+    <Folder Include="wwwroot\uploads\Categori\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\uploads\Category\6340559b-c89c-4809-b1b3-a88040d3d56f.png" />
+    <Content Remove="wwwroot\uploads\Categori\6340559b-c89c-4809-b1b3-a88040d3d56f.png" />
   </ItemGroup>
 
 </Project>

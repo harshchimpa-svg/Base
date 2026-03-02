@@ -1,11 +1,8 @@
-﻿using Application.Features.Employees.Queries;
-using Application.Features.Users;
-using Application.Features.Users.Commands;
+﻿
+using Application.Features.Users.Command;
 using Application.Features.Users.Queries;
 using Application.Features.Users.Queries.GetAllUsers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Users;
@@ -27,7 +24,14 @@ public class UserController : ControllerBase
         var data = await _mediator.Send(new GetUserByIdQuery(id));
         return ResponseHelper.GenerateResponse(data);
     }
-
+    
+    [HttpGet("current")]
+    public async Task<IActionResult> GetAll([FromQuery] GetCurrentUserQuery query)
+    {
+        var data = await _mediator.Send(query);
+        return Ok(data);
+    }
+    
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetAllUserQuery query)
     {
@@ -35,30 +39,23 @@ public class UserController : ControllerBase
         return Ok(data);
     }
 
-    [HttpGet("current")]
-    public async Task<IActionResult> GetCurrentUser()
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserRegistrationCommand command)
     {
-        var data = await _mediator.Send(new GetCurrentUserQuery());
+        var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register(UserRegistrationCommand command)
+    [HttpPut("current")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UpdateCurrentUser([FromForm] UpdateCurrentUserCommand command)
     {
         var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromForm]UpdateUserCommand command)
-    {
-        command.Id = id;
-        var data = await _mediator.Send(command);
-        return ResponseHelper.GenerateResponse(data);
-    }
-
-    [HttpPut("current")]
-    public async Task<IActionResult> UpdateCurrentUser([FromForm]UpdateCurrentUserCommand command)
+    public async Task<IActionResult> Update(string id, UpdateUserCommand command)
     {
         var data = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(data);
@@ -70,6 +67,4 @@ public class UserController : ControllerBase
         var data = await _mediator.Send(new DeleteUserCommand(id));
         return ResponseHelper.GenerateResponse(data);
     }
-
-
 }
