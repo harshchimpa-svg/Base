@@ -12,7 +12,7 @@ public class CreateClientCommand: IRequest<Result<string>>, ICreateMapFrom<Clien
     public string Name { get; set; }
     public string Email { get; set; } 
     public string Phone { get; set; }
-    public int? ServiceId { get; set; }
+    public int ServiceId { get; set; }
     public decimal Quantity  { get; set; }
 }
 

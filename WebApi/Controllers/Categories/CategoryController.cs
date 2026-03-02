@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Categoryes
 {
-    [Route("api/categoryes")]
+    [Route("api/category")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -39,7 +39,7 @@ namespace WebApi.Controllers.Categoryes
         public async Task<IActionResult> Get([FromQuery] GetAllCategoryQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]

@@ -37,7 +37,7 @@ namespace WebApi.Controllers.Exercises
         public async Task<IActionResult> GetAll([FromQuery] GetExerciseQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

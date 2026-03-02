@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Services
 
 {
-    [Route("api/services")]
+    [Route("api/service")]
     [ApiController]
 
     public class ServiceController : ControllerBase

@@ -41,15 +41,14 @@ internal class UpdateProductDocumentCommandHandler : IRequestHandler<UpdateProdu
 
     public async Task<Result<ProductDocument>> Handle(UpdateProductDocumentCommand request, CancellationToken cancellationToken)
     {
-        if (request.CreateCommand.GymProductId.HasValue)
-        {
-            var productDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.CreateCommand.GymProductId.Value);
+        
+            var productDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.CreateCommand.GymProductId);
 
             if (productDocument == null)
             {
                 return Result<ProductDocument>.BadRequest("Produt  Id is not exist.");
             }
-        }
+        
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)
             return Result<ProductDocument>.BadRequest("Image is required.");
 

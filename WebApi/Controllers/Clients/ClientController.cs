@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Clientses
 
 {
-    [Route("api/clients")]
+    [Route("api/client")]
     [ApiController]
 
     public class ClientController : ControllerBase
@@ -41,7 +41,7 @@ namespace WebApi.Controllers.Clientses
         public async Task<IActionResult> GetAll([FromQuery] GetAllClientQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         // [Authorize(Roles =  "Admin,Employee")]

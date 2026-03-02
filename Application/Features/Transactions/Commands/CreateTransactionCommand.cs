@@ -47,7 +47,7 @@ internal class CreateBalenceCommandHandler : IRequestHandler<CreateTransactionCo
         var customer = await _unitOfWork
             .Repository<Customer>()
             .Entities
-            .FirstOrDefaultAsync(x => x.Id == request.CustomerId, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == request.CustomerId);
 
         if (customer == null)
             return Result<string>.BadRequest("Customer not found");

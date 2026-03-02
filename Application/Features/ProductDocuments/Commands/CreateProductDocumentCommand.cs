@@ -17,7 +17,7 @@ namespace Application.Features.ProductDocuments.Command;
 public class CreateProductDocumentCommand : IRequest<Result<string>>, ICreateMapFrom<ProductDocument>
 {
     public IFormFile ImageUrl { get; set; }
-    public int? GymProductId { get; set; }
+    public int GymProductId { get; set; }
 }
 internal class CreateProductDocumentCommandHandler : IRequestHandler<CreateProductDocumentCommand, Result<string>>
 {
@@ -34,16 +34,14 @@ internal class CreateProductDocumentCommandHandler : IRequestHandler<CreateProdu
 
     public async Task<Result<string>> Handle(CreateProductDocumentCommand request, CancellationToken cancellationToken)
     {
-        if (request.GymProductId.HasValue)
-        {
             var gymProduct = await _unitOfWork.Repository<GymProduct>()
-                .GetByID(request.GymProductId.Value);
+                .GetByID(request.GymProductId);
 
             if (gymProduct == null)
             {
                 return Result<string>.BadRequest("gymProduct Id is not exist");
             }
-        }
+        
 
         if (request.ImageUrl == null)
         {

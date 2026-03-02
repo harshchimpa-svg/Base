@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.ShopeSettings
 
 {
-    [Route("api/shopesetting")]
+    [Route("api/shope-setting")]
     [ApiController]
 
     public class ShopSettingController : ControllerBase

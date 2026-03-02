@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.DashBoardes
 {
-    [Route("api/dashBoardes")]
+    [Route("api/dash-board")]
     [ApiController]
     public class DashBoardController : ControllerBase
     {

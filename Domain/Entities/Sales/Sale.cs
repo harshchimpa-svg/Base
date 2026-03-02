@@ -6,7 +6,7 @@ namespace Domain.Entities.Sales;
 
 public class Sale:BaseAuditableEntity
 {
-    [ForeignKey("UserId")]
+    [ForeignKey("User")]
     public string? UserId { get; set; }
     public User User { get; set; }
     public bool IsPaid { get; set; }

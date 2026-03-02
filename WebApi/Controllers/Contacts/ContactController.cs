@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Contacts
 
 {
-    [Route("api/contacts")]
+    [Route("api/contact")]
     [ApiController]
 
     public class ContactController : ControllerBase

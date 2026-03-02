@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Gyms
 {
-    [Route("api/gyms")]
+    [Route("api/gym")]
     [ApiController]
     public class GymController : ControllerBase
     {
@@ -20,7 +20,6 @@ namespace WebApi.Controllers.Gyms
         }
 
         [HttpPost]
-
         public async Task<ActionResult> Create(CreateGymCommand command)
         {
             var result = await _mediator.Send(command);
@@ -28,15 +27,14 @@ namespace WebApi.Controllers.Gyms
         }
 
         [HttpPut("{id}")]
-
         public async Task<IActionResult> Update(int id, CreateGymCommand command)
         {
             var result = await _mediator.Send(new UpdateGymCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
 
         }
+        
         [HttpGet]
-
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(new GetAllGymQuery());
@@ -44,7 +42,6 @@ namespace WebApi.Controllers.Gyms
         }
 
         [HttpGet("{id}")]
-
         public async Task<ActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetByIdGymQuery(id));
@@ -52,7 +49,6 @@ namespace WebApi.Controllers.Gyms
         }
 
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteGymCommand(id));

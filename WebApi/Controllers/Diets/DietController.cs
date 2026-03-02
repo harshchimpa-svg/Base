@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Diets
 {
-    [Route("api/diets")]
+    [Route("api/diet")]
     [ApiController]
     public class DietController : ControllerBase
     {
@@ -39,7 +39,7 @@ namespace WebApi.Controllers.Diets
         public async Task<IActionResult> GetAll([FromQuery] GetAllDietQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
 
         // [Authorize(Roles =  "Admin,Employee")]

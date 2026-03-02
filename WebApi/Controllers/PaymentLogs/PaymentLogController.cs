@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.PaymentLoges
 {
-    [Route("api/paymentLoge")]
+    [Route("api/paymentlog")]
     [ApiController]
     public class PaymentLogController: ControllerBase
     {
@@ -23,7 +23,7 @@ namespace WebApi.Controllers.PaymentLoges
         public async Task<IActionResult> Get([FromQuery] GetAllPaymentLogQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
     }
 }

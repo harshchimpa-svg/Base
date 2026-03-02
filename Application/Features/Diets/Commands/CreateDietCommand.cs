@@ -13,7 +13,7 @@ namespace Application.Features.Diets.Commands;
 
 public class CreateDietCommand: IRequest<Result<string>>, ICreateMapFrom<Diet>
 {
-    public int? DietTypeId { get; set; }
+    public int DietTypeId { get; set; }
     public   string Name { get; set; }
     public DateTime Time { get; set; }
     public string Description { get; set; }
@@ -35,14 +35,13 @@ internal class CreateDietCommandHandler : IRequestHandler<CreateDietCommand, Res
 
     public async Task<Result<string>> Handle(CreateDietCommand request, CancellationToken cancellationToken) 
     {
-        if (request.DietTypeId.HasValue)
-        {
-            var dietTypeExists = await _unitOfWork.Repository<DietType>().GetByID(request.DietTypeId.Value);
+        var dietTypeExists = await _unitOfWork
+            .Repository<DietType>()
+            .GetByID(request.DietTypeId);
 
-            if (dietTypeExists == null)
-            {
-                return Result<string>.BadRequest("DietType does not exist.");
-            }
+        if (dietTypeExists == null)
+        {
+            return Result<string>.BadRequest("DietType does not exist.");
         }
         var diet = _mapper.Map<Diet>(request);
 

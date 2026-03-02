@@ -19,7 +19,6 @@ public class CreateCustomerCommand : IRequest<Result<string>>, ICreateMapFrom<Cu
     public string PhoneNumber { get; set; }
     public string Notes { get; set; }
     public IFormFile? Profile { get; set; }
-    public decimal? Balance { get; set; }
 }
 
 internal class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Result<string>>
@@ -46,23 +45,17 @@ internal class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComm
         var httpContext = _httpContextAccessor.HttpContext;
 
         if (httpContext == null || !httpContext.User.Identity.IsAuthenticated)
-        {
-            return Result<string>.BadRequest("user note exist");
-        }
+            return Result<string>.BadRequest("User not exist");
 
         var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(userId))
-        {
-            return Result<string>.BadRequest("UserId not found ");
-        }
+            return Result<string>.BadRequest("UserId not found");
 
         string profileUrl = null;
 
         if (request.Profile != null)
-        {
             profileUrl = await _fileService.UploadAsync(request.Profile, "Customer");
-        }
 
         var customer = new Customer
         {
@@ -71,7 +64,7 @@ internal class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComm
             Email = request.Email,
             PhoneNumber = request.PhoneNumber,
             Notes = request.Notes,
-            Balance = request.Balance,
+            Balance = 0,              
             Profile = profileUrl,
             IsActive = true
         };

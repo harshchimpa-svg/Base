@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebApi.Controllers.Employees
 
 {
-    [Route("api/employees")]
+    [Route("api/employee")]
     [ApiController]
 
     public class EmployeeController: ControllerBase
@@ -50,7 +50,7 @@ namespace WebApi.Controllers.Employees
         public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeQuery query)
         {
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return ResponseHelper.GenerateResponse(result);
         }
         /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClients(int id)

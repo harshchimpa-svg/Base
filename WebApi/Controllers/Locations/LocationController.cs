@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Locations
 {
-    [Route("api/locations")]
+    [Route("api/location")]
     [ApiController]
     public class LocationController : ControllerBase
     {
@@ -19,7 +19,6 @@ namespace WebApi.Controllers.Locations
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-
         public async Task<ActionResult> Create(CreateLocationCommand command)
         {
             var result = await _mediator.Send(command);
@@ -28,7 +27,6 @@ namespace WebApi.Controllers.Locations
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-
         public async Task<IActionResult> Update(int id, CreateLocationCommand command)
         {
             var result = await _mediator.Send(new UpdateLocationCommand(id, command));
@@ -38,7 +36,6 @@ namespace WebApi.Controllers.Locations
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet]
-
         public async Task<IActionResult> Get()
         {
             var result = await _mediator.Send(new GetAllLocationQuery());
@@ -47,7 +44,6 @@ namespace WebApi.Controllers.Locations
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpGet("{id}")]
-
         public async Task<ActionResult> GetById(int id)
         {
             var result = await _mediator.Send(new GetByIdLocationQuery(id));
@@ -56,7 +52,6 @@ namespace WebApi.Controllers.Locations
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpDelete("{id}")]
-
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteLocationCommand(id));

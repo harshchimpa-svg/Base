@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.UserRoles;
 
-[Route("api/roles")]
+[Route("api/role")]
 [ApiController]
 public class RoleController : ControllerBase
 {
