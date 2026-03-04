@@ -69,7 +69,7 @@ namespace WebApi.Controllers.Transaction
         [HttpDelete("all/{customerId}")]
         public async Task<IActionResult> DeleteAllByCustomer(int customerId)
         {
-            var result = await _mediator.Send(new DeleteAllTransationCommand(customerId));
+            var result = await _mediator.Send(new DeleteAllTransactionCommand(customerId));
             return ResponseHelper.GenerateResponse(result);
         }
     }

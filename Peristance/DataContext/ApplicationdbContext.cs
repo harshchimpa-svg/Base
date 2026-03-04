@@ -62,7 +62,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
     public DbSet<DietType> DietType { get; set; }
-    public DbSet<GymTrainer> GemTraner { get; set; }
+    public DbSet<GymTrainer> GimTraner { get; set; }
     public DbSet<Diet> Diet { get; set; }
     public DbSet<DietDocument> DietDocument { get; set; }
     public DbSet<Exercise> Exercise { get; set; }

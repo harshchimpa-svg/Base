@@ -7,17 +7,17 @@ using Shared;
 
 namespace Application.Features.Tranners.Commands;
 
-public class DeleteTranerCommand : IRequest<Result<string>>
+public class DeleteTrainerCommand : IRequest<Result<string>>
 {
     public string Id { get; set; }
 
-    public DeleteTranerCommand(string id)
+    public DeleteTrainerCommand(string id)
     {
         Id = id;
     }
 }
 
-internal class DeleteTrannerCommandHandler : IRequestHandler<DeleteTranerCommand, Result<string>>
+internal class DeleteTrannerCommandHandler : IRequestHandler<DeleteTrainerCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
@@ -29,7 +29,7 @@ internal class DeleteTrannerCommandHandler : IRequestHandler<DeleteTranerCommand
         _userManager = userManager;
     }
 
-    public async Task<Result<string>> Handle(DeleteTranerCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(DeleteTrainerCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByIdAsync(request.Id);
         if (user == null)

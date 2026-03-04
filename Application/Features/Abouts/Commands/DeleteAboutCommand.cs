@@ -18,7 +18,7 @@ internal class DeleteAboutCommandHandler : IRequestHandler<DeleteAboutCommand, R
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteAboutCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteAboutCommandHandler(IUnitOfWork unitOfWork) 
     {
         _unitOfWork = unitOfWork;
     }
@@ -33,7 +33,7 @@ internal class DeleteAboutCommandHandler : IRequestHandler<DeleteAboutCommand, R
             return Result<bool>.BadRequest("About not found.");
         }
 
-        await _unitOfWork.Repository<About>().DeleteAsync(request.Id);
+        await _unitOfWork.Repository<About>().DeleteAsync(request.Id); 
         await _unitOfWork.Save(cancellationToken);
 
         return Result<bool>.Success(true, "About deleted successfully.");

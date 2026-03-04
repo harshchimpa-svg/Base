@@ -6,17 +6,17 @@ using Shared;
 
 namespace Application.Features.Balence.Command;
 
-public class DeleteAllTransationCommand : IRequest<Result<bool>>
+public class DeleteAllTransactionCommand : IRequest<Result<bool>>
 {
     public int CustomerId { get; set; }
 
-    public DeleteAllTransationCommand(int customerId)
+    public DeleteAllTransactionCommand(int customerId)
     {
         CustomerId = customerId;
     }
 }
 
-internal class DeleteAllTransationCommandHandler : IRequestHandler<DeleteAllTransationCommand, Result<bool>>
+internal class DeleteAllTransationCommandHandler : IRequestHandler<DeleteAllTransactionCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -25,7 +25,7 @@ internal class DeleteAllTransationCommandHandler : IRequestHandler<DeleteAllTran
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<bool>> Handle(DeleteAllTransationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteAllTransactionCommand request, CancellationToken cancellationToken)
     {
         var transactions = await _unitOfWork.Repository<Transaction>().Entities
             .Where(x => x.CustomerId == request.CustomerId)

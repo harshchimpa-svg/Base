@@ -18,7 +18,7 @@ public class TrannerController : ControllerBase
 
     // [Authorize(Roles =  "Admin,Employee")]
     [HttpPost]
-    public async Task<IActionResult> Create(CreateTranerCommand command)
+    public async Task<IActionResult> Create(CreateTrainerCommand command)
     {
         var result = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(result);
@@ -26,7 +26,7 @@ public class TrannerController : ControllerBase
 
     // [Authorize(Roles =  "Admin,Employee")]
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update( UpdateTranerCommand command)
+    public async Task<IActionResult> Update( UpdateTrainerCommand command)
     {
         var result = await _mediator.Send(command);
         return ResponseHelper.GenerateResponse(result);
@@ -44,7 +44,7 @@ public class TrannerController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var result = await _mediator.Send(new GetTranerByIdQuery(id));
+        var result = await _mediator.Send(new GetTrainerByIdQuery(id));
         return ResponseHelper.GenerateResponse(result);
     }
 
@@ -52,7 +52,7 @@ public class TrannerController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
-        var result = await _mediator.Send(new DeleteTranerCommand(id));
+        var result = await _mediator.Send(new DeleteTrainerCommand(id));
         return ResponseHelper.GenerateResponse(result);
     }
 }

@@ -16,7 +16,7 @@ using Shared;
 
 namespace Application.Features.Tranners.Commands;
 
-public class CreateTranerCommand : IRequest<Result<string>>
+public class CreateTrainerCommand : IRequest<Result<string>>
 {
     [Required]
     public string FirstName { get; set; }
@@ -47,7 +47,7 @@ public class CreateTranerCommand : IRequest<Result<string>>
     public string Password { get; set; }
 }
 
-internal class CreateTranerCommandHandler : IRequestHandler<CreateTranerCommand, Result<string>>
+internal class CreateTranerCommandHandler : IRequestHandler<CreateTrainerCommand, Result<string>>
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -72,7 +72,7 @@ internal class CreateTranerCommandHandler : IRequestHandler<CreateTranerCommand,
         _emailService = emailService;
     }
 
-    public async Task<Result<string>> Handle(CreateTranerCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateTrainerCommand request, CancellationToken cancellationToken)
     {
         request.Email = request.Email?.ToLower();
 

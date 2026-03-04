@@ -41,7 +41,7 @@ internal class UpdateAboutCommandHandler : IRequestHandler<UpdateAboutCommand, R
         if (request.CreateCommand == null || request.CreateCommand.Profile.Length == 0)
             return Result<About>.BadRequest("Image is required.");
          
-        var about = await _unitOfWork.Repository<About>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var about = await _unitOfWork.Repository<About>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);  
 
         if (about == null)
         {

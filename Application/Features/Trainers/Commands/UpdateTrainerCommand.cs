@@ -15,7 +15,7 @@ using Shared;
 
 namespace Application.Features.Tranners.Commands;
 
-public class UpdateTranerCommand : IRequest<Result<string>>
+public class UpdateTrainerCommand : IRequest<Result<string>>
 {
     [Required(ErrorMessage = "Id is required")]
     public string Id { get; set; }
@@ -43,7 +43,7 @@ public class UpdateTranerCommand : IRequest<Result<string>>
     public int? PinCode { get; set; }
 }
 
-internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand, Result<string>>
+internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTrainerCommand, Result<string>>
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -58,7 +58,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<string>> Handle(UpdateTranerCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(UpdateTrainerCommand request, CancellationToken cancellationToken)
     {
         var user = await _userManager.FindByIdAsync(request.Id);
         if (user == null)
@@ -96,20 +96,20 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
         return Result<string>.Success(user.Id, "User updated successfully.");
     }
 
-    private bool HasProfileFields(UpdateTranerCommand request)
+    private bool HasProfileFields(UpdateTrainerCommand request)
     {
         return request.PhoneNumber != null || request.Email != null || request.Weight != null ||
                request.Height != null || request.UserLevelType != null ||
                request.DateOfBirth != null || request.Message != null;
     }
     
-    private bool HasAddressFields(UpdateTranerCommand request)
+    private bool HasAddressFields(UpdateTrainerCommand request)
     {
         return request.Address1 != null || request.Address2 != null || request.City != null ||
                request.State != null || request.Country != null || request.PinCode != null;
     }
 
-    private async Task UpdateUserProfile(UpdateTranerCommand request, string userId, CancellationToken cancellationToken)
+    private async Task UpdateUserProfile(UpdateTrainerCommand request, string userId, CancellationToken cancellationToken)
     {
         var userProfileExists = await _unitOfWork.Repository<UserProfile>()
             .Entities
@@ -147,7 +147,7 @@ internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTranerCommand,
         await _unitOfWork.Save(cancellationToken);
     }
 
-    private async Task UpdateUserAddress(UpdateTranerCommand request, string userId, CancellationToken cancellationToken)
+    private async Task UpdateUserAddress(UpdateTrainerCommand request, string userId, CancellationToken cancellationToken)
     {
         var userAddressExists = await _unitOfWork.Repository<UserAddress>()
             .Entities

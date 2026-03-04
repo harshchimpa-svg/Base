@@ -8,17 +8,17 @@ using Shared;
 
 namespace Application.Features.Tranners.Queries;
 
-public class GetTranerByIdQuery : IRequest<Result<GetUserDto>>
+public class GetTrainerByIdQuery : IRequest<Result<GetUserDto>>
 {
     public int Id { get; set; }
 
-    public GetTranerByIdQuery(int id)
+    public GetTrainerByIdQuery(int id)
     {
         Id = id;
     }
 }
 
-internal class GetTrannerByIdQueryHandler : IRequestHandler<GetTranerByIdQuery, Result<GetUserDto>>
+internal class GetTrannerByIdQueryHandler : IRequestHandler<GetTrainerByIdQuery, Result<GetUserDto>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
@@ -30,7 +30,7 @@ internal class GetTrannerByIdQueryHandler : IRequestHandler<GetTranerByIdQuery, 
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetUserDto>> Handle(GetTranerByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetUserDto>> Handle(GetTrainerByIdQuery request, CancellationToken cancellationToken)
     {
         var tranner = await _unitOfWork.Repository<User>().GetByID(request.Id);
 
