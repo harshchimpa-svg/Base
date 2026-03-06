@@ -25,10 +25,10 @@ internal class DeleteAboutCommandHandler : IRequestHandler<DeleteAboutCommand, R
 
     public async Task<Result<bool>> Handle(DeleteAboutCommand request, CancellationToken cancellationToken)
     {
-        var abouteExists = await _unitOfWork.Repository<About>().Entities
+        var aboutExists = await _unitOfWork.Repository<About>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!abouteExists)
+        if (!aboutExists)
         {
             return Result<bool>.BadRequest("About not found.");
         }

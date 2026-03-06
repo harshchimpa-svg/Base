@@ -35,7 +35,7 @@ internal class GetByIdGymQueryHandler : IRequestHandler<GetByIdGymQuery, Result<
 
         if (gym == null)
         {
-            return Result<GetGymDto>.BadRequest("GYm Not Found");
+            return Result<GetGymDto>.BadRequest("Gym not found");
         }
 
         var mapData = _mapper.Map<GetGymDto>(gym);

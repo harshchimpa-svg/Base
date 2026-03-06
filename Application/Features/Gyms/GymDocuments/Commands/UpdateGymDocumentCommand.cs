@@ -29,11 +29,11 @@ internal class UpdateGymDocumentCommandHandler : IRequestHandler<UpdateGymDocume
     private readonly IFileService _fileService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateGymDocumentCommandHandler(IMapper mapper, IUnitOfWork CategoryRepository, IFileService fileService)
+    public UpdateGymDocumentCommandHandler(IMapper mapper, IUnitOfWork categoryRepository, IFileService fileService)
     {
         _mapper = mapper;
         _fileService = fileService;
-        _unitOfWork = CategoryRepository;
+        _unitOfWork = categoryRepository;
     }
 
     public async Task<Result<GymDocument>> Handle(UpdateGymDocumentCommand request, CancellationToken cancellationToken)

@@ -41,7 +41,7 @@ internal class UpdateGymProductHandler : IRequestHandler<UpdateGymProductCommand
 
             if (gymProducts == null)
             {
-                return Result<GymProduct>.BadRequest("Category id is not exist");
+                return Result<GymProduct>.BadRequest("CartItem does not exist");
             }
         }
         var gymProduct = await _unitOfWork.Repository<GymProduct>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);

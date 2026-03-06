@@ -39,7 +39,7 @@ internal class CreateLocationCommandHandler : IRequestHandler<CreateLocationComm
             var parentExists = await _unitOfWork.Repository<Location>().GetByID(request.ParentId.Value);
             if (parentExists == null)
             {
-                return Result<string>.BadRequest("Parent Id is not exist.");
+                return Result<string>.BadRequest("Parent does not exist.");
             }
         }
 

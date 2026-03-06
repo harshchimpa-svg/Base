@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Tranners.Queries;
+namespace Application.Features.Trainers.Queries;
 
 public class GetAllTrainerQuery : IRequest<PaginatedResult<GetUserDto>>
 {

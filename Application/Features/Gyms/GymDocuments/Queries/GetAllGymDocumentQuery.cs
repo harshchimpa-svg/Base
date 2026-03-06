@@ -29,7 +29,7 @@ internal class GetAllGymDocumentQueryHandler : IRequestHandler<GetAllGymDocument
 
     public async Task<PaginatedResult<GetGymDocumentDto>> Handle(GetAllGymDocumentQuery request, CancellationToken cancellationToken)
     {
-        var  queryable = _unitOfWork.Repository<GymDocument>().Entities.AsQueryable();
+        var queryable = _unitOfWork.Repository<GymDocument>().Entities.AsQueryable();
 
         if (request.GymId.HasValue)
         {

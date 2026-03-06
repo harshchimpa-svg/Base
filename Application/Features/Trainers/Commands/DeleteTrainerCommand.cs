@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Tranners.Commands;
+namespace Application.Features.Trainers.Commands;
 
 public class DeleteTrainerCommand : IRequest<Result<string>>
 {
@@ -17,13 +17,13 @@ public class DeleteTrainerCommand : IRequest<Result<string>>
     }
 }
 
-internal class DeleteTrannerCommandHandler : IRequestHandler<DeleteTrainerCommand, Result<string>>
+internal class DeleteTrainerCommandHandler : IRequestHandler<DeleteTrainerCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
 
 
-    public DeleteTrannerCommandHandler(IUnitOfWork unitOfWork,UserManager<User> userManager)
+    public DeleteTrainerCommandHandler(IUnitOfWork unitOfWork,UserManager<User> userManager)
     {
         _unitOfWork = unitOfWork;
         _userManager = userManager;

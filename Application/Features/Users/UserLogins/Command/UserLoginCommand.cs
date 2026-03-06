@@ -18,13 +18,13 @@ public class UserLoginCommand : IRequest<Result<string>>
 internal class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<string>>
 {
     private readonly UserManager<User> _userManager;
-    private readonly IJWTService _jWTService;
+    private readonly IJWTService _jwtService;
     private readonly IUserIdAndOrganizationIdRepository _userIdAndOrganizationIdRepository;
 
     public UserLoginCommandHandler(UserManager<User> userManager, IJWTService jWTService, IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository)
     {
         _userManager = userManager;
-        _jWTService = jWTService;
+        _jwtService = jWTService;
         _userIdAndOrganizationIdRepository = userIdAndOrganizationIdRepository;
     }
 
@@ -57,7 +57,7 @@ internal class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Resul
             return Result<string>.BadRequest("Username or password is incorrect!");
         }
 
-        string token = await _jWTService.GenerateToken(user.Id);
+        string token = await _jwtService.GenerateToken(user.Id);
 
         return Result<string>.Success(user.Id, "LogIn successfully....", token);
     }

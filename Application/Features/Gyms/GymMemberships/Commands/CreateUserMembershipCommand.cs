@@ -41,7 +41,7 @@ internal class CreateUserMembershipCommandHandler : IRequestHandler<CreateUserMe
 
         if (user == null)
         {
-            return Result<string>.BadRequest("User id not exist");
+            return Result<string>.BadRequest("User does not exist");
         }
 
         if (request.EndDate <= request.StartDate)

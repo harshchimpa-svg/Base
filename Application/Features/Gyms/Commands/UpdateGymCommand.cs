@@ -32,18 +32,18 @@ internal class UpdateGymHandler : IRequestHandler<UpdateGymCommand, Result<Gym>>
     {
         if (request.CreateCommand.LocationId.HasValue)
         {
-            var Location = await _unitOfWork.Repository<Gym>().GetByID(request.CreateCommand.LocationId.Value);
+            var location = await _unitOfWork.Repository<Gym>().GetByID(request.CreateCommand.LocationId.Value);
             
-            if (Location == null)
+            if (location == null)
             {
-                return Result<Gym>.BadRequest("Location id is not exist");
+                return Result<Gym>.BadRequest("Location does not exist");
             }
         }
         var gym = await _unitOfWork.Repository<Gym>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
         {
             if (gym == null)
             {
-                return Result<Gym>.BadRequest("Gyms id not found");
+                return Result<Gym>.BadRequest("Gym not found");
             }
 
             _mapper.Map(request.CreateCommand, gym);

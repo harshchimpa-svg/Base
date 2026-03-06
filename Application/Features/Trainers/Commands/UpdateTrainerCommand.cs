@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Tranners.Commands;
+namespace Application.Features.Trainers.Commands;
 
 public class UpdateTrainerCommand : IRequest<Result<string>>
 {

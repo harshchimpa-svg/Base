@@ -29,11 +29,11 @@ internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComm
     private readonly IFileService _fileService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCategoryCommandHandler(IMapper mapper, IUnitOfWork CategoriRepository, IFileService fileService)
+    public UpdateCategoryCommandHandler(IMapper mapper, IUnitOfWork categoryRepository, IFileService fileService)
     {
         _mapper = mapper;
         _fileService = fileService;
-        _unitOfWork = CategoriRepository;
+        _unitOfWork = categoryRepository;
     }
     
     public async Task<Result<Category>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
@@ -44,7 +44,7 @@ internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComm
 
             if (parent == null)
             {
-                return Result<Category>.BadRequest("Parent Id is not exist.");
+                return Result<Category>.BadRequest("Parent does not exist.");
             }
         }
         if (request.CreateCommand == null || request.CreateCommand.ImageUrl.Length == 0)

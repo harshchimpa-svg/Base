@@ -25,11 +25,11 @@ namespace Application.Features.Roles.Command
         private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
         private readonly IUserIdAndOrganizationIdRepository _organizationIdRepository;
-        public UpdateRoleCommandHandler(RoleManager<Role> roleManager, IMapper mapper, IUserIdAndOrganizationIdRepository OrganizationIdRepository)
+        public UpdateRoleCommandHandler(RoleManager<Role> roleManager, IMapper mapper, IUserIdAndOrganizationIdRepository organizationIdRepository)
         {
             _roleManager = roleManager;
             _mapper = mapper;
-            _organizationIdRepository = OrganizationIdRepository;
+            _organizationIdRepository = organizationIdRepository;
         }
 
         public async Task<Result<GetRoleDto>> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)

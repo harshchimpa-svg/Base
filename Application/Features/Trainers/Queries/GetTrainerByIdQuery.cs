@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared;
 
-namespace Application.Features.Tranners.Queries;
+namespace Application.Features.Trainers.Queries;
 
 public class GetTrainerByIdQuery : IRequest<Result<GetUserDto>>
 {
@@ -18,13 +18,13 @@ public class GetTrainerByIdQuery : IRequest<Result<GetUserDto>>
     }
 }
 
-internal class GetTrannerByIdQueryHandler : IRequestHandler<GetTrainerByIdQuery, Result<GetUserDto>>
+internal class GetTrainerByIdQueryHandler : IRequestHandler<GetTrainerByIdQuery, Result<GetUserDto>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetTrannerByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,UserManager<User> userManager)
+    public GetTrainerByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,UserManager<User> userManager)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
@@ -35,10 +35,10 @@ internal class GetTrannerByIdQueryHandler : IRequestHandler<GetTrainerByIdQuery,
         var trainer = await _unitOfWork.Repository<User>().GetByID(request.Id);
 
         if (trainer == null)
-            return Result<GetUserDto>.BadRequest("Tranner not found");
+            return Result<GetUserDto>.BadRequest("Trainer not found");
 
         var map = _mapper.Map<GetUserDto>(trainer);
 
-        return Result<GetUserDto>.Success(map, "Tranner detail");
+        return Result<GetUserDto>.Success(map, "Trainer detail");
     }
 }

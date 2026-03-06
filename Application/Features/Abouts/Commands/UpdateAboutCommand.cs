@@ -29,11 +29,11 @@ internal class UpdateAboutCommandHandler : IRequestHandler<UpdateAboutCommand, R
     private readonly IFileService _fileService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateAboutCommandHandler(IMapper mapper, IUnitOfWork UnitOfWork, IFileService fileService)
+    public UpdateAboutCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IFileService fileService)
     {
         _mapper = mapper;
         _fileService = fileService;
-        _unitOfWork = UnitOfWork;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<About>> Handle(UpdateAboutCommand request, CancellationToken cancellationToken)   

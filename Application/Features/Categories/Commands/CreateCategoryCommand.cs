@@ -38,7 +38,7 @@ internal class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryComma
 
             if (parentExists == null)
             {
-                return Result<string>.BadRequest("Parent Id is not exist.");
+                return Result<string>.BadRequest("Parent does not exist.");
             }
         }
         var imageUrl = await _fileService.UploadAsync(request.ImageUrl, "Categories");

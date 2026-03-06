@@ -14,7 +14,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared;
 
-namespace Application.Features.Tranners.Commands;
+namespace Application.Features.Trainers.Commands;
 
 public class CreateTrainerCommand : IRequest<Result<string>>
 {

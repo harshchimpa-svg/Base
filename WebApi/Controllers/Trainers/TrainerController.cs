@@ -1,5 +1,5 @@
-using Application.Features.Tranners.Commands;
-using Application.Features.Tranners.Queries;
+using Application.Features.Trainers.Commands;
+using Application.Features.Trainers.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +7,11 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/trainer")]
-public class TrannerController : ControllerBase
+public class TrainerController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public TrannerController(IMediator mediator)
+    public TrainerController(IMediator mediator)
     {
         _mediator = mediator;
     }

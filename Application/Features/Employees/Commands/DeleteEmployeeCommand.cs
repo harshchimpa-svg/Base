@@ -8,24 +8,24 @@ using Shared;
 
 namespace Application.Features.Employees.Commands;
 
-public class DeleateEmployeeCommand: IRequest<Result<bool>>
+public class DeleteEmployeeCommand: IRequest<Result<bool>>
 {
     public int Id { get; set; }
-    public DeleateEmployeeCommand(int id)
+    public DeleteEmployeeCommand(int id)
     {
         Id = id;
     }
 }
-internal class DeleateEmployeeCommandHandler : IRequestHandler<DeleateEmployeeCommand, Result<bool>>
+internal class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleateEmployeeCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteEmployeeCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<bool>> Handle(DeleateEmployeeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
     {
         var locationExists = await _unitOfWork.Repository<Employee>().Entities
             .AnyAsync(x => x.Id == request.Id);
