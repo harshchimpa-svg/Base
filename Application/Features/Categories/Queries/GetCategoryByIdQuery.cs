@@ -2,7 +2,7 @@
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Domain.Entities.Catagories;
+using Domain.Entities.Categories;
 using MediatR;
 using Shared;
 

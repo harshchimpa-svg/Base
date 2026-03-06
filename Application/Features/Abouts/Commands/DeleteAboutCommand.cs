@@ -36,6 +36,6 @@ internal class DeleteAboutCommandHandler : IRequestHandler<DeleteAboutCommand, R
         await _unitOfWork.Repository<About>().DeleteAsync(request.Id); 
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<bool>.Success(true, "About deleted successfully.");
+        return Result<bool>.Success(true, "About deleted successfully.");   
     }
 }

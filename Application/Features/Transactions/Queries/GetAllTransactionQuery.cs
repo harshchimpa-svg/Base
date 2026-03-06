@@ -17,13 +17,13 @@ public class GetAllTransactionQuery : IRequest<PaginatedResult<GetTransactionDto
     public int PageSize { get; set; }
 }
 
-internal class GetAllBalenceQueryHandler : IRequestHandler<GetAllTransactionQuery, PaginatedResult<GetTransactionDto>>
+internal class GetAllTransactionQueryHandler : IRequestHandler<GetAllTransactionQuery, PaginatedResult<GetTransactionDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllBalenceQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+    public GetAllTransactionQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

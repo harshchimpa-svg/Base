@@ -8,15 +8,15 @@ using Shared;
 
 namespace Application.Features.ShopeSettings.Command;
 
-public class DeleteShopeSettingCommand: IRequest<Result<bool>>
+public class DeleteShopSettingCommand: IRequest<Result<bool>>
 {
     public int Id { get; set; }
-    public DeleteShopeSettingCommand(int id)
+    public DeleteShopSettingCommand(int id)
     {
         Id = id;
     }
 }
-internal class DeleteShopeSettingCommandHandler : IRequestHandler<DeleteShopeSettingCommand, Result<bool>>
+internal class DeleteShopeSettingCommandHandler : IRequestHandler<DeleteShopSettingCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -25,7 +25,7 @@ internal class DeleteShopeSettingCommandHandler : IRequestHandler<DeleteShopeSet
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<bool>> Handle(DeleteShopeSettingCommand request, CancellationToken cancellationToken)
+    public async Task<Result<bool>> Handle(DeleteShopSettingCommand request, CancellationToken cancellationToken)
     {
         var shopSetting = await _unitOfWork.Repository<ShopSetting>().Entities
             .AnyAsync(x => x.Id == request.Id);

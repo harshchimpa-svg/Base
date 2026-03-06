@@ -1,7 +1,7 @@
 using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.Clientses;
+using Domain.Entities.Clients;
 using MediatR;
 using Shared;
 

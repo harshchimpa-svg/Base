@@ -1,7 +1,7 @@
 ﻿using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
 using Domain.Common.Enums.CatagoryTypes;
-using Domain.Entities.Catagories;
+using Domain.Entities.Categories;
 
 namespace Application.Dto.Categoryes;
 

@@ -10,11 +10,11 @@ using Shared;
 
 namespace Application.Features.ShopeSettings.Queries;
 
-public class GetAllShopeSettingQuery : IRequest<Result<List<GetShopSettingDto>>>
+public class GetAllShopSettingQuery : IRequest<Result<List<GetShopSettingDto>>>
 {
 }
 
-internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopeSettingQuery, Result<List<GetShopSettingDto>>>
+internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopSettingQuery, Result<List<GetShopSettingDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -30,7 +30,7 @@ internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopeSetti
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Result<List<GetShopSettingDto>>> Handle(GetAllShopeSettingQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<GetShopSettingDto>>> Handle(GetAllShopSettingQuery request, CancellationToken cancellationToken)
     {
         var user = _httpContextAccessor.HttpContext?.User;
 

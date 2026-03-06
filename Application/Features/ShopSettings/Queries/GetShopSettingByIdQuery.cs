@@ -10,16 +10,16 @@ using Shared;
 
 namespace Application.Features.ShopeSettings.Queries;
 
-public class GetShopeSettingByIdQuery: IRequest<Result<GetShopSettingDto>>
+public class GetShopSettingByIdQuery: IRequest<Result<GetShopSettingDto>>
 {
     public int Id { get; set; }
 
-    public GetShopeSettingByIdQuery(int id)
+    public GetShopSettingByIdQuery(int id)
     {
         Id = id;
     }
 }
-internal class GetShopeSettingByIdQueryHandler : IRequestHandler<GetShopeSettingByIdQuery, Result<GetShopSettingDto>>
+internal class GetShopeSettingByIdQueryHandler : IRequestHandler<GetShopSettingByIdQuery, Result<GetShopSettingDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -30,7 +30,7 @@ internal class GetShopeSettingByIdQueryHandler : IRequestHandler<GetShopeSetting
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetShopSettingDto>> Handle(GetShopeSettingByIdQuery request, CancellationToken cancellationToken) 
+    public async Task<Result<GetShopSettingDto>> Handle(GetShopSettingByIdQuery request, CancellationToken cancellationToken) 
     {
         var service = await _unitOfWork.Repository<ShopSetting>().GetByID(request.Id);
 

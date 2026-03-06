@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.UnitOfWorkRepositories;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Domain.Entities.Catagories;
+using Domain.Entities.Categories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;

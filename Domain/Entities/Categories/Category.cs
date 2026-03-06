@@ -1,7 +1,7 @@
 ﻿using Domain.Common;
 using Domain.Common.Enums.CatagoryTypes;
 
-namespace Domain.Entities.Catagories;
+namespace Domain.Entities.Categories;
 
 public class Category : BaseAuditableEntity
 {

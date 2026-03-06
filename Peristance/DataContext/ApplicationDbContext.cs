@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
-using Domain.Entities.Catagories;
-using Domain.Entities.Clientses;
+using Domain.Entities.Categories;
+using Domain.Entities.Clients;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;
 using Domain.Entities.DietDocuments;
@@ -25,7 +25,6 @@ using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
 using Domain.Entities.Gyms;
 using Domain.Entities.GymTraners;
-using Domain.Entities.PaymentLoges;
 using Domain.Entities.SalePayments;
 using Domain.Entities.SaleProducts;
 using Domain.Entities.Sales;
@@ -36,6 +35,7 @@ using Domain.Entities.GymCategorys;
 using Domain.Entities.GymProducts;
 using Domain.Entities.ProductDocuments;
 using Domain.Entities.GymCartItem;
+using Domain.Entities.PaymentLogs;
 using Domain.Entities.ShopeSettings;
 
 namespace Persistence.DataContext;
@@ -79,7 +79,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
-    public DbSet<ShopSetting> ShopeSetting { get; set; }
+    public DbSet<ShopSetting> ShopSetting { get; set; }
 
 
 

@@ -1,6 +1,6 @@
 using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
-using Domain.Entities.Clientses;
+using Domain.Entities.Clients;
 
 namespace Application.Dto.Clientses;
 

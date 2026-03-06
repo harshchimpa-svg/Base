@@ -2,7 +2,7 @@
 using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.Catagories;
+using Domain.Entities.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared;

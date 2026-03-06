@@ -6,7 +6,7 @@ using AutoMapper;
 using Domain.Common.Enums.TransactionTypes;
 using Domain.Entities.Customers;
 using Domain.Entities.Transactions;
-using Domain.Entities.PaymentLoges;
+using Domain.Entities.PaymentLogs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -23,13 +23,13 @@ public class CreateTransactionCommand : IRequest<Result<string>>, ICreateMapFrom
     public decimal Amount { get; set; }
 }
 
-internal class CreateBalenceCommandHandler : IRequestHandler<CreateTransactionCommand, Result<string>>
+internal class CreateTransactionCommandHandler : IRequestHandler<CreateTransactionCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public CreateBalenceCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    public CreateTransactionCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

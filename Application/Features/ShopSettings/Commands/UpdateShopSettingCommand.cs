@@ -9,19 +9,19 @@ using Shared;
 
 namespace Application.Features.ShopeSettings.Command;
 
-public class UpdateShopeSettingCommand: IRequest<Result<ShopSetting>>
+public class UpdateShopSettingCommand: IRequest<Result<ShopSetting>>
 {
     public int Id { get; set; }
-    public CreateShopeSettingCommand CreateCommand { get; set; } = new();
+    public CreateShopSettingCommand CreateCommand { get; set; } = new();
 
-    public UpdateShopeSettingCommand(int id, CreateShopeSettingCommand createCommand)
+    public UpdateShopSettingCommand(int id, CreateShopSettingCommand createCommand)
     {
         Id = id;
         CreateCommand = createCommand;
     }
 }
 
-internal class UpdateShopeSettingCommandHandler : IRequestHandler<UpdateShopeSettingCommand, Result<ShopSetting>>
+internal class UpdateShopeSettingCommandHandler : IRequestHandler<UpdateShopSettingCommand, Result<ShopSetting>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -37,7 +37,7 @@ internal class UpdateShopeSettingCommandHandler : IRequestHandler<UpdateShopeSet
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Result<ShopSetting>> Handle(UpdateShopeSettingCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ShopSetting>> Handle(UpdateShopSettingCommand request, CancellationToken cancellationToken)
     {
         var userId = _httpContextAccessor.HttpContext?.User
             ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -3,7 +3,7 @@ using Application.Dto.Balences;
 using Application.Dto.CommonDtos;
 using Application.Dto.Customers;
 using Domain.Common.Enums.TransactionTypes;
-using Domain.Entities.PaymentLoges;
+using Domain.Entities.PaymentLogs;
 using Domain.Entities.Sales;
 
 namespace Application.Dto.PaymentLoges;

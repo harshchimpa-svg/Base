@@ -3,7 +3,7 @@ using Application.Dto.PaymentLoges;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Customers;
-using Domain.Entities.PaymentLoges;
+using Domain.Entities.PaymentLogs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +22,13 @@ public class GetAllPaymentLogQuery : IRequest<PaginatedResult<GetPaymentLogDto>>
     public int PageSize { get; set; } = 10;
 }
 
-internal class GetAllPaymentLogeQueryHandler : IRequestHandler<GetAllPaymentLogQuery, PaginatedResult<GetPaymentLogDto>>
+internal class GetAllPaymentLogQueryHandler : IRequestHandler<GetAllPaymentLogQuery, PaginatedResult<GetPaymentLogDto>>
 {
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllPaymentLogeQueryHandler(IMapper mapper, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
+    public GetAllPaymentLogQueryHandler(IMapper mapper, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _httpContextAccessor = httpContextAccessor;

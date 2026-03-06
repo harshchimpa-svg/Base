@@ -4,7 +4,6 @@ using Domain.Entities.ApplicationUsers;
 using Domain.Entities.Gyms;
 
 namespace Domain.Entities.GymTraners;
-
 public class GymTrainer:BaseAuditableEntity
 {
     [ForeignKey("User")]

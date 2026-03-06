@@ -4,7 +4,7 @@ using Domain.Entities.ApplicationUsers;
 using Domain.Entities.Transactions;
 using Domain.Entities.Customers;
 
-namespace Domain.Entities.PaymentLoges;
+namespace Domain.Entities.PaymentLogs;
 
 public class PaymentLog : BaseAuditableEntity
 {

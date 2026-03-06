@@ -23,7 +23,7 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpPost]
-        public async Task<ActionResult> Create(CreateShopeSettingCommand command)
+        public async Task<ActionResult> Create(CreateShopSettingCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
@@ -31,9 +31,9 @@ namespace WebApi.Controllers.ShopeSettings
 
         [Authorize(Roles =  "Admin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CreateShopeSettingCommand command)
+        public async Task<IActionResult> Update(int id, CreateShopSettingCommand command)
         {
-            var result = await _mediator.Send(new UpdateShopeSettingCommand(id, command));
+            var result = await _mediator.Send(new UpdateShopSettingCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
@@ -41,7 +41,7 @@ namespace WebApi.Controllers.ShopeSettings
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await _mediator.Send(new GetAllShopeSettingQuery());
+            var result = await _mediator.Send(new GetAllShopSettingQuery());
             return ResponseHelper.GenerateResponse(result);
         }
 
@@ -49,7 +49,7 @@ namespace WebApi.Controllers.ShopeSettings
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetShopeSettingByIdQuery(id));
+            var result = await _mediator.Send(new GetShopSettingByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
 
@@ -57,7 +57,7 @@ namespace WebApi.Controllers.ShopeSettings
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeleteShopeSettingCommand(id));
+            var result = await _mediator.Send(new DeleteShopSettingCommand(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

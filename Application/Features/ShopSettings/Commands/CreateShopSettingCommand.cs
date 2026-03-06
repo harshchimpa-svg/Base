@@ -9,7 +9,7 @@ using Shared;
 
 namespace Application.Features.ShopeSettings.Command;
 
-public class CreateShopeSettingCommand: IRequest<Result<string>>, ICreateMapFrom<ShopSetting>
+public class CreateShopSettingCommand: IRequest<Result<string>>, ICreateMapFrom<ShopSetting>
 {
     public string ShopeName { get; set; }
     public string OnerName { get; set; }
@@ -19,7 +19,7 @@ public class CreateShopeSettingCommand: IRequest<Result<string>>, ICreateMapFrom
     public int? EmployeeId { get; set; }
 }
 
-internal class CreateShopeSettingCommandHandler : IRequestHandler<CreateShopeSettingCommand, Result<string>>
+internal class CreateShopeSettingCommandHandler : IRequestHandler<CreateShopSettingCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -35,7 +35,7 @@ internal class CreateShopeSettingCommandHandler : IRequestHandler<CreateShopeSet
         _httpContextAccessor = httpContextAccessor;  
     }
 
-    public async Task<Result<string>> Handle(CreateShopeSettingCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateShopSettingCommand request, CancellationToken cancellationToken)
     {
         var userId = _httpContextAccessor.HttpContext?.User
             ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;

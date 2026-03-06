@@ -3,7 +3,6 @@ using Application.Dto.Diets;
 using Application.Features.Clients.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.Clientses;
 using Domain.Entities.Diets;
 using MediatR;
 using Shared;

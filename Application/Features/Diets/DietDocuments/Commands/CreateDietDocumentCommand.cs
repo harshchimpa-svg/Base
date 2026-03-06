@@ -7,13 +7,13 @@ using Shared;
 
 namespace Application.Features.DietDocuments.Commands;
 
-public class CreateDiteDocumentCommand: IRequest<Result<string>>, ICreateMapFrom<DietDocument>
+public class CreateDietDocumentCommand: IRequest<Result<string>>, ICreateMapFrom<DietDocument>
 {
     public int DietId { get; set; }
     public string Document { get; set; }
 }
 
-internal class CreateDiteDocumentCommandHandler : IRequestHandler<CreateDiteDocumentCommand, Result<string>>
+internal class CreateDiteDocumentCommandHandler : IRequestHandler<CreateDietDocumentCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ internal class CreateDiteDocumentCommandHandler : IRequestHandler<CreateDiteDocu
         _mapper = mapper;
     }
 
-    public async Task<Result<string>> Handle(CreateDiteDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateDietDocumentCommand request, CancellationToken cancellationToken)
     {
         var dietDocument = _mapper.Map<DietDocument>(request);
 

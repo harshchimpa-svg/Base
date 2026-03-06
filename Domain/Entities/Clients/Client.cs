@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 using Domain.Entities.Services;
 
-namespace Domain.Entities.Clientses;
+namespace Domain.Entities.Clients;
 
 public class Client:BaseAuditableEntity
 {

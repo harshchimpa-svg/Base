@@ -37,7 +37,7 @@ internal class CreateAboutCommandHandler : IRequestHandler<CreateAboutCommand, R
         var about = new About
         {
             Name = request.Name,
-            SubTitel = request.SubTitle,
+            SubTitel = request.SubTitle,     
             Profile = imageUrl,
             IsActive = true
         };

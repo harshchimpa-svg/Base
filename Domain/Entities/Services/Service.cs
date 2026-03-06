@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
-using Domain.Entities.Catagories;
+using Domain.Entities.Categories;
 using Domain.Entities.Vendors;
 
 namespace Domain.Entities.Services;

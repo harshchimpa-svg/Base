@@ -1,5 +1,5 @@
 using Application.Interfaces.UnitOfWorkRepositories;
-using Domain.Entities.Clientses;
+using Domain.Entities.Clients;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
