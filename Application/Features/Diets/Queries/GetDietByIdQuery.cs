@@ -1,6 +1,4 @@
-using Application.Dto.Clientses;
 using Application.Dto.Diets;
-using Application.Features.Clients.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Diets;

@@ -23,7 +23,7 @@ public class UpdateGymCommand : IRequest<Result<Gym>>
     }
 }
 
-internal class UpdateGymHandler : IRequestHandler<UpdateGymCommand, Result<Gym>>
+internal class UpdateGymCommandHandler : IRequestHandler<UpdateGymCommand, Result<Gym>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;

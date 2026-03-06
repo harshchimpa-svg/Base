@@ -22,12 +22,12 @@ public class UpdateGymProductCommand : IRequest<Result<GymProduct>>
         CreateCommand = createCommand;
     }
 }
-internal class UpdateGymProductHandler : IRequestHandler<UpdateGymProductCommand, Result<GymProduct>>
+internal class UpdateGymProductCommandHandler : IRequestHandler<UpdateGymProductCommand, Result<GymProduct>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateGymProductHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateGymProductCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

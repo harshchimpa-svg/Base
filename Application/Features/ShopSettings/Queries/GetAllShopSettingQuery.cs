@@ -14,13 +14,13 @@ public class GetAllShopSettingQuery : IRequest<Result<List<GetShopSettingDto>>>
 {
 }
 
-internal class GetAllshopSettingQueryHandler : IRequestHandler<GetAllShopSettingQuery, Result<List<GetShopSettingDto>>>
+internal class GetAllShopSettingQueryHandler : IRequestHandler<GetAllShopSettingQuery, Result<List<GetShopSettingDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllshopSettingQueryHandler(
+    public GetAllShopSettingQueryHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IHttpContextAccessor httpContextAccessor)

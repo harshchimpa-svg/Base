@@ -19,12 +19,12 @@ public class GetShopSettingByIdQuery: IRequest<Result<GetShopSettingDto>>
         Id = id;
     }
 }
-internal class GetshopSettingByIdQueryHandler : IRequestHandler<GetShopSettingByIdQuery, Result<GetShopSettingDto>>
+internal class GetShopSettingByIdQueryHandler : IRequestHandler<GetShopSettingByIdQuery, Result<GetShopSettingDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetshopSettingByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetShopSettingByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

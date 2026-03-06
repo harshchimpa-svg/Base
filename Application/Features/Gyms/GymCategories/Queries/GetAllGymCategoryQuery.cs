@@ -1,12 +1,7 @@
-﻿
-
-using Application.Dto.GymCategorys;
-using Application.Dto.Gyms;
-using Application.Features.Gyms.Queries;
+﻿using Application.Dto.GymCategories;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.GymCategorys;
-using Domain.Entities.Gyms;
 using MediatR;
 using Shared;
 

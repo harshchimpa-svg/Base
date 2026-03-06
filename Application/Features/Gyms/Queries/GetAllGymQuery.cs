@@ -15,12 +15,12 @@ public class GetAllGymQuery : IRequest<Result<List<GetGymDto>>>
 
 }
 
-internal class GetGymQueryHandler : IRequestHandler<GetAllGymQuery, Result<List<GetGymDto>>>
+internal class GetAllGymQueryHandler : IRequestHandler<GetAllGymQuery, Result<List<GetGymDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetGymQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllGymQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

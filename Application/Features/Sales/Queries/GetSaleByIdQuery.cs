@@ -19,12 +19,12 @@ public class GetSaleByIdQuery: IRequest<Result<GetSaleDto>>
         Id = id;
     }
 }
-internal class GetSaleByIdQueriesHandler : IRequestHandler<GetSaleByIdQuery, Result<GetSaleDto>>
+internal class GetSaleByIdQueryHandler : IRequestHandler<GetSaleByIdQuery, Result<GetSaleDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetSaleByIdQueriesHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetSaleByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

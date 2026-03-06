@@ -14,11 +14,11 @@ public class DeleteDietTypeCommand: IRequest<Result<bool>>
         Id = id;
     }
 }
-internal class DeleteDietTypeCommandsHandler : IRequestHandler<DeleteDietTypeCommand, Result<bool>>
+internal class DeleteDietTypeCommandHandler : IRequestHandler<DeleteDietTypeCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteDietTypeCommandsHandler(IUnitOfWork unitOfWork)
+    public DeleteDietTypeCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

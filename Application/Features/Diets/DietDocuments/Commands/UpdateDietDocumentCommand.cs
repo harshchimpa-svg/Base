@@ -19,12 +19,12 @@ public class UpdateDietDocumentCommand: IRequest<Result<DietDocument>>
         CreateCommand = createCommand;
     }
 }
-internal class UpdateDiteDocumentCommandHandler : IRequestHandler<UpdateDietDocumentCommand, Result<DietDocument>>
+internal class UpdateDietDocumentCommandHandler : IRequestHandler<UpdateDietDocumentCommand, Result<DietDocument>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateDiteDocumentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateDietDocumentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

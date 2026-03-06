@@ -41,6 +41,6 @@ internal class DeleteCartItemCommandHandler : IRequestHandler<DeleteCartItemComm
         await _unitOfWork.Repository<CartItem>().DeleteAsync(request.Id);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<bool>.Success(true, "GymCartItems deleted succesfully");
+        return Result<bool>.Success(true, "GymCartItems deleted successfully");
     }
 }

@@ -40,6 +40,6 @@ internal class DeleteGymProductCommandHandler : IRequestHandler<DeleteGymProduct
         await _unitOfWork.Repository<GymProduct>().DeleteAsync(request.Id);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<bool>.Success(true, "GymProducts deleted succesfully");
+        return Result<bool>.Success(true, "GymProducts deleted successfully");
     }
 }

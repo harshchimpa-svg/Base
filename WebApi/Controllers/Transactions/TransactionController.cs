@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.Transaction
+namespace WebApi.Controllers.Transactions
 {
     [Route("api/transaction")]
     [ApiController]

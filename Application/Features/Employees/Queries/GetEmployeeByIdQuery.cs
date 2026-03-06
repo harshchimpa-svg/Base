@@ -19,12 +19,12 @@ public class GetEmployeeByIdQuery: IRequest<Result<GetEmployeeDto>>
         Id = id;
     }
 }
-internal class GetEmployeeByIdQueriesHandler : IRequestHandler<GetEmployeeByIdQuery, Result<GetEmployeeDto>>
+internal class GetEmployeeByIdQueryHandler : IRequestHandler<GetEmployeeByIdQuery, Result<GetEmployeeDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetEmployeeByIdQueriesHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetEmployeeByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

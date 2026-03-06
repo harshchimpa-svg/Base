@@ -1,7 +1,6 @@
-﻿using Application.Dto.Categoryes;
+﻿using Application.Dto.Categories;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Domain.Entities.Categories;
 using MediatR;
 using Shared;

@@ -1,4 +1,4 @@
-using Application.Dto.Clientses;
+using Application.Dto.Clients;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Clients;

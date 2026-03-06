@@ -3,7 +3,7 @@ using Application.Dto.CommonDtos;
 using Domain.Common.Enums.CatagoryTypes;
 using Domain.Entities.Categories;
 
-namespace Application.Dto.Categoryes;
+namespace Application.Dto.Categories;
 
 public class GetCategoryDto : BaseDto, IMapFrom<Category>
 {

@@ -10,12 +10,12 @@ namespace Application.Features.Services.Queries;
 public class GetAllServiceQuery: IRequest<Result<List<GetServiceDto>>>
 {
 }
-internal class GetAllPaymentHeadQueryHandler : IRequestHandler<GetAllServiceQuery, Result<List<GetServiceDto>>>
+internal class GetAllServiceQueryHandler : IRequestHandler<GetAllServiceQuery, Result<List<GetServiceDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllPaymentHeadQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllServiceQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

@@ -1,4 +1,5 @@
-﻿
+﻿using System.Security.Claims;
+using System.Text;
 using Application.Interfaces.GenericRepositories;
 using Application.Interfaces.Repositories.Organization;
 using Application.Interfaces.Repositories.Otps;
@@ -8,7 +9,6 @@ using Application.Interfaces.Repositories.Users.UserRoles.Roles;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,15 +18,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Peristance.Extension.Repositories.Organization;
 using Persistence.DataContext;
 using Persistence.Extension.Repositories;
+using Persistence.Extension.Repositories.Organization;
 using Persistence.Extension.Repositories.Otps;
 using Persistence.Extension.Repositories.Roles;
 using Persistence.Extension.Repositories.Roles.UserRoles;
 using Persistence.Extension.Repositories.UserIdAndOrganizationIds;
-using System.Security.Claims;
-using System.Text;
 
 namespace Persistence.Extension;
 
@@ -114,7 +112,7 @@ public static class IServiceCollectionExtension
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = configuration["JwtSettings:Issuer"],
                 ValidAudience = configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                IssuerSigningKey = new SymmetricSecurityKey(
                  Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"])),
                 RoleClaimType = ClaimTypes.Role
 

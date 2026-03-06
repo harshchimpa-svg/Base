@@ -16,12 +16,12 @@ public class GetTransactionByIdQuery: IRequest<Result<GetTransactionDto>>
         Id = id;
     }
 }
-internal class GetBalanceByIdQueryHandler : IRequestHandler<GetTransactionByIdQuery, Result<GetTransactionDto>>
+internal class GetTransactionByIdQueryHandler : IRequestHandler<GetTransactionByIdQuery, Result<GetTransactionDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetBalanceByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetTransactionByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

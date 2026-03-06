@@ -21,13 +21,13 @@ public class UpdateShopSettingCommand: IRequest<Result<ShopSetting>>
     }
 }
 
-internal class UpdateshopSettingCommandHandler : IRequestHandler<UpdateShopSettingCommand, Result<ShopSetting>>
+internal class UpdateShopSettingCommandHandler : IRequestHandler<UpdateShopSettingCommand, Result<ShopSetting>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UpdateshopSettingCommandHandler(
+    public UpdateShopSettingCommandHandler(
         IMapper mapper, 
         IUnitOfWork unitOfWork,
         IHttpContextAccessor httpContextAccessor)

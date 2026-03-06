@@ -23,12 +23,12 @@ public class UpdateCartItemCommand : IRequest<Result<CartItem>>
         CreateCommand = createCommand;
     }
 }
-internal class UpdateCartItemHandler : IRequestHandler<UpdateCartItemCommand, Result<CartItem>>
+internal class UpdateCartItemCommandHandler : IRequestHandler<UpdateCartItemCommand, Result<CartItem>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCartItemHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateCartItemCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

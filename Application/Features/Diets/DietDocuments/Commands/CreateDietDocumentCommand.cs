@@ -13,12 +13,12 @@ public class CreateDietDocumentCommand: IRequest<Result<string>>, ICreateMapFrom
     public string Document { get; set; }
 }
 
-internal class CreateDiteDocumentCommandHandler : IRequestHandler<CreateDietDocumentCommand, Result<string>>
+internal class CreateDietDocumentCommandHandler : IRequestHandler<CreateDietDocumentCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     
-    public CreateDiteDocumentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateDietDocumentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {   
         _unitOfWork = unitOfWork;
         _mapper = mapper;

@@ -12,12 +12,12 @@ public class GetAllLocationQuery : IRequest<Result<List<GetLocationDto>>>
 {
 }
 
-internal class GetLocationQueryHandler : IRequestHandler<GetAllLocationQuery, Result<List<GetLocationDto>>>
+internal class GetAllLocationQueryHandler : IRequestHandler<GetAllLocationQuery, Result<List<GetLocationDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetLocationQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllLocationQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
          _unitOfWork = unitOfWork;

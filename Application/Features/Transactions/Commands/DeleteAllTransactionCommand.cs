@@ -16,11 +16,11 @@ public class DeleteAllTransactionCommand : IRequest<Result<bool>>
     }
 }
 
-internal class DeleteAllTransationCommandHandler : IRequestHandler<DeleteAllTransactionCommand, Result<bool>>
+internal class DeleteAllTransactionCommandHandler : IRequestHandler<DeleteAllTransactionCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteAllTransationCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteAllTransactionCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

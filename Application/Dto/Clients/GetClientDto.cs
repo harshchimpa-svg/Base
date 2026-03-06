@@ -2,7 +2,7 @@ using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
 using Domain.Entities.Clients;
 
-namespace Application.Dto.Clientses;
+namespace Application.Dto.Clients;
 
 public class GetClientDto: BaseDto, IMapFrom<Client>
 {

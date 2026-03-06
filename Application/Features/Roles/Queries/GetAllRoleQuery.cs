@@ -11,12 +11,12 @@ namespace Application.Features.Roles.Queries;
 public class GetAllRoleQuery : IRequest<Result<List<GetRoleDto>>>
 {
 }
-internal class GetRoleQueryHandler : IRequestHandler<GetAllRoleQuery, Result<List<GetRoleDto>>>
+internal class GetAllRoleQueryHandler : IRequestHandler<GetAllRoleQuery, Result<List<GetRoleDto>>>
 {
     private readonly IMapper _mapper;
     private readonly RoleManager<Role> _roleManager;
 
-    public GetRoleQueryHandler(IMapper mapper, RoleManager<Role> roleManager)
+    public GetAllRoleQueryHandler(IMapper mapper, RoleManager<Role> roleManager)
     {
         _mapper = mapper;
         _roleManager = roleManager;

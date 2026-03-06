@@ -1,4 +1,4 @@
-﻿using Application.Dto.Categoryes;
+﻿using Application.Dto.Categories;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Categories;

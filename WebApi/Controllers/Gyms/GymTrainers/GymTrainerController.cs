@@ -3,7 +3,7 @@ using Application.Features.GymTrainers.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.GymTrainer
+namespace WebApi.Controllers.GymTrainers
 
 {
     [Route("api/gym-trainer")]

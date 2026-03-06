@@ -2,7 +2,7 @@ using Application.Interfaces.Repositories.Organization;
 using Microsoft.EntityFrameworkCore;
 using Persistence.DataContext;
 
-namespace Peristance.Extension.Repositories.Organization;
+namespace Persistence.Extension.Repositories.Organization;
 
 public class OrganizationRepository : IOrganizationRepository
 {
