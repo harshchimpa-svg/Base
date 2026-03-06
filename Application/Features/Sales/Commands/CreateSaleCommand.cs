@@ -22,7 +22,7 @@ public class CreateSaleCommand : IRequest<Result<string>>, ICreateMapFrom<Sale>
     public List<GetSaleProductDto> SaleProducts { get; set; }
     public List<GetSalePaymentDto> SalePayments { get; set; }
 
-    public record GetSaleProductDto(string ProductId, string ProductName, decimal Price, decimal Discount, decimal taxe, int Quantity);
+    public record GetSaleProductDto(string ProductId, string ProductName, decimal Price, decimal Discount, decimal Tax, int Quantity);
 
 
     public record GetSalePaymentDto(decimal NetAmount, MethodType MethodType, DateTime PaymentDate);
@@ -61,7 +61,7 @@ internal class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Res
                 Quantity = item.Quantity,
                 Price = item.Price,
                 Discount = item.Discount,
-                taxe = item.taxe
+                Tax = item.Tax
             };
 
             await _unitOfWork.Repository<SaleProduct>().AddAsync(saleProduct);

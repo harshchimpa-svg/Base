@@ -10,11 +10,11 @@ public class GetMaritalStatusLookupQuery : IRequest<Result<List<IdAndNameDto>>>;
 
 internal class GetMaritalStatusLookupQueryHandler : IRequestHandler<GetMaritalStatusLookupQuery, Result<List<IdAndNameDto>>>
 {
-    private readonly IMapper _mappper;
+    private readonly IMapper _mapper;
 
-    public GetMaritalStatusLookupQueryHandler(IMapper mappper)
+    public GetMaritalStatusLookupQueryHandler(IMapper mapper)
     {
-        _mappper = mappper;
+        _mapper = mapper;
     }
 
     public async Task<Result<List<IdAndNameDto>>> Handle(GetMaritalStatusLookupQuery request, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ internal class GetMaritalStatusLookupQueryHandler : IRequestHandler<GetMaritalSt
             .Cast<MaritalStatus>()
             .ToList();
 
-        var mapData = _mappper.Map<List<IdAndNameDto>>(statuses);
+        var mapData = _mapper.Map<List<IdAndNameDto>>(statuses);
 
         return Result<List<IdAndNameDto>>.Success(mapData, "Marital Statuses");
     }

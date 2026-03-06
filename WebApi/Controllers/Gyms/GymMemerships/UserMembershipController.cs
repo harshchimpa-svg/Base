@@ -1,9 +1,9 @@
-﻿using Application.Features.GymMemerships;
-using Application.Features.GymMemerships.Queries;
+﻿using Application.Features.GymMemberships;
+using Application.Features.GymMemberships.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.GymMemerships
+namespace WebApi.Controllers.GymMemberships
 {
     [Route("api/gym-memership")]
     [ApiController]

@@ -30,7 +30,7 @@ using Domain.Entities.SaleProducts;
 using Domain.Entities.Sales;
 using Domain.Entities.Transactions;
 using Domain.Entities.GymDocuments;
-using Domain.Entities.GymMemerships;
+using Domain.Entities.GymMemberships;
 using Domain.Entities.GymCategorys;
 using Domain.Entities.GymProducts;
 using Domain.Entities.ProductDocuments;
@@ -62,7 +62,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     public DbSet<Location> Locations { get; set; }
     public DbSet<Gym> Gyms { get; set; }
     public DbSet<DietType> DietType { get; set; }
-    public DbSet<GymTrainer> GimTraner { get; set; }
+    public DbSet<GymTrainer> GymTrainers { get; set; }
     public DbSet<Diet> Diet { get; set; }
     public DbSet<DietDocument> DietDocument { get; set; }
     public DbSet<Exercise> Exercise { get; set; }

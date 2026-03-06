@@ -10,12 +10,12 @@ namespace Application.Features.Vendors.Queries;
 public class GetAllVendorQuery: IRequest<Result<List<GetVendorDto>>>
 {
 }
-internal class GetAllVendorsQueryHandler : IRequestHandler<GetAllVendorQuery, Result<List<GetVendorDto>>>
+internal class GetAllVendorQueryHandler : IRequestHandler<GetAllVendorQuery, Result<List<GetVendorDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetAllVendorsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAllVendorQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

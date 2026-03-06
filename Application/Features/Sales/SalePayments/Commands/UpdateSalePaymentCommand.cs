@@ -11,9 +11,9 @@ public class UpdateSalePaymentCommand: IRequest<Result<SalePayment>>
 {
 
     public int Id { get; set; }
-    public CreateSalePaymentsCommand CreateCommand { get; set; } = new();
+    public CreateSalePaymentCommand CreateCommand { get; set; } = new();
 
-    public UpdateSalePaymentCommand(int id, CreateSalePaymentsCommand createCommand)
+    public UpdateSalePaymentCommand(int id, CreateSalePaymentCommand createCommand)
     {
         Id = id;
         CreateCommand = createCommand;

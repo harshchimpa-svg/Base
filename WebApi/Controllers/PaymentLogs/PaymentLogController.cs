@@ -1,11 +1,11 @@
 using Application.Features.Customers.Commands;
 using Application.Features.Customers.Queries;
-using Application.Features.PaymentLoges.Queries;
+using Application.Features.PaymentLogs.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.PaymentLoges
+namespace WebApi.Controllers.PaymentLogs
 {
     [Route("api/paymentlog")]
     [ApiController]

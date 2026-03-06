@@ -1,4 +1,4 @@
-using Application.Dto.Balences;
+using Application.Dto.Balances;
 using Application.Dto.Customers;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;

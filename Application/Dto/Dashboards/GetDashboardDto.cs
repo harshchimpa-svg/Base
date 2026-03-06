@@ -1,4 +1,4 @@
-﻿namespace Application.Dto.Dashboardes;
+﻿namespace Application.Dto.Dashboards;
 
 public class GetDashboardDto
 {

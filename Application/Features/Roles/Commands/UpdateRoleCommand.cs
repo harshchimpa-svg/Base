@@ -12,35 +12,35 @@ namespace Application.Features.Roles.Command
     public class UpdateRoleCommand : IRequest<Result<GetRoleDto>>
     {
         public Guid Id { get; set; }
-        public CreateRoleCommand roleCommand { get; set; }
+        public CreateRoleCommand RoleCommand { get; set; }
 
-        public UpdateRoleCommand(Guid id, CreateRoleCommand roleCommand)
+        public UpdateRoleCommand(Guid id, CreateRoleCommand RoleCommand)
         {
             Id = id;
-            this.roleCommand = roleCommand;
+            this.RoleCommand = RoleCommand;
         }
     }
     internal class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, Result<GetRoleDto>>
     {
         private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
-        private readonly IUserIdAndOrganizationIdRepository _OrganizationIdRepository;
+        private readonly IUserIdAndOrganizationIdRepository _organizationIdRepository;
         public UpdateRoleCommandHandler(RoleManager<Role> roleManager, IMapper mapper, IUserIdAndOrganizationIdRepository OrganizationIdRepository)
         {
             _roleManager = roleManager;
             _mapper = mapper;
-            _OrganizationIdRepository = OrganizationIdRepository;
+            _organizationIdRepository = OrganizationIdRepository;
         }
 
         public async Task<Result<GetRoleDto>> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
         {
-            var orgId = await _OrganizationIdRepository.Get();
+            var orgId = await _organizationIdRepository.Get();
             var roleId = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == request.Id.ToString() && x.OrganizationId == orgId.OrganizationId);
             if (roleId == null)
             { 
                 return Result<GetRoleDto>.BadRequest("Sorry role id not found");
             }
-            var mapRole = _mapper.Map(request.roleCommand, roleId);
+            var mapRole = _mapper.Map(request.RoleCommand, roleId);
             await _roleManager.UpdateAsync(mapRole);
             return Result<GetRoleDto>.Success("Update Role...");    
         }

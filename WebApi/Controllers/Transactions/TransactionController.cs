@@ -1,5 +1,5 @@
-using Application.Features.Balence.Command;
-using Application.Features.Balence.Queries;
+using Application.Features.Balance.Command;
+using Application.Features.Balance.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

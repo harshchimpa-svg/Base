@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Application.Dto.PaymentLoges;
+using Application.Dto.PaymentLogs;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Customers;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.PaymentLoges.Queries;
+namespace Application.Features.PaymentLogs.Queries;
 
 public class GetAllPaymentLogQuery : IRequest<PaginatedResult<GetPaymentLogDto>>
 {

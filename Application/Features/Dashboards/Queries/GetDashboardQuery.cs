@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Application.Dto.Dashboardes;
+using Application.Dto.Dashboards;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Common.Enums.TransactionTypes;
 using Domain.Entities.Transactions;

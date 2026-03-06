@@ -29,23 +29,23 @@ internal class GetAllGymDocumentQueryHandler : IRequestHandler<GetAllGymDocument
 
     public async Task<PaginatedResult<GetGymDocumentDto>> Handle(GetAllGymDocumentQuery request, CancellationToken cancellationToken)
     {
-        var  querable = _unitOfWork.Repository<GymDocument>().Entities.AsQueryable();
+        var  queryable = _unitOfWork.Repository<GymDocument>().Entities.AsQueryable();
 
         if (request.GymId.HasValue)
         {
-            querable = querable.Where(x => x.GymId == request.GymId);
+            queryable = queryable.Where(x => x.GymId == request.GymId);
         }
 
-        int count = await querable.CountAsync();
+        int count = await queryable.CountAsync();
 
         if (request.PageNumber != 0 && request.PageSize != 0)
         {
-            querable = querable
+            queryable = queryable
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize);
         }
 
-        var query = await querable.ToListAsync();
+        var query = await queryable.ToListAsync();
 
         var map = _mapper.Map<List<GetGymDocumentDto>>(query);
 

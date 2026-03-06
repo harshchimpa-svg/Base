@@ -3,13 +3,13 @@ using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.ApplicationUsers;
-using Domain.Entities.GymMemerships;
+using Domain.Entities.GymMemberships;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.GymMemerships;
+namespace Application.Features.GymMemberships;
 
 public class CreateUserMembershipCommand : IRequest<Result<string>>,ICreateMapFrom<UserMembership>
 {

@@ -8,7 +8,7 @@ using Shared;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.Features.Balence.Command;
+namespace Application.Features.Balance.Command;
 
 public class DeleteTransactionCommand : IRequest<Result<bool>>
 {

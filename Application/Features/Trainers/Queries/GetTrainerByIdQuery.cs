@@ -32,12 +32,12 @@ internal class GetTrannerByIdQueryHandler : IRequestHandler<GetTrainerByIdQuery,
 
     public async Task<Result<GetUserDto>> Handle(GetTrainerByIdQuery request, CancellationToken cancellationToken)
     {
-        var tranner = await _unitOfWork.Repository<User>().GetByID(request.Id);
+        var trainer = await _unitOfWork.Repository<User>().GetByID(request.Id);
 
-        if (tranner == null)
+        if (trainer == null)
             return Result<GetUserDto>.BadRequest("Tranner not found");
 
-        var map = _mapper.Map<GetUserDto>(tranner);
+        var map = _mapper.Map<GetUserDto>(trainer);
 
         return Result<GetUserDto>.Success(map, "Tranner detail");
     }

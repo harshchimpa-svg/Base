@@ -16,11 +16,11 @@ public class DeleteGymTrainerCommand: IRequest<Result<bool>>
         Id = id;
     }
 }
-internal class DeleteGymTranerCommandHandler : IRequestHandler<DeleteGymTrainerCommand, Result<bool>>
+internal class DeleteGymTrainerCommandHandler : IRequestHandler<DeleteGymTrainerCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteGymTranerCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteGymTrainerCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

@@ -16,11 +16,11 @@ public class DeleteShopSettingCommand: IRequest<Result<bool>>
         Id = id;
     }
 }
-internal class DeleteshopSettingCommandHandler : IRequestHandler<DeleteShopSettingCommand, Result<bool>>
+internal class DeleteShopSettingCommandHandler : IRequestHandler<DeleteShopSettingCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteshopSettingCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteShopSettingCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

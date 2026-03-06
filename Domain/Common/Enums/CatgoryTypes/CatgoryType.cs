@@ -2,6 +2,6 @@
 
 public enum CategoryType
 {
-    Expence = 1,
+    Expense = 1,
     Salary = 2
 }

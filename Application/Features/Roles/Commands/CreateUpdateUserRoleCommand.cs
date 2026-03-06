@@ -18,12 +18,12 @@ public class CreateUpdateUserRoleCommand : IRequest<Result<string>>
     public string UserId { get; set; }
     public List<string> Roles { get; set; } = new List<string>();
 }
-internal class CreateUserRoleCommandHandler : IRequestHandler<CreateUpdateUserRoleCommand, Result<string>>
+internal class CreateUpdateUserRoleCommandHandler : IRequestHandler<CreateUpdateUserRoleCommand, Result<string>>
 {
     private readonly IUserRoleRepository _repository;
     private readonly UserManager<User> _userManager;
 
-    public CreateUserRoleCommandHandler(IUserRoleRepository repository, UserManager<User> userManager)
+    public CreateUpdateUserRoleCommandHandler(IUserRoleRepository repository, UserManager<User> userManager)
     {
         _repository = repository;
         _userManager = userManager;

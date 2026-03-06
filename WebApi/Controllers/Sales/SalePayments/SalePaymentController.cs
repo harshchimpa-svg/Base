@@ -22,7 +22,7 @@ namespace WebApi.Controllers.SalePayments
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> Create(CreateSalePaymentsCommand command)
+        public async Task<ActionResult> Create(CreateSalePaymentCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
@@ -30,7 +30,7 @@ namespace WebApi.Controllers.SalePayments
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CreateSalePaymentsCommand command)
+        public async Task<IActionResult> Update(int id, CreateSalePaymentCommand command)
         {
             var result = await _mediator.Send(new UpdateSalePaymentCommand(id, command));
             return ResponseHelper.GenerateResponse(result);

@@ -16,12 +16,12 @@ public class GetVendorByIdQuery: IRequest<Result<GetVendorDto>>
         Id = id;
     }
 }
-internal class GetVendorsByIdQueryHandler : IRequestHandler<GetVendorByIdQuery, Result<GetVendorDto>>
+internal class GetVendorByIdQueryHandler : IRequestHandler<GetVendorByIdQuery, Result<GetVendorDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetVendorsByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetVendorByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

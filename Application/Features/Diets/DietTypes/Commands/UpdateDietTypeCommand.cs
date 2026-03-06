@@ -7,19 +7,19 @@ using Shared;
 
 namespace Application.Features.DietTypes.Command;
 
-public class UpdateDietTypeCommands: IRequest<Result<DietType>>
+public class UpdateDietTypeCommand: IRequest<Result<DietType>>
 {
 
     public int Id { get; set; }
     public CreateDietTypeCommand CreateCommand { get; set; } = new();
 
-    public UpdateDietTypeCommands(int id, CreateDietTypeCommand createCommand)
+    public UpdateDietTypeCommand(int id, CreateDietTypeCommand createCommand)
     {
         Id = id;
         CreateCommand = createCommand;
     }
 }
-internal class UpdateDietTypeCommandsHandler : IRequestHandler<UpdateDietTypeCommands, Result<DietType>>
+internal class UpdateDietTypeCommandsHandler : IRequestHandler<UpdateDietTypeCommand, Result<DietType>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -30,7 +30,7 @@ internal class UpdateDietTypeCommandsHandler : IRequestHandler<UpdateDietTypeCom
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<DietType>> Handle(UpdateDietTypeCommands request, CancellationToken cancellationToken)
+    public async Task<Result<DietType>> Handle(UpdateDietTypeCommand request, CancellationToken cancellationToken)
     {
         var dietTypes = await _unitOfWork.Repository<DietType>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 

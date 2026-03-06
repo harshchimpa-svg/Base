@@ -1,4 +1,4 @@
-using Application.Dto.Balences;
+using Application.Dto.Balances;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Transactions;
@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared;
 using System.Security.Claims;
 
-namespace Application.Features.Balence.Queries;
+namespace Application.Features.Balance.Queries;
 
 public class GetRecentActivityQuery : IRequest<Result<List<GetTransactionDto>>>
 {

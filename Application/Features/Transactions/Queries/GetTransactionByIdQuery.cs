@@ -1,11 +1,11 @@
-using Application.Dto.Balences;
+using Application.Dto.Balances;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Transactions;
 using MediatR;
 using Shared;
 
-namespace Application.Features.Balence.Queries;
+namespace Application.Features.Balance.Queries;
 
 public class GetTransactionByIdQuery: IRequest<Result<GetTransactionDto>>
 {
@@ -16,12 +16,12 @@ public class GetTransactionByIdQuery: IRequest<Result<GetTransactionDto>>
         Id = id;
     }
 }
-internal class GetBalenceByIdQueryHandler : IRequestHandler<GetTransactionByIdQuery, Result<GetTransactionDto>>
+internal class GetBalanceByIdQueryHandler : IRequestHandler<GetTransactionByIdQuery, Result<GetTransactionDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetBalenceByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetBalanceByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

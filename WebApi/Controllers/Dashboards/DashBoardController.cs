@@ -7,11 +7,11 @@ namespace WebApi.Controllers.Dashboards
 {
     [Route("api/dash-board")]
     [ApiController]
-    public class DashBoardController : ControllerBase
+    public class DashboardController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public DashBoardController(IMediator mediator)
+        public DashboardController(IMediator mediator)
         {
             _mediator = mediator;
         }

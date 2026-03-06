@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Balence.Command;
+namespace Application.Features.Balance.Command;
 
 public class CreateTransactionCommand : IRequest<Result<string>>, ICreateMapFrom<Transaction>
 {
@@ -63,7 +63,7 @@ internal class CreateTransactionCommandHandler : IRequestHandler<CreateTransacti
 
         await _unitOfWork.Repository<Customer>().UpdateAsync(customer);
 
-        var paymentLoge = new PaymentLog
+        var paymentLog = new PaymentLog
         {
             UserId = userId, 
             CustomerId = customer.Id,
@@ -74,7 +74,7 @@ internal class CreateTransactionCommandHandler : IRequestHandler<CreateTransacti
             CreatedDate = DateTime.UtcNow
         };
 
-        await _unitOfWork.Repository<PaymentLog>().AddAsync(paymentLoge);
+        await _unitOfWork.Repository<PaymentLog>().AddAsync(paymentLog);
 
         await _unitOfWork.Save(cancellationToken);
 

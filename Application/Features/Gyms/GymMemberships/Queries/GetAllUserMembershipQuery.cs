@@ -1,12 +1,12 @@
 ﻿
-using Application.Dto.GymMemerships;
+using Application.Dto.GymMemberships;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.GymMemerships;
+using Domain.Entities.GymMemberships;
 using MediatR;
 using Shared;
 
-namespace Application.Features.GymMemerships.Queries;
+namespace Application.Features.GymMemberships.Queries;
 
 public class GetAllUserMembershipQuery : IRequest<Result<List<GetUserMembershipDto>>>
 {

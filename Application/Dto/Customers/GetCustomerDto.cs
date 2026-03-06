@@ -1,5 +1,5 @@
 using Application.Common.Mappings.Commons;
-using Application.Dto.Balences;
+using Application.Dto.Balances;
 using Application.Dto.CommonDtos;
 using Domain.Entities.Contacts;
 using Domain.Entities.Customers;

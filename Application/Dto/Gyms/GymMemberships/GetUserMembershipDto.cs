@@ -2,9 +2,9 @@
 
 using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
-using Domain.Entities.GymMemerships;
+using Domain.Entities.GymMemberships;
 
-namespace Application.Dto.GymMemerships;
+namespace Application.Dto.GymMemberships;
 
 public class GetUserMembershipDto :BaseDto,IMapFrom<UserMembership>
 {

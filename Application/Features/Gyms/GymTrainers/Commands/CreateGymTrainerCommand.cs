@@ -15,12 +15,12 @@ public class CreateGymTrainerCommand: IRequest<Result<string>>, ICreateMapFrom<G
 
 }
 
-internal class CreateGymTranerCommandHandler : IRequestHandler<CreateGymTrainerCommand, Result<string>>
+internal class CreateGymTrainerCommandHandler : IRequestHandler<CreateGymTrainerCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     
-    public CreateGymTranerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateGymTrainerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -28,9 +28,9 @@ internal class CreateGymTranerCommandHandler : IRequestHandler<CreateGymTrainerC
 
     public async Task<Result<string>> Handle(CreateGymTrainerCommand request, CancellationToken cancellationToken)
     {
-        var gemTraner = _mapper.Map<GymTrainer>(request);
+        var gymTrainer = _mapper.Map<GymTrainer>(request);
 
-        await _unitOfWork.Repository<GymTrainer>().AddAsync(gemTraner);
+        await _unitOfWork.Repository<GymTrainer>().AddAsync(gymTrainer);
         await _unitOfWork.Save(cancellationToken);
         
         return Result<string>.Success("GymTrainer created successfully.");

@@ -4,7 +4,7 @@ using Application.Dto.Customers;
 using Domain.Common.Enums.TransactionTypes;
 using Domain.Entities.Transactions;
 
-namespace Application.Dto.Balences;
+namespace Application.Dto.Balances;
 
 public class GetTransactionDto: BaseDto, IMapFrom<Transaction>
 {

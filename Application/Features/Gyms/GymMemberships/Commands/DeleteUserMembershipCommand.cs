@@ -1,12 +1,12 @@
 ﻿
 
 using Application.Interfaces.UnitOfWorkRepositories;
-using Domain.Entities.GymMemerships;
+using Domain.Entities.GymMemberships;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.GymMemerships;
+namespace Application.Features.GymMemberships;
 
 public class DeleteUserMembershipCommand : IRequest<Result<bool>>
 {

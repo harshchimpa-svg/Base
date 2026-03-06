@@ -1,12 +1,12 @@
 using Application.Common.Mappings.Commons;
-using Application.Dto.Balences;
+using Application.Dto.Balances;
 using Application.Dto.CommonDtos;
 using Application.Dto.Customers;
 using Domain.Common.Enums.TransactionTypes;
 using Domain.Entities.PaymentLogs;
 using Domain.Entities.Sales;
 
-namespace Application.Dto.PaymentLoges;
+namespace Application.Dto.PaymentLogs;
 
 public class GetPaymentLogDto: BaseDto, IMapFrom<PaymentLog>
 {

@@ -10,7 +10,7 @@ using Shared;
 
 namespace Application.Features.SalePayments.Command;
 
-public class CreateSalePaymentsCommand: IRequest<Result<string>>, ICreateMapFrom<SalePayment>
+public class CreateSalePaymentCommand: IRequest<Result<string>>, ICreateMapFrom<SalePayment>
 {
     public int SaleId { get; set; }
     public MethodType MethodType { get; set; }
@@ -19,7 +19,7 @@ public class CreateSalePaymentsCommand: IRequest<Result<string>>, ICreateMapFrom
     public StatusType StatusType  { get; set; }
 }
 
-internal class CreateSalePaymentsCommandHandler : IRequestHandler<CreateSalePaymentsCommand, Result<string>>
+internal class CreateSalePaymentsCommandHandler : IRequestHandler<CreateSalePaymentCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -30,7 +30,7 @@ internal class CreateSalePaymentsCommandHandler : IRequestHandler<CreateSalePaym
         _mapper = mapper;
     }
 
-    public async Task<Result<string>> Handle(CreateSalePaymentsCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateSalePaymentCommand request, CancellationToken cancellationToken)
     {
             var parentExists = await _unitOfWork.Repository<Sale>().GetByID(request.SaleId);
             if (parentExists == null)

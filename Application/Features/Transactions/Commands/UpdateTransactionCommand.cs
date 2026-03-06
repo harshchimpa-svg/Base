@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Balence.Command;
+namespace Application.Features.Balance.Command;
 
 public class UpdateTransactionCommand : IRequest<Result<Transaction>>
 {

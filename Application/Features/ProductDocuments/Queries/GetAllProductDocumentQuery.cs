@@ -33,23 +33,23 @@ internal class GetAllProductDocumentQueryHandler : IRequestHandler<GetAllProduct
 
     public async Task<PaginatedResult<GetProductDocumentDto>> Handle(GetAllProductDocumentQuery request, CancellationToken cancellationToken)
     {
-        var querable = _unitOfWork.Repository<ProductDocument>().Entities.AsQueryable();
+        var queryable = _unitOfWork.Repository<ProductDocument>().Entities.AsQueryable();
 
         if (request.GymProductId.HasValue)
         {
-            querable = querable.Where(x => x.GymProductId == request.GymProductId);
+            queryable = queryable.Where(x => x.GymProductId == request.GymProductId);
         }
 
-        int count = await querable.CountAsync();
+        int count = await queryable.CountAsync();
 
         if (request.PageNumber != 0 && request.PageSize != 0)
         {
-            querable = querable
+            queryable = queryable
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize);
         }
 
-        var query = await querable.ToListAsync();
+        var query = await queryable.ToListAsync();
 
         var map = _mapper.Map<List<GetProductDocumentDto>>(query);
 

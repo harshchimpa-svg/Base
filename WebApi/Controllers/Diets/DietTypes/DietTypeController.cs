@@ -28,7 +28,7 @@ namespace WebApi.Controllers.DietTypes
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CreateDietTypeCommand command)
         {
-            var result = await _mediator.Send(new UpdateDietTypeCommands(id, command));
+            var result = await _mediator.Send(new UpdateDietTypeCommand(id, command));
             return ResponseHelper.GenerateResponse(result);
         }
 
@@ -52,7 +52,7 @@ namespace WebApi.Controllers.DietTypes
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteType(int id)
         {
-            var result = await _mediator.Send(new DeleteDietTypeCommands(id));
+            var result = await _mediator.Send(new DeleteDietTypeCommand(id));
             return ResponseHelper.GenerateResponse(result);
         }
     }

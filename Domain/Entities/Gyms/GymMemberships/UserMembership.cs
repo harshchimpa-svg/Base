@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 using Domain.Entities.ApplicationUsers;
 
-namespace Domain.Entities.GymMemerships;
+namespace Domain.Entities.GymMemberships;
 
 public class UserMembership : BaseAuditableEntity
 {

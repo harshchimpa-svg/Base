@@ -6,15 +6,15 @@ using Shared;
 
 namespace Application.Features.DietTypes.Command;
 
-public class DeleteDietTypeCommands: IRequest<Result<bool>>
+public class DeleteDietTypeCommand: IRequest<Result<bool>>
 {
     public int Id { get; set; }
-    public DeleteDietTypeCommands(int id)
+    public DeleteDietTypeCommand(int id)
     {
         Id = id;
     }
 }
-internal class DeleteDietTypeCommandsHandler : IRequestHandler<DeleteDietTypeCommands, Result<bool>>
+internal class DeleteDietTypeCommandsHandler : IRequestHandler<DeleteDietTypeCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -23,7 +23,7 @@ internal class DeleteDietTypeCommandsHandler : IRequestHandler<DeleteDietTypeCom
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<bool>> Handle(DeleteDietTypeCommands request, CancellationToken cancellationToken) 
+    public async Task<Result<bool>> Handle(DeleteDietTypeCommand request, CancellationToken cancellationToken) 
     {
         var dietTypesExists = await _unitOfWork.Repository<DietType>().Entities
             .AnyAsync(x => x.Id == request.Id);
