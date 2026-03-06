@@ -9,7 +9,7 @@ namespace Application.Features.Services.Command;
 
 public class CreateServiceCommand: IRequest<Result<string>>, ICreateMapFrom<Service>
 {
-    public int? CatgoryId { get; set; }
+    public int? CategoryId { get; set; }
     public string Name { get; set; }
     public string SerialNo { get; set; }
     public int? VendorId { get; set; }

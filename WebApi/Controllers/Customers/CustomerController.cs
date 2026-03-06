@@ -27,7 +27,7 @@ namespace WebApi.Controllers.Customers
         }
 
         [HttpPost("reminder")]
-        public async Task<ActionResult> CreateReminder(ReminderCustomer command)
+        public async Task<ActionResult> CreateReminder(ReminderCustomerCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);

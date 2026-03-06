@@ -47,7 +47,7 @@ public class CreateTrainerCommand : IRequest<Result<string>>
     public string Password { get; set; }
 }
 
-internal class CreateTranerCommandHandler : IRequestHandler<CreateTrainerCommand, Result<string>>
+internal class CreateTrainerCommandHandler : IRequestHandler<CreateTrainerCommand, Result<string>>
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -56,7 +56,7 @@ internal class CreateTranerCommandHandler : IRequestHandler<CreateTrainerCommand
     private readonly IEmailService _emailService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateTranerCommandHandler(
+    public CreateTrainerCommandHandler(
         UserManager<User> userManager,
         IMapper mapper,
         IUserIdAndOrganizationIdRepository userIdAndOrganizationIdRepository,

@@ -24,7 +24,7 @@ using Service = Domain.Entities.Services.Service;
 using Vendor = Domain.Entities.Vendors.Vendor;
 using Domain.Entities.Locations;
 using Domain.Entities.Gyms;
-using Domain.Entities.GymTraners;
+using Domain.Entities.GymTrainers;
 using Domain.Entities.SalePayments;
 using Domain.Entities.SaleProducts;
 using Domain.Entities.Sales;
@@ -36,7 +36,7 @@ using Domain.Entities.GymProducts;
 using Domain.Entities.ProductDocuments;
 using Domain.Entities.GymCartItem;
 using Domain.Entities.PaymentLogs;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 
 namespace Persistence.DataContext;
 

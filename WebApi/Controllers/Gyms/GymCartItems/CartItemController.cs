@@ -1,9 +1,7 @@
-﻿using Application.Features.GymCartsItems.Command;
+﻿using Application.Features.GymCartItems.Queries;
+using Application.Features.GymCartsItems.Command;
 using Application.Features.GymCartsItems.Queries;
-using Application.Features.Gyms.Command;
-using Application.Features.Gyms.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymCartItems

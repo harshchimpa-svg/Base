@@ -1,12 +1,12 @@
 using Application.Features.Services.Command;
 using Application.Features.Services.Queries;
-using Application.Features.ShopeSettings.Command;
-using Application.Features.ShopeSettings.Queries;
+using Application.Features.ShopSettings.Command;
+using Application.Features.ShopSettings.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.ShopeSettings
+namespace WebApi.Controllers.ShopSettings
 
 {
     [Route("api/shope-setting")]

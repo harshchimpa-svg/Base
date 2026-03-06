@@ -1,5 +1,5 @@
-using Application.Features.GymTraners.Command;
-using Application.Features.GymTraners.Queries;
+using Application.Features.GymTrainers.Command;
+using Application.Features.GymTrainers.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

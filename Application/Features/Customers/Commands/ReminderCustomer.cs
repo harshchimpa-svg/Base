@@ -9,17 +9,17 @@ using System.Security.Claims;
 
 namespace Application.Features.Customers.Commands;
 
-public class ReminderCustomer : IRequest<Result<string>>
+public class ReminderCustomerCommand : IRequest<Result<string>>
 {
 }
 
-internal class ReminderCustomerHandler : IRequestHandler<ReminderCustomer, Result<string>>
+internal class ReminderCustomerCommandHandler : IRequestHandler<ReminderCustomerCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEmailService _emailService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ReminderCustomerHandler(
+    public ReminderCustomerCommandHandler(
         IUnitOfWork unitOfWork,
         IEmailService emailService,
         IHttpContextAccessor httpContextAccessor)
@@ -29,7 +29,7 @@ internal class ReminderCustomerHandler : IRequestHandler<ReminderCustomer, Resul
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Result<string>> Handle(ReminderCustomer request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(ReminderCustomerCommand request, CancellationToken cancellationToken)
     {
         var httpContext = _httpContextAccessor.HttpContext;
 

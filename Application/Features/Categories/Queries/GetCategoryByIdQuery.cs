@@ -34,11 +34,11 @@ internal class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuer
 
         if (category == null)
         {
-            return Result<GetCategoryDto>.BadRequest("Catgory not found.");
+            return Result<GetCategoryDto>.BadRequest("Category not found.");
         }
 
         var mapData = _mapper.Map<GetCategoryDto>(category);
 
-        return Result<GetCategoryDto>.Success(mapData, "Catgory");
+        return Result<GetCategoryDto>.Success(mapData, "Category");
     }
 }

@@ -1,14 +1,14 @@
 using Application.Dto.Customers;
-using Application.Dto.GymTraners;
+using Application.Dto.GymTrainers;
 using Application.Features.Customers.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Customers;
-using Domain.Entities.GymTraners;
+using Domain.Entities.GymTrainers;
 using MediatR;
 using Shared;
 
-namespace Application.Features.GymTraners.Queries;
+namespace Application.Features.GymTrainers.Queries;
 
 public class GetAllGymTrainerQuery: IRequest<Result<List<GetGymTrainerDto>>>
 {

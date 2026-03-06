@@ -1,12 +1,12 @@
 using Application.Features.Services.Command;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Entities.Services;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.ShopeSettings.Command;
+namespace Application.Features.ShopSettings.Command;
 
 public class DeleteShopSettingCommand: IRequest<Result<bool>>
 {
@@ -16,11 +16,11 @@ public class DeleteShopSettingCommand: IRequest<Result<bool>>
         Id = id;
     }
 }
-internal class DeleteShopeSettingCommandHandler : IRequestHandler<DeleteShopSettingCommand, Result<bool>>
+internal class DeleteshopSettingCommandHandler : IRequestHandler<DeleteShopSettingCommand, Result<bool>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteShopeSettingCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteshopSettingCommandHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

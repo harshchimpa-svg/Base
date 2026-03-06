@@ -10,22 +10,22 @@ using Shared;
 
 namespace Application.Features.Dashboards.Queries;
 
-public class GetAllDashBoardQuery : IRequest<Result<GetDashboardDto>>
+public class GetAllDashboardQuery : IRequest<Result<GetDashboardDto>>
 {
 }
 
-internal class GetAllDashBoardQueryHandler : IRequestHandler<GetAllDashBoardQuery, Result<GetDashboardDto>>
+internal class GetAllDashboardQueryHandler : IRequestHandler<GetAllDashboardQuery, Result<GetDashboardDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllDashBoardQueryHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+    public GetAllDashboardQueryHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
     {
         _unitOfWork = unitOfWork;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Result<GetDashboardDto>> Handle(GetAllDashBoardQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetDashboardDto>> Handle(GetAllDashboardQuery request, CancellationToken cancellationToken)
     {
         var userId = _httpContextAccessor.HttpContext?.User
             ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;

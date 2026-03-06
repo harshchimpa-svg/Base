@@ -13,14 +13,14 @@ using Shared;
 
 namespace Application.Features.ProductDocuments.Queries;
 
-public class GetAllProductDocumentQuery : IRequest<PaginatedResult<GetProductDocument>>
+public class GetAllProductDocumentQuery : IRequest<PaginatedResult<GetProductDocumentDto>>
 {
     public int? GymProductId { get; set; }
     public int PageNumber { get; set; }
 
     public int PageSize { get; set; }
 }
-internal class GetAllProductDocumentQueryHandler : IRequestHandler<GetAllProductDocumentQuery, PaginatedResult<GetProductDocument>>
+internal class GetAllProductDocumentQueryHandler : IRequestHandler<GetAllProductDocumentQuery, PaginatedResult<GetProductDocumentDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -31,7 +31,7 @@ internal class GetAllProductDocumentQueryHandler : IRequestHandler<GetAllProduct
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<PaginatedResult<GetProductDocument>> Handle(GetAllProductDocumentQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetProductDocumentDto>> Handle(GetAllProductDocumentQuery request, CancellationToken cancellationToken)
     {
         var querable = _unitOfWork.Repository<ProductDocument>().Entities.AsQueryable();
 
@@ -51,8 +51,8 @@ internal class GetAllProductDocumentQueryHandler : IRequestHandler<GetAllProduct
 
         var query = await querable.ToListAsync();
 
-        var map = _mapper.Map<List<GetProductDocument>>(query);
+        var map = _mapper.Map<List<GetProductDocumentDto>>(query);
 
-        return PaginatedResult<GetProductDocument>.Create(map, count, request.PageNumber, request.PageSize);
+        return PaginatedResult<GetProductDocumentDto>.Create(map, count, request.PageNumber, request.PageSize);
     }
 }

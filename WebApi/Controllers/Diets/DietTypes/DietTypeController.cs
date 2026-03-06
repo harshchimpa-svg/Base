@@ -18,7 +18,7 @@ namespace WebApi.Controllers.DietTypes
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPost]
-        public async Task<ActionResult> Create(CreateDietTypeCommands command)
+        public async Task<ActionResult> Create(CreateDietTypeCommand command)
         {
             var result = await _mediator.Send(command);
             return ResponseHelper.GenerateResponse(result);
@@ -26,7 +26,7 @@ namespace WebApi.Controllers.DietTypes
 
         // [Authorize(Roles =  "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CreateDietTypeCommands command)
+        public async Task<IActionResult> Update(int id, CreateDietTypeCommand command)
         {
             var result = await _mediator.Send(new UpdateDietTypeCommands(id, command));
             return ResponseHelper.GenerateResponse(result);

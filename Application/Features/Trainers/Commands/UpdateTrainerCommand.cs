@@ -43,14 +43,14 @@ public class UpdateTrainerCommand : IRequest<Result<string>>
     public int? PinCode { get; set; }
 }
 
-internal class UpdateTranerCommandHandler : IRequestHandler<UpdateTrainerCommand, Result<string>>
+internal class UpdateTrainerCommandHandler : IRequestHandler<UpdateTrainerCommand, Result<string>>
 {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private readonly IOrganizationRepository _organizationRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateTranerCommandHandler(UserManager<User> userManager, IMapper mapper, IOrganizationRepository organizationRepository, IUnitOfWork unitOfWork)
+    public UpdateTrainerCommandHandler(UserManager<User> userManager, IMapper mapper, IOrganizationRepository organizationRepository, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _mapper = mapper;

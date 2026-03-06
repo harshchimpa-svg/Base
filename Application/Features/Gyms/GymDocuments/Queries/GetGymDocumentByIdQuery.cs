@@ -39,8 +39,8 @@ internal class GetGymDocumentByIdQueryHandler : IRequestHandler<GetGymDocumentBy
             return Result<GetGymDocumentDto>.BadRequest("GymDocuments not found");
         }
 
-        var mapdata = _mapper.Map<GetGymDocumentDto>(gymDocuments);
+        var mapData = _mapper.Map<GetGymDocumentDto>(gymDocuments);                            
 
-        return Result<GetGymDocumentDto>.Success(mapdata, "GymDocument");
+        return Result<GetGymDocumentDto>.Success(mapData, "GymDocument");
     }
 }

@@ -34,7 +34,7 @@ public class TrannerController : ControllerBase
 
     // [Authorize(Roles =  "Admin,Employee")]
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllTrnerQuery query)
+    public async Task<IActionResult> GetAll([FromQuery] GetAllTrainerQuery query)
     {
         var result = await _mediator.Send(query);
         return ResponseHelper.GenerateResponse(result);

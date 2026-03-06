@@ -1,5 +1,5 @@
     using Application.Dto.Customers;
-    using Application.Dto.GymTraners;
+    using Application.Dto.GymTrainers;
     using Application.Features.Customers.Queries;
     using Application.Interfaces.UnitOfWorkRepositories;
     using AutoMapper;
@@ -7,7 +7,7 @@
     using MediatR;
     using Shared;
 
-    namespace Application.Features.GymTraners.Queries;
+    namespace Application.Features.GymTrainers.Queries;
 
     public class GetGymTrainerByIdQuery: IRequest<Result<GetGymTrainerDto>>
     {
@@ -35,11 +35,11 @@
 
             if (gymTraners == null)
             {
-                return Result<GetGymTrainerDto>.BadRequest("GymTraners not found.");
+                return Result<GetGymTrainerDto>.BadRequest("GymTrainers not found.");
             }
 
             var mapData = _mapper.Map<GetGymTrainerDto>(gymTraners);
 
-            return Result<GetGymTrainerDto>.Success(mapData, "GymTraners");
+            return Result<GetGymTrainerDto>.Success(mapData, "GymTrainers");
         }
     }

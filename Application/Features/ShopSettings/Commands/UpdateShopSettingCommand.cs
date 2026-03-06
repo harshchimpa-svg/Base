@@ -1,13 +1,13 @@
 using System.Security.Claims;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.ShopeSettings.Command;
+namespace Application.Features.ShopSettings.Command;
 
 public class UpdateShopSettingCommand: IRequest<Result<ShopSetting>>
 {
@@ -21,13 +21,13 @@ public class UpdateShopSettingCommand: IRequest<Result<ShopSetting>>
     }
 }
 
-internal class UpdateShopeSettingCommandHandler : IRequestHandler<UpdateShopSettingCommand, Result<ShopSetting>>
+internal class UpdateshopSettingCommandHandler : IRequestHandler<UpdateShopSettingCommand, Result<ShopSetting>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UpdateShopeSettingCommandHandler(
+    public UpdateshopSettingCommandHandler(
         IMapper mapper, 
         IUnitOfWork unitOfWork,
         IHttpContextAccessor httpContextAccessor)

@@ -1,9 +1,9 @@
 using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
 using Domain.Entities.Services;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 
-namespace Application.Dto.ShopeSettings;
+namespace Application.Dto.ShopSettings;
 
 public class GetShopSettingDto: BaseDto, IMapFrom<ShopSetting>
 {

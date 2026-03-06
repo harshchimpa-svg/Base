@@ -2,11 +2,11 @@ using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Gyms;
-using Domain.Entities.GymTraners;
+using Domain.Entities.GymTrainers;
 using MediatR;
 using Shared;
 
-namespace Application.Features.GymTraners.Command;
+namespace Application.Features.GymTrainers.Command;
 
 public class CreateGymTrainerCommand: IRequest<Result<string>>, ICreateMapFrom<GymTrainer>
 {

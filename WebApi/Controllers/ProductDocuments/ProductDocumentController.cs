@@ -42,7 +42,7 @@ namespace WebApi.Controllers.GymProductDocuments
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetProductDocumentByIdQuery(id));
+            var result = await _mediator.Send(new GetProductDocumentDtoByIdQuery(id));
             return ResponseHelper.GenerateResponse(result);
         }
         [HttpDelete("{id}")]

@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.DashBoardes
+namespace WebApi.Controllers.Dashboards
 {
     [Route("api/dash-board")]
     [ApiController]
@@ -20,7 +20,7 @@ namespace WebApi.Controllers.DashBoardes
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var result = await _mediator.Send(new GetAllDashBoardQuery());
+            var result = await _mediator.Send(new GetAllDashboardQuery());
             return ResponseHelper.GenerateResponse(result);
         }
     }

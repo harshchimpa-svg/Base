@@ -11,20 +11,20 @@ public class UpdateDietTypeCommands: IRequest<Result<DietType>>
 {
 
     public int Id { get; set; }
-    public CreateDietTypeCommands CreateCommand { get; set; } = new();
+    public CreateDietTypeCommand CreateCommand { get; set; } = new();
 
-    public UpdateDietTypeCommands(int id, CreateDietTypeCommands createCommand)
+    public UpdateDietTypeCommands(int id, CreateDietTypeCommand createCommand)
     {
         Id = id;
         CreateCommand = createCommand;
     }
 }
-internal class UpdateDietTypesCommandsHandler : IRequestHandler<UpdateDietTypeCommands, Result<DietType>>
+internal class UpdateDietTypeCommandsHandler : IRequestHandler<UpdateDietTypeCommands, Result<DietType>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateDietTypesCommandsHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateDietTypeCommandsHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

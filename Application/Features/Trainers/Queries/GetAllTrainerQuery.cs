@@ -13,7 +13,7 @@ using Shared;
 
 namespace Application.Features.Tranners.Queries;
 
-public class GetAllTrnerQuery : IRequest<PaginatedResult<GetUserDto>>
+public class GetAllTrainerQuery : IRequest<PaginatedResult<GetUserDto>>
 {
     public string? Email { get; set; }
     public string? MobileNumber { get; set; }
@@ -22,13 +22,13 @@ public class GetAllTrnerQuery : IRequest<PaginatedResult<GetUserDto>>
     public int PageSize { get; set; } = 10;
 }
 
-internal class GetAllTrnerQueryHandler : IRequestHandler<GetAllTrnerQuery, PaginatedResult<GetUserDto>>
+internal class GetAllTrainerQueryHandler : IRequestHandler<GetAllTrainerQuery, PaginatedResult<GetUserDto>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllTrnerQueryHandler(
+    public GetAllTrainerQueryHandler(
         IMapper mapper,
         UserManager<User> userManager,
         IHttpContextAccessor httpContextAccessor)
@@ -38,7 +38,7 @@ internal class GetAllTrnerQueryHandler : IRequestHandler<GetAllTrnerQuery, Pagin
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<PaginatedResult<GetUserDto>> Handle(GetAllTrnerQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<GetUserDto>> Handle(GetAllTrainerQuery request, CancellationToken cancellationToken)
     {
         var currentUserId = _httpContextAccessor.HttpContext?
             .User?

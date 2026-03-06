@@ -2,12 +2,12 @@ using System.Security.Claims;
 using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared;
 
-namespace Application.Features.ShopeSettings.Command;
+namespace Application.Features.ShopSettings.Command;
 
 public class CreateShopSettingCommand: IRequest<Result<string>>, ICreateMapFrom<ShopSetting>
 {
@@ -19,13 +19,13 @@ public class CreateShopSettingCommand: IRequest<Result<string>>, ICreateMapFrom<
     public int? EmployeeId { get; set; }
 }
 
-internal class CreateShopeSettingCommandHandler : IRequestHandler<CreateShopSettingCommand, Result<string>>
+internal class CreateshopSettingCommandHandler : IRequestHandler<CreateShopSettingCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IHttpContextAccessor _httpContextAccessor;   
 
-    public CreateShopeSettingCommandHandler(
+    public CreateshopSettingCommandHandler(
         IUnitOfWork unitOfWork, 
         IMapper mapper,
         IHttpContextAccessor httpContextAccessor)   
@@ -43,11 +43,11 @@ internal class CreateShopeSettingCommandHandler : IRequestHandler<CreateShopSett
         if (string.IsNullOrWhiteSpace(userId))
             return Result<string>.BadRequest("ShopSetting not authenticated");
 
-        var ShopeSetting = _mapper.Map<ShopSetting>(request);
+        var shopSetting = _mapper.Map<ShopSetting>(request);
 
-        ShopeSetting.UserId = userId;  
+        shopSetting.UserId = userId;  
 
-        await _unitOfWork.Repository<ShopSetting>().AddAsync(ShopeSetting);
+        await _unitOfWork.Repository<ShopSetting>().AddAsync(shopSetting);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("ShopSetting created successfully.");

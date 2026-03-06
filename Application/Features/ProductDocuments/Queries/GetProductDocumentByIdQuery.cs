@@ -7,38 +7,38 @@ using Shared;
 
 namespace Application.Features.ProductDocuments.Queries;
 
-public class GetProductDocumentByIdQuery : IRequest<Result<GetProductDocument>>
+public class GetProductDocumentDtoByIdQuery : IRequest<Result<GetProductDocumentDto>>
 {
     public int Id { get; set; }
 
-    public GetProductDocumentByIdQuery(int id)
+    public GetProductDocumentDtoByIdQuery(int id)
     {
         Id = id;
     }
 }
-internal class GetProductDocumentByIdQueryHandler : IRequestHandler<GetProductDocumentByIdQuery, Result<GetProductDocument>>
+internal class GetProductDocumentDtoByIdQueryHandler : IRequestHandler<GetProductDocumentDtoByIdQuery, Result<GetProductDocumentDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
 
-    public GetProductDocumentByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetProductDocumentDtoByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<GetProductDocument>> Handle(GetProductDocumentByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetProductDocumentDto>> Handle(GetProductDocumentDtoByIdQuery request, CancellationToken cancellationToken)
     {
         var productDocument = await _unitOfWork.Repository<ProductDocument>().GetByID(request.Id);
 
         if (productDocument == null)
         {
-            return Result<GetProductDocument>.BadRequest("Product not found");
+            return Result<GetProductDocumentDto>.BadRequest("Product not found");
         }
 
-        var mapdata = _mapper.Map<GetProductDocument>(productDocument);
+        var mapData = _mapper.Map<GetProductDocumentDto>(productDocument);
 
-        return Result<GetProductDocument>.Success("ProductDocument not found");
+        return Result<GetProductDocumentDto>.Success("ProductDocument not found");
     }
 }

@@ -1,9 +1,9 @@
 using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
-using Domain.Entities.GymTraners;
+using Domain.Entities.GymTrainers;
 using Domain.Entities.Vendors;
 
-namespace Application.Dto.GymTraners;
+namespace Application.Dto.GymTrainers;
 
 public class GetGymTrainerDto: BaseDto, IMapFrom<GymTrainer>
 {

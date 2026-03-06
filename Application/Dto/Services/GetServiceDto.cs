@@ -6,7 +6,7 @@ namespace Application.Dto.Services;
 
 public class GetServiceDto: BaseDto, IMapFrom<Service>
 {
-    public int? CatgoryId { get; set; }
+    public int? CategoryId { get; set; }
     public string Name { get; set; }
     public string SerialNo { get; set; }
     public int? VendorId { get; set; }

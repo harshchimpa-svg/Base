@@ -8,7 +8,7 @@ namespace Domain.Entities.Services;
 public class Service:BaseAuditableEntity
 {
     [ForeignKey("Category")]
-    public int? CatgoryId { get; set; }
+    public int? CategoryId { get; set; }
     public Category Category { get; set; }
     public string Name { get; set; }
     public string SerialNo { get; set; }

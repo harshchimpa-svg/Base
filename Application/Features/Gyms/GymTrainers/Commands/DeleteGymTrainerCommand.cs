@@ -1,12 +1,12 @@
 using Application.Features.Customers.Commands;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Entities.Customers;
-using Domain.Entities.GymTraners;
+using Domain.Entities.GymTrainers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.GymTraners.Command;
+namespace Application.Features.GymTrainers.Command;
 
 public class DeleteGymTrainerCommand: IRequest<Result<bool>>
 {

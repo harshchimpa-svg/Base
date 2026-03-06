@@ -19,12 +19,12 @@ public class UpdateServiceCommand: IRequest<Result<Service>>
         CreateCommand = createCommand;
     }
 }
-internal class UpdateServicesCommandHandler : IRequestHandler<UpdateServiceCommand, Result<Service>>
+internal class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand, Result<Service>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateServicesCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UpdateServiceCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

@@ -1,14 +1,14 @@
 using Application.Dto.Services;
-using Application.Dto.ShopeSettings;
+using Application.Dto.ShopSettings;
 using Application.Features.Services.Queries;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Services;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 using MediatR;
 using Shared;
 
-namespace Application.Features.ShopeSettings.Queries;
+namespace Application.Features.ShopSettings.Queries;
 
 public class GetShopSettingByIdQuery: IRequest<Result<GetShopSettingDto>>
 {
@@ -19,12 +19,12 @@ public class GetShopSettingByIdQuery: IRequest<Result<GetShopSettingDto>>
         Id = id;
     }
 }
-internal class GetShopeSettingByIdQueryHandler : IRequestHandler<GetShopSettingByIdQuery, Result<GetShopSettingDto>>
+internal class GetshopSettingByIdQueryHandler : IRequestHandler<GetShopSettingByIdQuery, Result<GetShopSettingDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetShopeSettingByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetshopSettingByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;

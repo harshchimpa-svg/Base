@@ -1,26 +1,26 @@
 using System.Security.Claims;
-using Application.Dto.ShopeSettings;
+using Application.Dto.ShopSettings;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.ShopeSettings;
+using Domain.Entities.ShopSettings;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.ShopeSettings.Queries;
+namespace Application.Features.ShopSettings.Queries;
 
 public class GetAllShopSettingQuery : IRequest<Result<List<GetShopSettingDto>>>
 {
 }
 
-internal class GetAllShopeSettingQueryHandler : IRequestHandler<GetAllShopSettingQuery, Result<List<GetShopSettingDto>>>
+internal class GetAllshopSettingQueryHandler : IRequestHandler<GetAllShopSettingQuery, Result<List<GetShopSettingDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GetAllShopeSettingQueryHandler(
+    public GetAllshopSettingQueryHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
         IHttpContextAccessor httpContextAccessor)

@@ -3,7 +3,7 @@ using Domain.Common;
 using Domain.Entities.ApplicationUsers;
 using Domain.Entities.Employees;
 
-namespace Domain.Entities.ShopeSettings;
+namespace Domain.Entities.ShopSettings;
 
 public class ShopSetting:BaseAuditableEntity
 {

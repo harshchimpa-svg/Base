@@ -41,22 +41,22 @@ internal class UpdateCartItemHandler : IRequestHandler<UpdateCartItemCommand, Re
 
             if (product == null)
             {
-                return Result<CartItem>.BadRequest("CartsItems id is not exist");
+                return Result<CartItem>.BadRequest("CartsItem id is not exist");
             }
         
-        var gymCartsItems = await _unitOfWork.Repository<CartItem>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var gymCartItems = await _unitOfWork.Repository<CartItem>().Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
         {
-            if (gymCartsItems == null)
+            if (gymCartItems == null)
             {
                 return Result<CartItem>.BadRequest("CartItem id not found");
             }
 
-            _mapper.Map(request.CreateCommand, gymCartsItems);
+            _mapper.Map(request.CreateCommand, gymCartItems);
 
-            await _unitOfWork.Repository<CartItem>().UpdateAsync(gymCartsItems);
+            await _unitOfWork.Repository<CartItem>().UpdateAsync(gymCartItems);
             await _unitOfWork.Save(cancellationToken);
 
-            return Result<CartItem>.Success("Updated GymCartsItems");
+            return Result<CartItem>.Success("Updated GymCartItems");
         }
     }
 }

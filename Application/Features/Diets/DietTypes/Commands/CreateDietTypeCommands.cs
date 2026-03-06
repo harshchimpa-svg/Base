@@ -7,11 +7,11 @@ using Shared;
 
 namespace Application.Features.DietTypes.Command;
 
-public class CreateDietTypeCommands: IRequest<Result<string>>, ICreateMapFrom<DietType>
+public class CreateDietTypeCommand: IRequest<Result<string>>, ICreateMapFrom<DietType>
 {
     public string? Name { get; set; }
 }
-internal class CreateDietTypeCommandHandler : IRequestHandler<CreateDietTypeCommands, Result<string>>
+internal class CreateDietTypeCommandHandler : IRequestHandler<CreateDietTypeCommand, Result<string>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ internal class CreateDietTypeCommandHandler : IRequestHandler<CreateDietTypeComm
         _mapper = mapper;
     }
 
-    public async Task<Result<string>> Handle(CreateDietTypeCommands request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateDietTypeCommand request, CancellationToken cancellationToken)
     {
         var dietTypes = _mapper.Map<DietType>(request);
 

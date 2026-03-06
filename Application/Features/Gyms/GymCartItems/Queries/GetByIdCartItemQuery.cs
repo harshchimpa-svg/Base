@@ -9,7 +9,7 @@ using Domain.Entities.Gyms;
 using MediatR;
 using Shared;
 
-namespace Application.Features.GymCartsItems.Queries;
+namespace Application.Features.GymCartItems.Queries;
 
 public class GetByIdCartItemQuery : IRequest<Result<GetCartItemDto>>
 {
@@ -33,15 +33,15 @@ internal class GetByIdCartItemQueryHandler : IRequestHandler<GetByIdCartItemQuer
 
     public async Task<Result<GetCartItemDto>> Handle(GetByIdCartItemQuery request, CancellationToken cancellationToken)
     {
-        var gymCartsItems = await _unitOfWork.Repository<CartItem>().GetByID(request.Id);
+        var gymCartItems = await _unitOfWork.Repository<CartItem>().GetByID(request.Id);
 
-        if (gymCartsItems == null)
+        if (gymCartItems == null)
         {
-            return Result<GetCartItemDto>.BadRequest("GymCartsItems Not Found");
+            return Result<GetCartItemDto>.BadRequest("GymCartItems Not Found");
         }
 
-        var mapData = _mapper.Map<GetCartItemDto>(gymCartsItems);
+        var mapData = _mapper.Map<GetCartItemDto>(gymCartItems);
 
-        return Result<GetCartItemDto>.Success(mapData, "GymCartsItems");
+        return Result<GetCartItemDto>.Success(mapData, "GymCartItems");
     }
 }
