@@ -12,7 +12,7 @@ public class Organization
     public string Name { get; set; }
     public string? Logo { get; set; }
     public string? TagLine { get; set; }
-    public string? WebSite { get; set; }
+    public string? Website { get; set; }
     public long? PhoneNumber { get; set; }
 
     [EmailAddress(ErrorMessage = "Enter proper Email")]

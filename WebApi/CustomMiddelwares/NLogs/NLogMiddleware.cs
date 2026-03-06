@@ -25,14 +25,14 @@ public class NLogMiddleware
 
         try
         {
-            LogManager.GetCurrentClassLogger().Error("Request received: IP: {IpAddress}, UserId: {UserId}, Method: {Method}, URL: {Url}, Level:{level}",
+            LogManager.GetCurrentClassLogger().Error("Request received: IP: {IpAddress}, UserId: {UserId}, Method: {Method}, URL: {Url}, Level: {level}",
                                                     ipAddress, userId, method, url, "Info");
 
             await _next(context);
         }
         catch (Exception ex)
         {
-            LogManager.GetCurrentClassLogger().Error(ex, "Error occurred: IP: {IpAddress}, UserId: {UserId}, Method: {Method}, URL: {Url}, Level:{level}",
+            LogManager.GetCurrentClassLogger().Error(ex, "Error occurred: IP: {IpAddress}, UserId: {UserId}, Method: {Method}, URL: {Url}, Level: {level}",
                                                                 ipAddress, userId, method, url, "Error");
 
             if (_environment.IsProduction()// || _environment.IsDevelopment()

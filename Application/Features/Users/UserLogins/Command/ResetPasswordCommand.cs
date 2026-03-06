@@ -49,9 +49,9 @@ internal class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordComman
 
         _contextAccessor.HttpContext.User = principal;
 
-        var useOrga = await _organization.Get();
+        var useOrg = await _organization.Get();
 
-        var user = await _userManager.FindByIdAsync(useOrga.UserId);
+        var user = await _userManager.FindByIdAsync(useOrg.UserId);
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 

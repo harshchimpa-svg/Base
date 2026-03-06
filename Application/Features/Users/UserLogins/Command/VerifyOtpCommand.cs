@@ -43,7 +43,7 @@ internal class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Resul
 
    public async Task<Result<string>> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
 {
-    var useOrga = await _userIdAndOrganizationIdRepository.Get();
+    var useOrg = await _userIdAndOrganizationIdRepository.Get();
 
     User? user = null;
 

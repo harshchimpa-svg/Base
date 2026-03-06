@@ -34,9 +34,9 @@ internal class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComm
             return Result<int>.BadRequest("Old password and new password not same..");
         }
 
-        var useOrga = await _userOrganization.Get();
+        var useOrg = await _userOrganization.Get();
 
-        var userId = useOrga.UserId;
+        var userId = useOrg.UserId;
 
         var user = await _userManager.FindByIdAsync(userId);
 

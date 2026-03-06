@@ -30,7 +30,7 @@ internal class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Resul
 
      async Task<Result<string>> IRequestHandler<UserLoginCommand, Result<string>>.Handle(UserLoginCommand request, CancellationToken cancellationToken)
     {
-        var useOrga = await _userIdAndOrganizationIdRepository.Get();
+        var useOrg = await _userIdAndOrganizationIdRepository.Get();
 
         User? user = null;
 

@@ -31,7 +31,7 @@ internal class ChangePasswordByAdminCommandHandler : IRequestHandler<ChangePassw
 
     public async Task<Result<int>> Handle(ChangePasswordByAdminCommand request, CancellationToken cancellationToken)
     {
-        var useOrga = await _userOrganization.Get();
+        var useOrg = await _userOrganization.Get();
 
         var user = await _userManager.FindByIdAsync(request.UserId);
 
@@ -40,9 +40,9 @@ internal class ChangePasswordByAdminCommandHandler : IRequestHandler<ChangePassw
             throw new BadRequestException("User doesn't exists");
         }
 
-        if (!useOrga.IsAdmin)
+        if (!useOrg.IsAdmin)
         {
-            bool isAuthorizedSchoolUser = user.OrganizationId == useOrga.UserOrganizationId;
+            bool isAuthorizedSchoolUser = user.OrganizationId == useOrg.UserOrganizationId;
 
             if (!isAuthorizedSchoolUser)
             {

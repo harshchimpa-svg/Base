@@ -52,11 +52,5 @@ namespace WebApi.Controllers.Employees
             var result = await _mediator.Send(query);
             return ResponseHelper.GenerateResponse(result);
         }
-        /*[HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClients(int id)
-        {
-            var Clients = await _mediator.Send(new DeleteEmployeeCommand(id));
-            return ResponseHelper.GenerateResponse(Clients);
-        }*/
     }
 }

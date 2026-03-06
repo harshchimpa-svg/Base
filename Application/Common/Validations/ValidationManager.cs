@@ -42,7 +42,7 @@ public class ValidationManager
 
     public async Task ValidateId<T>(int? id) where T : BaseAuditableEntity
     {
-        var useOrga = await _userIdAndOrganizationIdRepository.Get();
+        var useOrg = await _userIdAndOrganizationIdRepository.Get();
 
         if (id != null)
         {

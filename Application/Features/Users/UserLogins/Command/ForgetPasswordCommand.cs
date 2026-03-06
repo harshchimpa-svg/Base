@@ -39,7 +39,7 @@ internal class ForgetPasswordCommandHandler : IRequestHandler<ForgetPasswordComm
 
     public async Task<Result<int>> Handle(ForgetPasswordCommand request, CancellationToken cancellationToken)
     {
-        var useOrga = await _userOrganization.Get();
+        var useOrg = await _userOrganization.Get();
 
         User? user = null;
 

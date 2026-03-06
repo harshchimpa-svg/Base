@@ -109,15 +109,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseAuditabl
 
     public async Task UpdateAsync(T entity, int id = 0)
     {
-        var useOrga = await _userIdAndOrganizationIdRepository.Get();
+        var useOrg = await _userIdAndOrganizationIdRepository.Get();
 
         T? exist = _context.Set<T>().Find(id != 0 ? id : entity.Id);
 
         entity.UpdatedDate = DateTime.UtcNow;
 
-        if (!string.IsNullOrEmpty(useOrga.UserId))
+        if (!string.IsNullOrEmpty(useOrg.UserId))
         {
-            entity.UpdatedBy = useOrga.UserId;
+            entity.UpdatedBy = useOrg.UserId;
         }
 
         _context.Entry(exist).CurrentValues.SetValues(exist);

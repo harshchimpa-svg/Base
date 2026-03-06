@@ -59,8 +59,8 @@ internal class UpdateCurrentUserCommandHandler
         UpdateCurrentUserCommand request,
         CancellationToken cancellationToken)
     {
-        var useOrga = await _userOrganization.Get();
-        var user = await _userManager.FindByIdAsync(useOrga.UserId);
+        var useOrg = await _userOrganization.Get();
+        var user = await _userManager.FindByIdAsync(useOrg.UserId);
 
         if (user == null)
             return Result<string>.NotFound("User not found");
