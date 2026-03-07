@@ -33,7 +33,7 @@ internal class DeleteAllTransactionCommandHandler : IRequestHandler<DeleteAllTra
 
         if (!transactions.Any())
         {
-            return Result<bool>.BadRequest("transation is not found");
+            return Result<bool>.BadRequest("transaction is not found");
         }
 
         foreach (var transaction in transactions)

@@ -59,6 +59,6 @@ internal class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Resul
 
         string token = await _jwtService.GenerateToken(user.Id);
 
-        return Result<string>.Success(user.Id, "LogIn successfully....", token);
+        return Result<string>.Success(user.Id, "Login successful", token);
     }
 }

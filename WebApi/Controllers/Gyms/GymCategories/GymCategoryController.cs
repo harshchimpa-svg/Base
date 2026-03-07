@@ -1,9 +1,6 @@
-﻿
-using Application.Features.GymCategories.Command;
+﻿using Application.Features.GymCategories.Command;
 using Application.Features.GymCategories.Queries;
-using Application.Features.Gyms.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.GymCategorys
@@ -18,7 +15,6 @@ namespace WebApi.Controllers.GymCategorys
         {
             _mediator = mediator;
         }
-
         
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateGymCategoryCommand command)

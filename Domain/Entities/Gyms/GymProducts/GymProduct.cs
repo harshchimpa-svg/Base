@@ -9,7 +9,7 @@ public class GymProduct : BaseAuditableEntity
     public int Tax {  get; set; }
     public decimal Price { get; set; }
 
-    [ForeignKey("GymCategoryes")]
+    [ForeignKey("GymCategory")]
     public int? GymCategoryId { get; set; }
-    public GymCategoryes GymCategories { get; set; }
+    public GymCategory GymCategory{ get; set; }
 }

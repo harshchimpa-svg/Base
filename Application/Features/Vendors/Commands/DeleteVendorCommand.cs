@@ -25,10 +25,10 @@ internal class DeleteVendorCommandHandler : IRequestHandler<DeleteVendorCommand,
     
     public async Task<Result<bool>> Handle(DeleteVendorCommand request, CancellationToken cancellationToken)
     {
-        var vendorsExists = await _unitOfWork.Repository<Vendor>().Entities
+        var vendorExists = await _unitOfWork.Repository<Vendor>().Entities
             .AnyAsync(x => x.Id == request.Id);
 
-        if (!vendorsExists)
+        if (!vendorExists)
         {
             return Result<bool>.BadRequest("Vendors not found.");
         }

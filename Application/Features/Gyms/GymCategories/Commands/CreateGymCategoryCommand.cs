@@ -7,7 +7,7 @@ using Shared;
 
 namespace Application.Features.GymCategories.Command;
 
-public class CreateGymCategoryCommand : IRequest<Result<int>>, IMapFrom<GymCategoryes>
+public class CreateGymCategoryCommand : IRequest<Result<int>>, IMapFrom<GymCategory>
 {
     public string Name { get; set; }
     public string Description { get; set; }
@@ -25,9 +25,9 @@ internal class CreateGymCategoryCommandHandler : IRequestHandler<CreateGymCatego
 
     public async Task<Result<int>> Handle( CreateGymCategoryCommand request, CancellationToken cancellationToken)
     {
-        var gymCategory = _mapper.Map<GymCategoryes>(request);
+        var gymCategory = _mapper.Map<GymCategory>(request);
 
-        await _unitOfWork.Repository<GymCategoryes>().AddAsync(gymCategory);
+        await _unitOfWork.Repository<GymCategory>().AddAsync(gymCategory);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<int>.Success(gymCategory.Id, "Gym Category Created");

@@ -26,7 +26,7 @@ internal class UpdateGymCategoryCommandHandler : IRequestHandler<UpdateGymCatego
 
     public async Task<Result<string>> Handle(  UpdateGymCategoryCommand request,  CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<GymCategoryes>()
+        var gymCategory = await _unitOfWork.Repository<GymCategory>()
             .Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
         if (gymCategory == null)

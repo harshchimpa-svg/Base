@@ -62,7 +62,7 @@ internal class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordComman
             return Result<int>.BadRequest("Something went wrong..");
         }
 
-        return Result<int>.Success("Password update successfully");
+        return Result<int>.Success("Password updated successfully");
     }
 
     private ClaimsPrincipal? ValidateToken(string token)

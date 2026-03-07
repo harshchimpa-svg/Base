@@ -29,16 +29,16 @@ internal class GetByIdGymCategoryQueryHandler : IRequestHandler<GetByIdGymCatego
 
     public async Task<Result<GetGymCategoryDto>> Handle(GetByIdGymCategoryQuery request, CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<GymCategoryes>().GetByID(request.Id);
+        var gymCategory = await _unitOfWork.Repository<GymCategory>().GetByID(request.Id);
 
         if (gymCategory == null)
         {
-            return Result<GetGymCategoryDto>.BadRequest("GymCategoryes Not Found");
+            return Result<GetGymCategoryDto>.BadRequest("GymCategory Not Found");
         }
 
         var mapData = _mapper.Map<GetGymCategoryDto>(gymCategory);
 
-        return Result<GetGymCategoryDto>.Success(mapData, "GymCategoryes");
+        return Result<GetGymCategoryDto>.Success(mapData, "GymCategory");
     }
 }
 

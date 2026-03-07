@@ -26,13 +26,13 @@ internal class DeleteGymCategoryCommandHandler : IRequestHandler<DeleteGymCatego
 
     public async Task<Result<string>> Handle( DeleteGymCategoryCommand request, CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<GymCategoryes>()
+        var gymCategory = await _unitOfWork.Repository<GymCategory>()
             .Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
         if (gymCategory == null)
             return Result<string>.BadRequest("Gym Category not found");
 
-        await _unitOfWork.Repository<GymCategoryes>().DeleteAsync(gymCategory);
+        await _unitOfWork.Repository<GymCategory>().DeleteAsync(gymCategory);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("Gym Category Deleted");
