@@ -2,7 +2,7 @@
 
 using Domain.Common;
 
-namespace Domain.Entities.GymCategorys;
+namespace Domain.Entities.GymCategories;
 
 public class GymCategories : BaseAuditableEntity
 {

@@ -6,7 +6,7 @@ public class PaginatedResult<T> : Result<T>
     {
         Data = data ?? new List<T>();
         Messages = messages ?? new List<string>();
-        Successed = succeeded;
+        Succeeded = succeeded;
         CurrentPage = pageNumber > 0 ? pageNumber : 1;
         PageSize = pageSize > 0 ? pageSize : 10;
         TotalCount = count;

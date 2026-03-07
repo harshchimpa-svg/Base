@@ -5,7 +5,7 @@ namespace Shared;
 public class Result<T> : IResult<T>
 {
     public List<string> Messages { get; set; }
-    public bool Successed { get; set; }
+    public bool Succeeded { get; set; }
     public T Data { get; set; }
     public int Code { get; set; }
     public string Token { get; set; }
@@ -18,7 +18,7 @@ public class Result<T> : IResult<T>
         return new Result<T>
         {
             Code = 200,
-            Successed = true,
+            Succeeded = true,
             Messages = new List<string> { message }
         };
     }
@@ -27,7 +27,7 @@ public class Result<T> : IResult<T>
         return new Result<T>
         {
             Code = 200,
-            Successed = true,
+            Succeeded = true,
             Data = data,
             Messages = new List<string> { message } ?? null
         };
@@ -37,7 +37,7 @@ public class Result<T> : IResult<T>
         return new Result<T>
         {
             Code = 200,
-            Successed = true,
+            Succeeded = true,
             Data = data,
             Token = token,
             Messages = new List<string> { message } ?? null
@@ -52,7 +52,7 @@ public class Result<T> : IResult<T>
         return new Result<T>
         {
             Code = 400,
-            Successed = false,
+            Succeeded = false,
             Messages = new List<string> { message } ?? null
         };
     }
@@ -64,7 +64,7 @@ public class Result<T> : IResult<T>
         return new Result<T>
         {
             Code = 204,
-            Successed = false,
+            Succeeded = false,
             Data = data,
             Messages = new List<string> { message } ?? null
         };
@@ -74,7 +74,7 @@ public class Result<T> : IResult<T>
         return new Result<T>
         {
             Code = 204,
-            Successed = false,
+            Succeeded = false,
             Messages = new List<string> { message } ?? null
         };
     }

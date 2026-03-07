@@ -7,12 +7,12 @@ public class ResponseHelper
 {
     public static ActionResult GenerateResponse<T>(Result<T> data)
     {
-        if (data.Successed)
+        if (data.Succeeded)
         {
             var responseObject = new
             {
                 messages = data.Messages,
-                succeeded = data.Successed,
+                succeeded = data.Succeeded,
                 data = data.Data,
                 code=data.Code,
                 exception = data.Exception,
@@ -27,7 +27,7 @@ public class ResponseHelper
             var errorObject = new
             {
                 messages = data.Messages,
-                succeeded = data.Successed,
+                succeeded = data.Succeeded,
                 data = data.Data,
                 exception = data.Exception,
                 code = data.Code,

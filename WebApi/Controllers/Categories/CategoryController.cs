@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers.Categoryes
+namespace WebApi.Controllers.Categories
 {
     [Route("api/category")]
     [ApiController]

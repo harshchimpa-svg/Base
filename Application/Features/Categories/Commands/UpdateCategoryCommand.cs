@@ -21,7 +21,7 @@ public class UpdateCategoryCommand : IRequest<Result<Category>>
         CreateCommand = createCommand;
     }
 }
-public record GetCategoriDto(IFormFile File);
+public record GetCategoryDto(IFormFile File);
 
 internal class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Result<Category>>
 {
