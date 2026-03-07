@@ -52,6 +52,6 @@ internal class CreateGymDocumentCommandHandler : IRequestHandler<CreateGymDocume
         await _unitOfWork.Repository<GymDocument>().AddAsync(gymDocument);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<string>.Success("Gym document Created");
+        return Result<string>.Success("GymDocument Created");
     }
 }

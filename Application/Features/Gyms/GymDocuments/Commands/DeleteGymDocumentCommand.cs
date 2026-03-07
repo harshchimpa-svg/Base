@@ -34,12 +34,12 @@ internal class DeleteGymDocumentCommandHandler : IRequestHandler<DeleteGymDocume
 
         if (!gymDocuments)
         {
-            return Result<bool>.BadRequest("Gym Document not Found");
+            return Result<bool>.BadRequest("GymDocument not Found");
         }
 
         await _unitOfWork.Repository<GymDocument>().DeleteAsync(request.Id);
         await _unitOfWork.Save(cancellationToken);
 
-        return Result<bool>.Success(true, "Gym Document deleted successfully");
+        return Result<bool>.Success(true, "GymDocument deleted successfully");
     }
 }

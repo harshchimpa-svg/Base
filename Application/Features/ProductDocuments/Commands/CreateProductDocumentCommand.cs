@@ -41,13 +41,7 @@ internal class CreateProductDocumentCommandHandler : IRequestHandler<CreateProdu
             {
                 return Result<string>.BadRequest("gymProduct Id is not exist");
             }
-        
-
-        if (request.ImageUrl == null)
-        {
-            return Result<string>.BadRequest("Image is required");
-        }
-
+            
         var imageUrl = await _fileService.UploadAsync(request.ImageUrl, "ProductDocument");
 
         var productDocument = _mapper.Map<ProductDocument>(request);

@@ -24,7 +24,6 @@ public class UpdateEmployeeCommand : IRequest<Result<string>>
     public string? LastName { get; set; }
     public string? OtherDetails { get; set; }
 
-    // Profile fields
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
     public decimal Weight { get; set; }
@@ -33,7 +32,6 @@ public class UpdateEmployeeCommand : IRequest<Result<string>>
     public DateTime DateOfBirth { get; set; }
     public string? Message { get; set; }
 
-    // Address fields
     public string? Address1 { get; set; }
     public string? Address2 { get; set; }
     public string? City { get; set; }
@@ -117,7 +115,6 @@ internal class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComm
         UserProfile userProfile;
         if (!userProfileExists)
         {
-            // Create new profile if it doesn't exist
             userProfile = new UserProfile
             {
                 UserId = userId

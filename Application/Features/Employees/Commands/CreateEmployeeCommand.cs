@@ -165,7 +165,5 @@ public async Task<Result<string>> Handle(CreateEmployeeCommand request, Cancella
         ? Result<string>.Success("Employee registered. OTP sent.")
         : Result<string>.Success("Employee registered successfully.");
 }
-
 }
-// Employee.RoleId = "1a916884-1fbb-4cc1-86b5-bc06125fb7f2";
 

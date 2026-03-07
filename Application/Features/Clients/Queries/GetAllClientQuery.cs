@@ -36,7 +36,6 @@ internal class GetAllClientQueryHandler : IRequestHandler<GetAllClientQuery,Pagi
         }
         int count = await queryable.CountAsync();
 
-
         if (request.PageNumber != 0 && request.PageSize != 0)
         {
             queryable = queryable

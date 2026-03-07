@@ -19,10 +19,7 @@ internal class ReminderCustomerCommandHandler : IRequestHandler<ReminderCustomer
     private readonly IEmailService _emailService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ReminderCustomerCommandHandler(
-        IUnitOfWork unitOfWork,
-        IEmailService emailService,
-        IHttpContextAccessor httpContextAccessor)
+    public ReminderCustomerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IHttpContextAccessor httpContextAccessor)
     {
         _unitOfWork = unitOfWork;
         _emailService = emailService;
