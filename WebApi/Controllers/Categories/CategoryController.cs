@@ -1,6 +1,5 @@
 ﻿using Application.Features.Categories.Command;
 using Application.Features.Categories.Queries;
-using Application.Features.Categoryes.Command;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

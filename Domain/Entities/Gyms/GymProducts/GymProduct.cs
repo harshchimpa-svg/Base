@@ -13,5 +13,5 @@ public class GymProduct : BaseAuditableEntity
 
     [ForeignKey("Category")]
     public int? GymCategoryId { get; set; }
-    public GymCategory GymCategory { get; set; }
+    public GymCategories GymCategories { get; set; }
 }

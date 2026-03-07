@@ -75,7 +75,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     
     public DbSet<GymDocument> GymDocuments { get; set; }
     public DbSet<UserMembership> UserMembership { get; set; }
-    public DbSet<GymCategory> GymCategories { get; set; }
+    public DbSet<GymCategories> GymCategories { get; set; }
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }

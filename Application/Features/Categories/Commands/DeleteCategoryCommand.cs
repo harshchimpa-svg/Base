@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Application.Features.Categoryes.Command;
+namespace Application.Features.Categories.Command;
 
 public class DeleteCategoryCommand : IRequest<Result<bool>>
 {

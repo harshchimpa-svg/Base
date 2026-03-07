@@ -24,10 +24,10 @@ internal class GetAllGymCategoryQueryHandler : IRequestHandler<GetAllGymCategory
 
     public async Task<Result<List<GetGymCategoryDto>>> Handle(GetAllGymCategoryQuery request, CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<GymCategory>().GetAll();
+        var gymCategory = await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>().GetAll();
 
         var map = _mapper.Map<List<GetGymCategoryDto>>(gymCategory);
 
-        return Result<List<GetGymCategoryDto>>.Success(map, "GymCategory");
+        return Result<List<GetGymCategoryDto>>.Success(map, "GymCategories");
     }
 }

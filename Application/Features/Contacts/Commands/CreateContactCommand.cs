@@ -11,7 +11,7 @@ public class CreateContactCommand: IRequest<Result<string>>, ICreateMapFrom<Cont
 {   
     public string Name { get; set; }
     public string Email { get; set; }
-    public string Massage { get; set; }
+    public string Message { get; set; }
 }
 
 internal class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, Result<string>>

@@ -7,7 +7,7 @@ using Domain.Entities.GymCategorys;
 
 namespace Application.Dto.GymCategories;
 
-public class GetGymCategoryDto : BaseDto,IMapFrom<GymCategory>
+public class GetGymCategoryDto : BaseDto,IMapFrom<Domain.Entities.GymCategorys.GymCategories>
 {
     public string Name { get; set; }
     public string Description { get; set; }

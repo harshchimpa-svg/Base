@@ -1,4 +1,3 @@
-using Application.Features.Categoryes.Command;
 using Application.Interfaces.UnitOfWorkRepositories;
 using Domain.Entities.Vendors;
 using MediatR;

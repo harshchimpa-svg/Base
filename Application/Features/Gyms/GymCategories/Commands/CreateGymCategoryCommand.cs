@@ -9,13 +9,13 @@ using Shared;
 
 namespace Application.Features.GymCategories.Command;
 
-public class CreateGymCategoryCommand : IRequest<Result<int>>, IMapFrom<GymCategory>
+public class CreateGymCategoryCommand : IRequest<Result<int>>, IMapFrom<Domain.Entities.GymCategorys.GymCategories>
 {
     public string Name { get; set; }
     public string Description { get; set; }
     public void Mapping(AutoMapper.Profile profile)
     {
-        profile.CreateMap<CreateGymCategoryCommand, GymCategory>();
+        profile.CreateMap<CreateGymCategoryCommand, Domain.Entities.GymCategorys.GymCategories>();
     }
 }
 internal class CreateGymCategoryCommandHandler : IRequestHandler<CreateGymCategoryCommand, Result<int>>
@@ -31,9 +31,9 @@ internal class CreateGymCategoryCommandHandler : IRequestHandler<CreateGymCatego
 
     public async Task<Result<int>> Handle( CreateGymCategoryCommand request, CancellationToken cancellationToken)
     {
-        var gymCategory = _mapper.Map<GymCategory>(request);
+        var gymCategory = _mapper.Map<Domain.Entities.GymCategorys.GymCategories>(request);
 
-        await _unitOfWork.Repository<GymCategory>().AddAsync(gymCategory);
+        await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>().AddAsync(gymCategory);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<int>.Success(gymCategory.Id, "Gym Category Created");
