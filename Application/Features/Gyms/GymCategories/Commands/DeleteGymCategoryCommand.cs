@@ -1,7 +1,5 @@
-﻿
-
-using Application.Interfaces.UnitOfWorkRepositories;
-using Domain.Entities.GymCategorys;
+﻿using Application.Interfaces.UnitOfWorkRepositories;
+using Domain.Entities.GymCategories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
@@ -28,13 +26,13 @@ internal class DeleteGymCategoryCommandHandler : IRequestHandler<DeleteGymCatego
 
     public async Task<Result<string>> Handle( DeleteGymCategoryCommand request, CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>()
+        var gymCategory = await _unitOfWork.Repository<GymCategoryes>()
             .Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
         if (gymCategory == null)
             return Result<string>.BadRequest("Gym Category not found");
 
-        await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>().DeleteAsync(gymCategory);
+        await _unitOfWork.Repository<GymCategoryes>().DeleteAsync(gymCategory);
         await _unitOfWork.Save(cancellationToken);
 
         return Result<string>.Success("Gym Category Deleted");

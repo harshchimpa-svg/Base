@@ -1,8 +1,6 @@
-﻿
-
-using Application.Interfaces.UnitOfWorkRepositories;
+﻿using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.GymCategorys;
+using Domain.Entities.GymCategories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
@@ -28,7 +26,7 @@ internal class UpdateGymCategoryCommandHandler : IRequestHandler<UpdateGymCatego
 
     public async Task<Result<string>> Handle(  UpdateGymCategoryCommand request,  CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>()
+        var gymCategory = await _unitOfWork.Repository<GymCategoryes>()
             .Entities.FirstOrDefaultAsync(x => x.Id == request.Id);
 
         if (gymCategory == null)

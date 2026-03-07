@@ -1,8 +1,6 @@
-﻿
-
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
-using Domain.Entities.GymCategorys;
+using Domain.Entities.GymCategories;
 
 namespace Domain.Entities.GymProducts;
 
@@ -11,7 +9,7 @@ public class GymProduct : BaseAuditableEntity
     public int Tax {  get; set; }
     public decimal Price { get; set; }
 
-    [ForeignKey("Category")]
+    [ForeignKey("GymCategoryes")]
     public int? GymCategoryId { get; set; }
-    public GymCategories GymCategories { get; set; }
+    public GymCategoryes GymCategories { get; set; }
 }

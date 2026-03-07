@@ -1,14 +1,8 @@
-﻿using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
+﻿using System.Linq.Expressions;
+using System.Reflection;
+using Application.Interfaces.Repositories.UserIdAndOrganizationIds;
 using Domain.Entities.ApplicationRoles;
 using Domain.Entities.ApplicationUsers;
-using Domain.Entities.Organizations;
-using Domain.Entities.OTPs;
-using Domain.Entities.Users.UserRoles;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using System.Reflection;
 using Domain.Entities.Categories;
 using Domain.Entities.Clients;
 using Domain.Entities.Contacts;
@@ -19,24 +13,30 @@ using Domain.Entities.DietTypes;
 using Domain.Entities.Employees;
 using Domain.Entities.ExerciseDocuments;
 using Domain.Entities.Exercises;
-using About = Domain.Entities.Abouts.About;
-using Service = Domain.Entities.Services.Service;
-using Vendor = Domain.Entities.Vendors.Vendor;
-using Domain.Entities.Locations;
+using Domain.Entities.GymCartItem;
+using Domain.Entities.GymCategories;
+using Domain.Entities.GymDocuments;
+using Domain.Entities.GymMemberships;
+using Domain.Entities.GymProducts;
 using Domain.Entities.Gyms;
 using Domain.Entities.GymTrainers;
+using Domain.Entities.Locations;
+using Domain.Entities.Organizations;
+using Domain.Entities.OTPs;
+using Domain.Entities.PaymentLogs;
+using Domain.Entities.ProductDocuments;
 using Domain.Entities.SalePayments;
 using Domain.Entities.SaleProducts;
 using Domain.Entities.Sales;
-using Domain.Entities.Transactions;
-using Domain.Entities.GymDocuments;
-using Domain.Entities.GymMemberships;
-using Domain.Entities.GymCategorys;
-using Domain.Entities.GymProducts;
-using Domain.Entities.ProductDocuments;
-using Domain.Entities.GymCartItem;
-using Domain.Entities.PaymentLogs;
 using Domain.Entities.ShopSettings;
+using Domain.Entities.Transactions;
+using Domain.Entities.Users.UserRoles;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using About = Domain.Entities.Abouts.About;
+using Service = Domain.Entities.Services.Service;
+using Vendor = Domain.Entities.Vendors.Vendor;
 
 namespace Persistence.DataContext;
 
@@ -75,7 +75,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string, Identi
     
     public DbSet<GymDocument> GymDocuments { get; set; }
     public DbSet<UserMembership> UserMembership { get; set; }
-    public DbSet<GymCategories> GymCategories { get; set; }
+    public DbSet<GymCategoryes> GymCategories { get; set; }
     public DbSet<GymProduct> GymProducts { get; set; }
     public DbSet<ProductDocument> ProductDocuments { get; set; }
     public DbSet<CartItem> CartItems { get; set; }

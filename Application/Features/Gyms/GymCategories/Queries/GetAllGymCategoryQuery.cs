@@ -1,7 +1,7 @@
 ﻿using Application.Dto.GymCategories;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.GymCategorys;
+using Domain.Entities.GymCategories;
 using MediatR;
 using Shared;
 
@@ -24,10 +24,10 @@ internal class GetAllGymCategoryQueryHandler : IRequestHandler<GetAllGymCategory
 
     public async Task<Result<List<GetGymCategoryDto>>> Handle(GetAllGymCategoryQuery request, CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>().GetAll();
+        var gymCategory = await _unitOfWork.Repository<GymCategoryes>().GetAll();
 
         var map = _mapper.Map<List<GetGymCategoryDto>>(gymCategory);
 
-        return Result<List<GetGymCategoryDto>>.Success(map, "GymCategories");
+        return Result<List<GetGymCategoryDto>>.Success(map, "GymCategoryes");
     }
 }

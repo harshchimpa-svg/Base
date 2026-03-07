@@ -1,12 +1,8 @@
-﻿
-
-using Application.Common.Mappings.Commons;
-using Application.Features.Gyms.Command;
+﻿using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.GymCategorys;
+using Domain.Entities.GymCategories;
 using Domain.Entities.GymProducts;
-using Domain.Entities.Gyms;
 using MediatR;
 using Shared;
 
@@ -33,7 +29,7 @@ internal class CreateGymProductCommandHandler : IRequestHandler<CreateGymProduct
     {
         if (request.CategoryId.HasValue)
         {
-            var gymProducts = await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>().GetByID(request.CategoryId.Value);
+            var gymProducts = await _unitOfWork.Repository<GymCategoryes>().GetByID(request.CategoryId.Value);
             if (gymProducts == null)
             {
                 return Result<string>.BadRequest("GymProduct id not exit");

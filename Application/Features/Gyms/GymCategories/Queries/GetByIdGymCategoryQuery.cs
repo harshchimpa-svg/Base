@@ -1,7 +1,7 @@
 ﻿using Application.Dto.GymCategories;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
-using Domain.Entities.GymCategorys;
+using Domain.Entities.GymCategories;
 using MediatR;
 using Shared;
 
@@ -29,7 +29,7 @@ internal class GetByIdGymCategoryQueryHandler : IRequestHandler<GetByIdGymCatego
 
     public async Task<Result<GetGymCategoryDto>> Handle(GetByIdGymCategoryQuery request, CancellationToken cancellationToken)
     {
-        var gymCategory = await _unitOfWork.Repository<Domain.Entities.GymCategorys.GymCategories>().GetByID(request.Id);
+        var gymCategory = await _unitOfWork.Repository<GymCategoryes>().GetByID(request.Id);
 
         if (gymCategory == null)
         {

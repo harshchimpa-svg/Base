@@ -2,6 +2,7 @@ using Application.Dto.Vendors;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Categories;
+using Domain.Entities.Vendors;
 using MediatR;
 using Shared;
 
@@ -29,7 +30,7 @@ internal class GetVendorByIdQueryHandler : IRequestHandler<GetVendorByIdQuery, R
 
     public async Task<Result<GetVendorDto>> Handle(GetVendorByIdQuery request, CancellationToken cancellationToken)
     {
-        var vendor = await _unitOfWork.Repository<Category>().GetByID(request.Id);
+        var vendor = await _unitOfWork.Repository<Vendor>().GetByID(request.Id);
 
         if (vendor == null)
         {

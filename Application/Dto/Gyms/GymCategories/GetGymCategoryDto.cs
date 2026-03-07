@@ -1,13 +1,10 @@
-﻿
-
-
-using Application.Common.Mappings.Commons;
+﻿using Application.Common.Mappings.Commons;
 using Application.Dto.CommonDtos;
-using Domain.Entities.GymCategorys;
+using Domain.Entities.GymCategories;
 
 namespace Application.Dto.GymCategories;
 
-public class GetGymCategoryDto : BaseDto,IMapFrom<Domain.Entities.GymCategorys.GymCategories>
+public class GetGymCategoryDto : BaseDto,IMapFrom<GymCategoryes>
 {
     public string Name { get; set; }
     public string Description { get; set; }
