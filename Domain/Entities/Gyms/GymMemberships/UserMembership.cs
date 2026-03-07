@@ -9,7 +9,6 @@ namespace Domain.Entities.GymMemberships;
 public class UserMembership : BaseAuditableEntity
 {
     public int MembershipId { get; set; }
-
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
 

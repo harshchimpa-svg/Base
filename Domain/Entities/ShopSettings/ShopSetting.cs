@@ -12,8 +12,10 @@ public class ShopSetting:BaseAuditableEntity
     public string PhoneNo { get; set; }
     public string Email { get; set; }
     public int GstNumber  { get; set; }
+    
     [ForeignKey("Employee")]
     public int? EmployeeId { get; set; }
     public Employee Employee { get; set; }
+    
     public string? UserId { get; set; }
 }

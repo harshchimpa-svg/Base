@@ -8,6 +8,7 @@ public class Notification:BaseAuditableEntity
 {
     public string Title { get; set; }
     public string Message { get; set; }
+    
     [ForeignKey("User")]
     public string? UserId { get; set; }
     public User? User { get; set; }

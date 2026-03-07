@@ -13,5 +13,6 @@ public class Client:BaseAuditableEntity
     [ForeignKey("Service")]
     public int? ServiceId { get; set; }
     public Service Service { get; set; }
+    
     public decimal Quantity  { get; set; }
 }

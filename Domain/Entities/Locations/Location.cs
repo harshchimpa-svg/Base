@@ -6,7 +6,8 @@ using Domain.Common.Enums.LocationTypes;
 
 namespace Domain.Entities.Locations;
 
-public class Location : BaseAuditableEntity
+public class 
+    Location : BaseAuditableEntity
 {
     public string Name { get; set; }
     public LocationType? LocationType { get; set; }

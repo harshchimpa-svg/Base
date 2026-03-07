@@ -9,5 +9,6 @@ public class DietDocument:BaseAuditableEntity
     [ForeignKey("Diet")]
     public int? DietId { get; set; }
     public Diet Diet { get; set; }
+    
     public string Document { get; set; }
 }

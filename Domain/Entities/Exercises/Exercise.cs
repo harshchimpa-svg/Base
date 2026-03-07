@@ -9,6 +9,7 @@ public class Exercise:BaseAuditableEntity
     [ForeignKey("DietType")]
     public int? DietTypeId { get; set; }
     public DietType? DietType { get; set; }
+    
     public string Name { get; set; }
     public string? Description { get; set; }
 }

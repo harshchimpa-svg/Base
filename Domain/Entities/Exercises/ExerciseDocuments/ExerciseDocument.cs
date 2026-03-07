@@ -10,5 +10,6 @@ public class ExerciseDocument:BaseAuditableEntity
      [ForeignKey("Exercise")]
      public int? ExerciseId { get; set; }
      public Exercise? Exercise { get; set; }
+     
     public string Document { get; set; }
 }

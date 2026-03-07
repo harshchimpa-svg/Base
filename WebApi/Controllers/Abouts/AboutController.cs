@@ -21,8 +21,8 @@ namespace WebApi.Controllers.Abouts
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateAboutCommand command)
         {
-            var about = await _mediator.Send(command);
-            return ResponseHelper.GenerateResponse(about);
+            var result = await _mediator.Send(command);
+            return ResponseHelper.GenerateResponse(result);
         }
         
         [Authorize(Roles =  "Admin")]

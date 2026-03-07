@@ -11,10 +11,6 @@ public class CreateGymCategoryCommand : IRequest<Result<int>>, IMapFrom<GymCateg
 {
     public string Name { get; set; }
     public string Description { get; set; }
-    public void Mapping(Profile profile)
-    {
-        profile.CreateMap<CreateGymCategoryCommand, GymCategoryes>();
-    }
 }
 internal class CreateGymCategoryCommandHandler : IRequestHandler<CreateGymCategoryCommand, Result<int>>
 {
