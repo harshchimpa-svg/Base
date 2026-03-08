@@ -1,7 +1,6 @@
 ﻿using Application.Features.Categories.Command;
 using Application.Features.Categories.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers.Categories
