@@ -45,7 +45,7 @@ internal class CreateCategoryCommandHandler: IRequestHandler<CreateCategoryComma
 
         var document = new Category
         {
-            ImageUrl = imageUrl,
+            ImageUrl = imageUrl
         };
         
         var category = _mapper.Map<Category>(request);

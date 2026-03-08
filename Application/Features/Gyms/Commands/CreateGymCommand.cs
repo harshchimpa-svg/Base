@@ -1,12 +1,9 @@
-﻿
-
-using Application.Common.Mappings.Commons;
+﻿using Application.Common.Mappings.Commons;
 using Application.Interfaces.UnitOfWorkRepositories;
 using AutoMapper;
 using Domain.Entities.Gyms;
 using MediatR;
 using Shared;
-
 
 namespace Application.Features.Gyms.Command;
 
