@@ -50,9 +50,9 @@ internal class UpdateCartItemCommandHandler : IRequestHandler<UpdateCartItemComm
             {
                 return Result<CartItem>.BadRequest("CartItem id not found");
             }
-
+            
             _mapper.Map(request.CreateCommand, gymCartItems);
-
+            
             await _unitOfWork.Repository<CartItem>().UpdateAsync(gymCartItems);
             await _unitOfWork.Save(cancellationToken);
 
