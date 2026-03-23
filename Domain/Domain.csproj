@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Entities\Gyms\GymTrainers\" />
+    <Folder Include="Entities\KhataBooks\" />
   </ItemGroup>
 
 </Project>

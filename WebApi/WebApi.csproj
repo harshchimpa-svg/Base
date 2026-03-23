@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\KhataBooks\" />
     <Folder Include="wwwroot\Documents\" />
     <Folder Include="wwwroot\Documents\" />
     <Folder Include="wwwroot\uploads\Categori\" />

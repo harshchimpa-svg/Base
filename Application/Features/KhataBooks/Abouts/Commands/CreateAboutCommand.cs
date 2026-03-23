@@ -26,7 +26,7 @@ internal class CreateAboutCommandHandler : IRequestHandler<CreateAboutCommand, R
         _fileService = fileService;
         _unitOfWork = unitOfWork;
     }
-
+     
     public async Task<Result<string>> Handle(CreateAboutCommand request, CancellationToken cancellationToken)
     {
         if (request.Profile == null)
@@ -37,7 +37,7 @@ internal class CreateAboutCommandHandler : IRequestHandler<CreateAboutCommand, R
         var about = new About
         {
             Name = request.Name,
-            SubTitel = request.SubTitle,     
+            SubTitel = request.SubTitle,
             Profile = imageUrl,
             IsActive = true
         };

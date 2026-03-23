@@ -26,6 +26,7 @@ namespace WebApi.Controllers.Customers
             return ResponseHelper.GenerateResponse(result);
         }
 
+        [Authorize(Roles =  "Admin,Employee")]
         [HttpPost("reminder")]
         public async Task<ActionResult> CreateReminder(ReminderCustomerCommand command)
         {
